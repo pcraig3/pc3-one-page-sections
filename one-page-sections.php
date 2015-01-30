@@ -8,21 +8,23 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://pcraig3.ca/
+ * @link              http://pcraig3.ca
  * @since             0.1.0
  * @package           One_Page_Sections
  *
  * @wordpress-plugin
  * Plugin Name:       One Page Sections
- * Plugin URI:        http://example.com/plugin-name-uri/
+ * Plugin URI:        https://github.com/pcraig3/pc3-one-page-sections
  * Description:       Quick and Dirty Plugin Builds One (Scrolling) Page with Sections
  * Version:           0.1.0
  * Author:            Paul Craig
- * Author URI:        http://pcraig3.ca/
+ * Author URI:        http://pcraig3.ca
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       opc
+ * Text Domain:       one-page-sections
  * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/pcraig3/pc3-one-page-sections
+ * GitHub Branch:     master
  */
 
 // If this file is called directly, abort.
