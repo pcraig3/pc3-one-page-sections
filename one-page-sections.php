@@ -71,6 +71,13 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-one-page-sections.php';
 function run_one_page_sections() {
 
 	$plugin = new One_Page_Sections();
+
+	if ( class_exists( 'AdminPageFramework' ) ) {
+
+		new SectionPostType('pc3_section');
+
+	}
+
 	$plugin->run();
 
 }

@@ -119,6 +119,13 @@ class One_Page_Sections {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-one-page-sections-public.php';
 
+		/**
+		 * Include the AdminPageFramework
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/admin-page-framework.min.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/classes/SectionPostType.php';
+
 		$this->loader = new One_Page_Sections_Loader();
 
 	}

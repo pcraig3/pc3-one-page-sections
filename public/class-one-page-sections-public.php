@@ -51,7 +51,6 @@ class One_Page_Sections_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -87,7 +86,7 @@ class One_Page_Sections_Public {
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
-		 * An instance ofà this class should be passed to the run() function
+		 * An instance of this class should be passed to the run() function
 		 * defined in One_Page_Sections_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
