@@ -111,15 +111,15 @@ class PC3_SectionManagerPage_Callbacks {
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;
 
-        $aField['type']     = 'text';
+        $aField['type']         = 'text';
         $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
         $aField['sortable']     = true;
 
         $oFirst_Post = array_shift( $aPosts );
 
         //first value must be set differently from any preceding values
-        $aField['label']     = 'Post ID: ' . intval( $oFirst_Post->ID );
-        $aField['value']     = $oFirst_Post->post_title;
+        $aField['label']     = $oFirst_Post->post_title;
+        $aField['value']     = intval( $oFirst_Post->ID );
         $aField['attributes']     = array(
             'readonly'  => true
         );
@@ -163,12 +163,25 @@ class PC3_SectionManagerPage_Callbacks {
     private function _returnSectionArray( $post_title, $label ) {
 
         return array (
-            'value'           => $post_title,
-            'label'             => 'Post ID: ' . intval($label),
+            'value'           => intval($label),
+            'label'             => $post_title,
             'attributes'        => array(
                 'readonly'  => true
             )
         );
     }
+
+    /*
+     *
+     * private method ghost_function($array_gotten_after_submit)
+     *
+     * //where array looks like: callback_example] => Array ( [0] => 1902, [1] => 1903, [2] => 1904 )
+     *update_option( 'pc3_plugin_name', $array_gotten_after_submit );
+     *
+     * }
+     *
+     * And that way we can call the option back.
+     *
+     */
 
 }
