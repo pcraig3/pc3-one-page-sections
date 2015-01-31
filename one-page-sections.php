@@ -9,7 +9,6 @@
  * that starts the plugin.
  *
  * @link              http://pcraig3.ca
- * @since             0.1.0
  * @package           One_Page_Sections
  *
  * @wordpress-plugin
@@ -70,12 +69,16 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-one-page-sections.php';
  */
 function run_one_page_sections() {
 
+	//@TODO: Enable featured images.
+	//@TODO: Enable Post-Types.
+
 	$plugin = new One_Page_Sections();
 
-	if ( class_exists( 'AdminPageFramework' ) ) {
+	if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-		new SectionPostType('pc3_section');
-
+		//@var pc3_section
+		new PC3_SectionPostType('pc3_section');
+		new PC3_SectionManagerPage();
 	}
 
 	$plugin->run();

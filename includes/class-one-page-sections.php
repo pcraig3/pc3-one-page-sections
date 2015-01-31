@@ -122,9 +122,19 @@ class One_Page_Sections {
 		/**
 		 * Include the AdminPageFramework
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/admin-page-framework.min.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/pc3-admin-page-framework.min.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/classes/SectionPostType.php';
+		/**
+		 * Include directory with included classes that extend the APF
+		 * Probably not good practice -.-
+		 *
+		 * @see http://www.paulund.co.uk/php-include-files-folder
+		 */
+		foreach (glob(plugin_dir_path( dirname( __FILE__ ) ) . 'includes/classes/*.php') as $filename)
+		{
+			if( file_exists($filename))
+				require_once $filename;
+		}
 
 		$this->loader = new One_Page_Sections_Loader();
 

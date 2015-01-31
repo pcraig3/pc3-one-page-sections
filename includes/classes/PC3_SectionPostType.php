@@ -15,7 +15,7 @@
  * @subpackage One_Page_Sections/includes/classes
  */
 
-class SectionPostType extends AdminPageFramework_PostType {
+class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
 
     /**
      * Automatically called with the 'wp_loaded' hook.
@@ -51,7 +51,7 @@ class SectionPostType extends AdminPageFramework_PostType {
             'query_var'             => false,
             'menu_position'         => 9,
             'menu_icon'             => 'dashicons-align-center',
-            'supports'              => array( 'editor', 'title' ),
+            'supports'              => array( 'editor', 'title', 'thumbnail', 'post-formats' ),
             'has_archive' =>            false,
         ) );
 
