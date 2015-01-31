@@ -16,7 +16,7 @@
  * Plugin Name:       One Page Sections
  * Plugin URI:        https://github.com/pcraig3/pc3-one-page-sections
  * Description:       Quick and Dirty Plugin Builds One (Scrolling) Page with Sections
- * Version:           0.1.0
+ * Version:           0.2.0
  * Author:            Paul Craig
  * Author URI:        http://pcraig3.ca
  * License:           GPL-2.0+
@@ -66,7 +66,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-one-page-sections.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    0.1.0
+ * @since    0.2.0
  */
 function run_one_page_sections() {
 

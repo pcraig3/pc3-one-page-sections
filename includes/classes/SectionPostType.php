@@ -1,15 +1,26 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Paul
- * Date: 30/01/2015
- * Time: 17:51
+ * Register a new custom post type, Sections.
+ *
+ * For a crash course in APF, check out this link
+ * @see http://admin-page-framework.michaeluno.jp/tutorials/12-create-a-custom-post-type-and-custom-taxonomy/
+ *
+ * For acceptable parameters, check out the WordPress Codex
+ * @see http://codex.wordpress.org/Function_Reference/register_post_type
+ *
+ *
+ * @since      0.2.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/includes/classes
  */
 
 class SectionPostType extends AdminPageFramework_PostType {
 
     /**
      * Automatically called with the 'wp_loaded' hook.
+     *
+ 	 * @since    0.2.0
      */
     public function setUp() {
 
@@ -45,6 +56,26 @@ class SectionPostType extends AdminPageFramework_PostType {
         ) );
 
         $this->setArguments( $args );
+
+        /*
+         * Example code for if we wanted a new taxonomy
+         *
+         * @see http://admin-page-framework.michaeluno.jp/tutorials/12-create-a-custom-post-type-and-custom-taxonomy/
+         *
+        $this->addTaxonomy(
+            'apf_tutorial_example_taxonomy',  // taxonomy slug
+            array(                  // argument - for the argument array keys, refer to : http://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments
+                'labels'                => array(
+                    'name'          => __( 'Tutorial Taxonomy', 'admin-page-framework-tutorial' ),
+                ),
+                'show_ui'               => true,
+                'show_tagcloud'         => false,
+                'hierarchical'          => true,
+                'show_table_filter'     => true,    // framework specific key
+                'show_in_sidebar_menus' => true,    // framework specific key
+            )
+        );
+        */
     }
 
 }
