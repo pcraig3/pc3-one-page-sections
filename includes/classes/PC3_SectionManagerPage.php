@@ -66,8 +66,12 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         $this->addSettingFields(
             'my_section_1',
             array( // Submit button
-                'field_id' => 'submit_button',
-                'type' => 'submit',
+                'field_id'      => 'submit_button',
+                'type'          => 'submit',
+                'attributes'    => array(
+                    'disabled'  => 'disabled',
+                    'class'     => 'button'
+                )
             )
         );
 

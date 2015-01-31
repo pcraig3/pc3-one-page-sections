@@ -36,6 +36,11 @@ class PC3_SectionManagerPage_Callbacks {
     public $sSectionID  = 'my_section_1';
 
     /**
+     * Variable keeps track of whether or not sections were returned
+     */
+    private $bIfSections = false;
+
+    /**
      * Sets up hooks and properties.
      */
     public function __construct( $sClassName='', $sPageSlug='' ) {
@@ -76,6 +81,20 @@ class PC3_SectionManagerPage_Callbacks {
         // field_definition_{instantiated class name}_{section id}_{field_id}
         add_filter( 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example', array( $this, 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example' ) );
 
+
+        // field_definition_{instantiated class name}_{section id}_{field_id}
+        //{field_id} = submit_button
+        add_filter( 'field_definition_PC3_SectionManagerPage_my_section_1_submit_button', array( $this, 'field_definition_PC3_SectionManagerPage_my_section_1_submit_button' ) );
+    }
+
+    public function field_definition_PC3_SectionManagerPage_my_section_1_submit_button( $aField ) {
+
+        if( $this->bIfSections)
+            $aField['attributes'] = array(
+                'class' => 'button button-primary'
+            );
+
+        return $aField;
     }
 
     /*
@@ -88,6 +107,9 @@ class PC3_SectionManagerPage_Callbacks {
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
             return $aField;
+
+        //flag this as 'true'; Sections were found!
+        $this->bIfSections = true;
 
         $aField['type']     = 'text';
         $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
