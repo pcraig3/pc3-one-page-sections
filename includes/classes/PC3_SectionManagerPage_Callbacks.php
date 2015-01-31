@@ -26,12 +26,12 @@ class PC3_SectionManagerPage_Callbacks {
     /**
      * The section slug to add to the tab.
      */
-    public $sSectionID  = 'callbacks';
+    public $sSectionID  = 'my_section_1';
 
     /**
      * Sets up hooks and properties.
      */
-    public function __construct( $sClassName='', $sPageSlug='', $sTabSlug='' ) {
+    public function __construct( $sClassName='', $sPageSlug='' ) {
 
         $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
         $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
@@ -42,41 +42,9 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /**
-     * Triggered when the page is loaded.
-     */
-    public function replyToAddTab( $oAdminPage ) {
-
-        // Tab
-        $oAdminPage->addInPageTabs(
-            $this->sPageSlug, // target page slug
-            array(
-                'tab_slug'  => $this->sTabSlug,
-                'title'         => __( 'Callbacks', 'admin-page-framework-demo' ),
-            )
-        );
-
-        // load + page slug + tab slug
-        add_action( 'load_' . $this->sPageSlug . '_' . $this->sTabSlug, array( $this, 'replyToAddFormElements' ) );
-
-
-
-    }
-
-    /**
      * Triggered when the tab is loaded.
      */
-    public function replyToAddFormElements( $oAdminPage ) {
-
-        // Section
-        $oAdminPage->addSettingSections(
-            $this->sPageSlug, // the target page slug
-            array(
-                'tab_slug'          => $this->sTabSlug,
-                'section_id'        => $this->sSectionID,
-                'title'             => __( 'Using Callbacks', 'admin-page-framework-demo' ),
-                'description'       => __( 'These fields are (re)defined with callbacks.', 'admin-page-framework-demo' ),
-            )
-        );
+    public function replyToLoadPage( $oAdminPage ) {
 
         /**
          * Fields to be defined with callback methods - pass only the required keys: 'field_id', 'section_id', and the 'type'.
@@ -86,42 +54,27 @@ class PC3_SectionManagerPage_Callbacks {
             array(
                 'field_id'          => 'callback_example',
                 'type'              => 'select',
-            ),
-            array(
-                'field_id'          => 'apf_post_titles',
-                'type'              => 'checkbox',
-                'label_min_width'   => '100%',
-            ),
-            array()
+            )
         );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_APF_Demo_callbacks_callback_example', array( $this, 'field_definition_APF_Demo_callbacks_callback_example' ) );
-
-        // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_APF_Demo_callbacks_apf_post_titles', array( $this, 'field_definition_APF_Demo_callbacks_apf_post_titles' ) );
+        add_filter( 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example', array( $this, 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example' ) );
 
     }
 
     /*
      * Field callback methods - for field definitions that require heavy tasks should be defined with the callback methods.
      */
-    public function field_definition_APF_Demo_callbacks_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+    public function field_definition_PC3_SectionManagerPage_my_section_1_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aField['title']        = __( 'Post Titles', 'admin-page-framework-demo' );
-        $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'admin-page-framework-demo' ), __METHOD__ );
+        $aField['title']        = __( 'Post Titles', 'one-page-sections' );
+        $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
         $aField['label']        = $this->_getPostTitles();
         return $aField;
 
     }
-    public function field_definition_APF_Demo_callbacks_apf_post_titles( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aField['title'] = __( 'APF Custom Post Titles', 'admin-page-framework-demo' );
-        $aField['label'] = $this->_getPostTitles( AdminPageFrameworkLoader_Registry::$aPostTypes['demo'] );
-        return $aField;
-
-    }
-    private function _getPostTitles( $sPostTypeSlug='post' ) {
+    private function _getPostTitles( $sPostTypeSlug='pc3_section' ) {
 
         $_aArgs         = array(
             'post_type' => $sPostTypeSlug,

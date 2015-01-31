@@ -38,7 +38,21 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             )
         );
 
+        $this->addSettingSections(
+            'manage_sections',
+            array(
+                'section_id' => 'my_section_1',
+                'title' => 'My First Form Section',
+                'description' => 'This section is for me.',
+            )
+        );
+
+
+        new PC3_SectionManagerPage_Callbacks();
     }
+
+
+
 
     /**
      * One of the pre-defined methods which is triggered when the registered page loads.
@@ -50,18 +64,19 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
 
         $this->addSettingFields(
+            'my_section_1',
             array(    // Single text field
-                'field_id' => 'my_text_field',
-                'type' => 'text',
-                'title' => 'Text',
+                'field_id' => 'my_select_field',
+                'type' => 'select',
+                'title' => 'Select Stuff',
+                'default' => 2,
+                'label'         => array(
+                    0 =>    'Red',
+                    1 =>    'Blue',
+                    2 =>    'Yellow',
+                    3 =>    'Orange',
+                ),
                 'description' => 'Type something here.',
-            ),
-            array(    // Text Area
-                'field_id' => 'my_textarea_field',
-                'type' => 'textarea',
-                'title' => 'Single Text Area',
-                'description' => 'Type a text string here.',
-                'default' => 'Hello World! This is set as the default string.',
             ),
             array( // Submit button
                 'field_id' => 'submit_button',
@@ -81,8 +96,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
         echo '<h3>Saved Fields</h3>';
-        echo '<pre>my_text_field: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'my_text_field', 'default text value') . '</pre>';
-        echo '<pre>my_textarea_field: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'my_textarea_field', 'default text value') . '</pre>';
+        echo '<pre>my_select_field: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'my_select_field', 'default text value') . '</pre>';
 
         echo '<h3>Show all the options as an array</h3>';
         echo $this->oDebug->getArray(AdminPageFramework::getOption('PC3_SectionManagerPage'));
