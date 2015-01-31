@@ -65,19 +65,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
 
         $this->addSettingFields(
             'my_section_1',
-            array(    // Single text field
-                'field_id' => 'my_select_field',
-                'type' => 'select',
-                'title' => 'Select Stuff',
-                'default' => 2,
-                'label'         => array(
-                    0 =>    'Red',
-                    1 =>    'Blue',
-                    2 =>    'Yellow',
-                    3 =>    'Orange',
-                ),
-                'description' => 'Type something here.',
-            ),
             array( // Submit button
                 'field_id' => 'submit_button',
                 'type' => 'submit',
@@ -96,7 +83,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
         echo '<h3>Saved Fields</h3>';
-        echo '<pre>my_select_field: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'my_select_field', 'default text value') . '</pre>';
         echo '<pre>callback_example: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
 
         echo '<h3>Show all the options as an array</h3>';

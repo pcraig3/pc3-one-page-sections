@@ -55,18 +55,21 @@ class PC3_SectionManagerPage_Callbacks {
 
         /**
          * Fields to be defined with callback methods - pass only the required keys: 'field_id', 'section_id', and the 'type'.
+         *
+         * Create a hidden field with an announcement that no Sections were found.
+         * If Sections are found, then this gets overridden
          */
         $oAdminPage->addSettingFields(
             $this->sSectionID,  // target section id
             array(
                 'field_id'          => 'callback_example',
-                'type'              => 'text',
-                'default'           => 'FAKE ENTRY',
-                'label'             => 1 . ' :',
-                'sortable'          =>    true,
-                'attributes'        => array(
-                    'disabled'  => 'disabled',
-                ),
+                'title'             => __( 'Section Titles', 'one-page-sections' ),
+                'type'              => 'hidden',
+                'default'           => '',
+                // 'hidden' =>    true // <-- the field row can be hidden with this option.
+                'label'             =>
+                    __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
+                'description'       => __( 'Maybe try <a href="http://pcraig3.dev/web/wp/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
             )
         );
 
@@ -80,51 +83,70 @@ class PC3_SectionManagerPage_Callbacks {
      */
     public function field_definition_PC3_SectionManagerPage_my_section_1_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aField['title']        = __( 'Section Titles', 'one-page-sections' );
+        $aPosts = $this->_getPosts( 'pc3_section' );
+
+        //return unmodified field if no sections were found
+        if( empty( $aPosts ) )
+            return $aField;
+
+        $aField['type']     = 'text';
         $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
+        $aField['sortable']     = true;
 
-        $secs_array = $this->_getPostTitles();
-        foreach($secs_array as $sec) {
+        $oFirst_Post = array_shift( $aPosts );
 
-            array_push($aField, $sec);
+        //first value must be set differently from any preceding values
+        $aField['label']     = 'Post ID: ' . intval( $oFirst_Post->ID );
+        $aField['value']     = $oFirst_Post->post_title;
+        $aField['attributes']     = array(
+            'readonly'  => true
+        );
+
+        //stop here if only one section was found
+        if( empty( $aPosts ) )
+            return $aField;
+
+        $aFormattedPosts = $this->_formatPostsForField( $aPosts );
+
+        foreach( $aFormattedPosts as $aPost ) {
+
+            array_push( $aField, $aPost );
         }
 
-        //$aField        = $this->_getPostTitles();
         return $aField;
-
     }
 
 
-    private function _getPostTitles( $sPostTypeSlug='pc3_section' ) {
+    private function _getPosts( $sPostTypeSlug='pc3_section' ) {
 
         $_aArgs         = array(
             'post_type' => $sPostTypeSlug,
         );
         $_oResults      = new WP_Query( $_aArgs );
 
+        return $_oResults->posts;
+    }
+
+    private function _formatPostsForField( $oPosts ) {
+
         $_aSectionTextFields = array();
 
-        foreach( $_oResults->posts as $_iIndex => $_oPost ) {
+        foreach( $oPosts as $_iIndex => $_oPost ) {
             array_push($_aSectionTextFields, $this->_returnSectionArray($_oPost->post_title, $_oPost->ID));
         }
-        return $_aSectionTextFields;
 
+        return $_aSectionTextFields;
     }
 
     private function _returnSectionArray( $post_title, $label ) {
 
         return array (
-
             'value'           => $post_title,
             'label'             => 'Post ID: ' . intval($label),
             'attributes'        => array(
-                'readonly'  => true,
-                'disabled'  => false,
+                'readonly'  => true
             )
         );
-
-
     }
-
 
 }
