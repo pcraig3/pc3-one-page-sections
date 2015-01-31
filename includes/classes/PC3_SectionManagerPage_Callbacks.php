@@ -8,6 +8,13 @@
 
 class PC3_SectionManagerPage_Callbacks {
 
+    /*
+     * @TODO: Order of sections isn't preserved because of the dynamic callback thing.
+     * THUS, we need some metadata keeping track of the order of the fields?
+     * Maybe a hidden field that has a "{position}:{id}" storage?
+     *
+     */
+
     /**
      * Stores the caller class name, set in the constructor.
      */
@@ -56,12 +63,10 @@ class PC3_SectionManagerPage_Callbacks {
                 'type'              => 'text',
                 'default'           => 'FAKE ENTRY',
                 'label'             => 1 . ' :',
+                'sortable'          =>    true,
                 'attributes'        => array(
-                    'size' => 20,
-                    'readonly'  => false,
+                    'disabled'  => 'disabled',
                 ),
-
-                //'delimiter'         => '<br />',
             )
         );
 
@@ -71,75 +76,12 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /*
-     *
-     * array( // Multiple text fields
-                'field_id'          => 'text_multiple',
-                'title'             => __( 'Multiple', 'admin-page-framework-demo' ),
-                'help'              => __( 'Multiple text fields can be set by passing an array to the <code>label</code> argument.', 'admin-page-framework-demo' ),
-                'type'              => 'text',
-                'default'           => __( 'Hello world!', 'admin-page-framework-demo' ),
-                'label'             => __( 'First', 'admin-page-framework-demo' ) . ': ',
-                'attributes'        => array(
-                    'size' => 20,
-                ),
-                'capability'        => 'manage_options',
-                'delimiter'         => '<br />',
-                array(
-                    'default'       => 'Foo bar',
-                    'label'         => __( 'Second', 'admin-page-framework-demo' ) . ': ',
-                    'attributes'    => array(
-                        'size' => 40,
-                    )
-                ),
-                array(
-                    'default'       => __( 'Yes, we can', 'admin-page-framework-demo' ),
-                    'label'         => __( 'Third', 'admin-page-framework-demo' ) . ': ',
-                    'attributes'    => array(
-                        'size' => 60,
-                    )
-                ),
-                'description'       => __( 'These are multiple text fields. To include multiple input fields associated with one field ID, use the numeric keys in the field definition array.', 'admin-page-framework-demo' ),
-            ),
-     *
-     *
-     *
-     */
-
-    /*
      * Field callback methods - for field definitions that require heavy tasks should be defined with the callback methods.
      */
     public function field_definition_PC3_SectionManagerPage_my_section_1_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
         $aField['title']        = __( 'Section Titles', 'one-page-sections' );
         $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
-
-
-        $secs_array = array(
-            array(
-                'default'       => 'Bottom',
-                'label'         => 1904,
-                'attributes'    => array(
-                    'size'      => 25,
-                    'readonly'  => true
-                )
-            ),
-            array(
-                'default'       => 'Middle',
-                'label'         => 1903,
-                'attributes'    => array(
-                    'size'      => 30,
-                    'readonly'  => true
-                )
-            ),
-            array(
-                'default'       => 'Top',
-                'label'         => 1902,
-                'attributes'    => array(
-                    'size'      => 35,
-                    'readonly'  => true
-                )
-            )
-        );
 
         $secs_array = $this->_getPostTitles();
         foreach($secs_array as $sec) {
@@ -152,6 +94,7 @@ class PC3_SectionManagerPage_Callbacks {
 
     }
 
+
     private function _getPostTitles( $sPostTypeSlug='pc3_section' ) {
 
         $_aArgs         = array(
@@ -160,25 +103,23 @@ class PC3_SectionManagerPage_Callbacks {
         $_oResults      = new WP_Query( $_aArgs );
 
         $_aSectionTextFields = array();
-        $size = 20;
 
         foreach( $_oResults->posts as $_iIndex => $_oPost ) {
-            $size +=10;
-            array_push($_aSectionTextFields, $this->_returnSectionArray($_oPost->post_title, $_oPost->ID, $size));
+            array_push($_aSectionTextFields, $this->_returnSectionArray($_oPost->post_title, $_oPost->ID));
         }
         return $_aSectionTextFields;
 
     }
 
-    private function _returnSectionArray( $post_title, $label, $size ) {
+    private function _returnSectionArray( $post_title, $label ) {
 
         return array (
 
-            'default'           => $post_title,
-            'label'             => intval($label) . ' :',
+            'value'           => $post_title,
+            'label'             => 'Post ID: ' . intval($label),
             'attributes'        => array(
-                'size' => intval($size),
-                'readonly'  => true
+                'readonly'  => true,
+                'disabled'  => false,
             )
         );
 
