@@ -38,6 +38,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             )
         );
 
+        /*
         $this->addSettingSections(
             'manage_sections',
             array(
@@ -46,7 +47,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                 'description' => 'This section is for me.',
             )
         );
-
+        */
 
         new PC3_SectionManagerPage_Callbacks();
     }
@@ -64,7 +65,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
 
         $this->addSettingFields(
-            'my_section_1',
             array( // Submit button
                 'field_id'      => 'submit_button',
                 'type'          => 'submit',
@@ -87,7 +87,13 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
         echo '<h3>Saved Fields</h3>';
-        echo '<pre>callback_example: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
+        //echo '<pre>callback_example: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
+        echo '<pre>Whole thing: ';
+        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage'));
+        var_dump(AdminPageFramework::getOption('PC4_SectionManagerPage'));
+        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example'));
+        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_examples'));
+        echo '</pre>';
 
         echo '<h3>Show all the options as an array</h3>';
         echo $this->oDebug->getArray(AdminPageFramework::getOption('PC3_SectionManagerPage'));

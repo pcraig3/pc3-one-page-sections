@@ -29,7 +29,7 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * The section slug to add to the tab.
-     */
+     *
     public $sSectionID  = 'my_section_1';
 
     /**
@@ -62,7 +62,6 @@ class PC3_SectionManagerPage_Callbacks {
          * If Sections are found, then this gets overridden
          */
         $oAdminPage->addSettingFields(
-            $this->sSectionID,  // target section id
             array(
                 'field_id'          => 'callback_example',
                 'title'             => __( 'Section Titles', 'one-page-sections' ),
@@ -76,12 +75,12 @@ class PC3_SectionManagerPage_Callbacks {
         );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example', array( $this, 'field_definition_PC3_SectionManagerPage_my_section_1_callback_example' ) );
+        add_filter( 'field_definition_PC3_SectionManagerPage_callback_example', array( $this, 'field_definition_PC3_SectionManagerPage_callback_example' ) );
 
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         //{field_id} = submit_button
-        add_filter( 'field_definition_PC3_SectionManagerPage_my_section_1_submit_button', array( $this, 'field_definition_PC3_SectionManagerPage_my_section_1_submit_button' ) );
+        add_filter( 'field_definition_PC3_SectionManagerPage_submit_button', array( $this, 'field_definition_PC3_SectionManagerPage_submit_button' ) );
     }
 
     /**
@@ -93,7 +92,7 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_my_section_1_submit_button( $aField ) {
+    public function field_definition_PC3_SectionManagerPage_submit_button( $aField ) {
 
         if( $this->bIfSections)
             $aField['attributes'] = array(
@@ -112,13 +111,17 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'callback_example'
      * @return array array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_my_section_1_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+    public function field_definition_PC3_SectionManagerPage_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
         $aPosts = $this->_getPosts( 'pc3_section' );
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
             return $aField;
+
+        //their sorted order is saved by the AdminPageFramework, but WordPress by default returns most recent Posts first
+        //this function reorganises the returned array of Posts
+        $aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts );
 
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;
@@ -150,6 +153,7 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * Function returns posts based on slug.  n our case, we're planning on returning Sections.
+     * ~Maybe should be somewhere else
      *
      * @param string $sPostTypeSlug
      * @return mixed
@@ -165,17 +169,66 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /**
+     * Function returns posts based on slug.  n our case, we're planning on returning Sections.
+     * ~Maybe should be somewhere else
+     *
+     */
+    private function _reorderPostsBasedOnSortedOptions( $_aPosts, $_sClassName = 'PC3_SectionManagerPage' , $_sFieldID = 'callback_example' ) {
+
+        /*
+         * Saved sections are returned as an indexed array filled with Post IDs.  Ex:
+         *
+         * array(3) {
+              [0]=>
+              string(4) "1902"
+              [1]=>
+              string(4) "1903"
+              [2]=>
+              string(4) "1904"
+            }
+         *
+         */
+        $_aSavedSectionIds = AdminPageFramework::getOption( $_sClassName, $_sFieldID );
+
+        //if no posts are returned, or no saved options are found, then return immediately
+        if( empty( $_aPosts ) || empty( $_aSavedSectionIds ) )
+            return $_aPosts;
+
+        $aPostsReordered = array();
+
+        foreach( $_aSavedSectionIds as $_sSectionId ) {
+
+            foreach( $_aPosts as $_iIndex => $_oPost ) {
+
+                if( intval( $_sSectionId ) === intval( $_oPost->ID ) ) {
+
+                    //if the value in the saved array of sectionIds matched the current post id,
+                    //push into reordered array and remove from old array
+                    array_push( $aPostsReordered, $_oPost );
+                    unset( $_aPosts[$_iIndex] );
+                }
+            }
+        }
+
+        //all remaining posts are stuck to the end of the reordered array
+        while( ! empty( $_aPosts ) )
+            array_push( $aPostsReordered, array_shift( $_aPosts ) );
+
+        return $aPostsReordered;
+    }
+
+    /**
      * Iterate through Post objects, turning each into an array that an APF Field will understand
      * Return all arrays in another array.
      *
-     * @param $oPosts object    WordPress Post objects
+     * @param $aPosts array     array of WordPress Post objects
      * @return array            an array of WordPress Post arrays
      */
-    private function _formatPostsForField( $oPosts ) {
+    private function _formatPostsForField( $aPosts ) {
 
         $_aSectionTextFields = array();
 
-        foreach( $oPosts as $_iIndex => $_oPost ) {
+        foreach( $aPosts as $_iIndex => $_oPost ) {
             array_push($_aSectionTextFields, $this->_returnSectionArray($_oPost->post_title, $_oPost->ID));
         }
 
@@ -199,18 +252,4 @@ class PC3_SectionManagerPage_Callbacks {
             )
         );
     }
-
-    /*
-     *
-     * private method ghost_function($array_gotten_after_submit)
-     *
-     * //where array looks like: callback_example] => Array ( [0] => 1902, [1] => 1903, [2] => 1904 )
-     *update_option( 'pc3_plugin_name', $array_gotten_after_submit );
-     *
-     * }
-     *
-     * And that way we can call the option back.
-     *
-     */
-
 }
