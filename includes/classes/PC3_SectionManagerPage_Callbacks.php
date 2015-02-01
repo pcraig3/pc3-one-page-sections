@@ -10,7 +10,7 @@
  * If no sections are found, form displays error message and alerts users that they need to create sections
  * If no options are found, sections are listed in order of most recent.
  *
- * @since      0.1.0
+ * @since      0.3.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/includes
  * @author     Paul Craig <paul@pcraig3.ca>
@@ -44,6 +44,8 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * Sets up hooks and properties.
+     *
+     * @since      0.3.0
      */
     public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='' ) {
 
@@ -59,6 +61,8 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * Triggered when the tab is loaded.
+     *
+     * @since      0.3.0
      */
     public function replyToLoadPage( $oAdminPage ) {
 
@@ -79,6 +83,7 @@ class PC3_SectionManagerPage_Callbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
+     * @since      0.3.0
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
@@ -145,6 +150,8 @@ class PC3_SectionManagerPage_Callbacks {
      * Function returns posts based on slug.  n our case, we're planning on returning Sections.
      * ~Maybe should be somewhere else
      *
+     * @since      0.3.0
+     *
      * @param string $sPostTypeSlug
      * @return mixed
      */
@@ -161,6 +168,8 @@ class PC3_SectionManagerPage_Callbacks {
     /**
      * Function takes an array of posts and reorders them based on options saved by the Admin Page Framework
      * ~Maybe should be somewhere else
+     *
+     * @since      0.3.0
      *
      * @param $_aPosts array        array of Posts
      * @param string $_sClassName   Class generating the page on which our fields are being inserted
@@ -215,6 +224,8 @@ class PC3_SectionManagerPage_Callbacks {
      * Iterate through Post objects, turning each into an array that an APF Field will understand
      * Return all arrays in another array.
      *
+     * @since      0.3.0
+     *
      * @param $aPosts array     array of WordPress Post objects
      * @return array            an array of WordPress Post arrays
      */
@@ -231,6 +242,8 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * Returns an array that an APF Field will understand
+     *
+     * @since      0.3.0
      *
      * @param $post_title string    the title of a post
      * @param $label int            the id of a post

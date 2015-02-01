@@ -13,6 +13,8 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      * The set-up method which is triggered automatically with the 'wp_loaded' hook.
      *
      * Here we define the setup() method to set how many pages, page titles and icons etc.
+     *
+     * @since      0.3.0
      */
     public function setUp()
     {
@@ -38,17 +40,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             )
         );
 
-        /*
-        $this->addSettingSections(
-            'manage_sections',
-            array(
-                'section_id' => 'my_section_1',
-                'title' => 'My First Form Section',
-                'description' => 'This section is for me.',
-            )
-        );
-        */
-
         new PC3_SectionManagerPage_Callbacks(
             'PC3_SectionManagerPage',
             'manage_sections',
@@ -57,14 +48,13 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         );
     }
 
-
-
-
     /**
      * One of the pre-defined methods which is triggered when the registered page loads.
      * ie, load_{page slug}
      *
      * Here we add form fields.
+     *
+     * @since      0.3.0
      */
     public function load_manage_sections($oAdminPage)
     {
@@ -95,6 +85,8 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      * One of the pre-defined methods which is triggered when the page contents is going to be rendered.
      *
      * ie, do_{page slug}
+     *
+     * @since      0.3.0
      */
     public function do_manage_sections()
     {
@@ -108,7 +100,5 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
 
         echo '<h3>Show all the options as an array</h3>';
         echo $this->oDebug->getArray(AdminPageFramework::getOption('PC3_SectionManagerPage'));
-
-
     }
 }
