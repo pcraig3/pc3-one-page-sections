@@ -1,21 +1,21 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: Paul
- * Date: 30/01/2015
- * Time: 21:31
+ * The file that handles the logic that populates the Section Manager Page.
+ *
+ * Sections are called from the WordPress database, and their titles used to populate Sortable Objects.
+ * Users can re-arrange the sortable objects comme ils veulent, the idea being that the sections will
+ * all show up on one page ~somewhere and in the order specified.
+ *
+ * If no sections are found, form displays error message and alerts users that they need to create sections
+ * If no options are found, sections are listed in order of most recent.
+ *
+ * @since      0.1.0
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/includes
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
-
 class PC3_SectionManagerPage_Callbacks {
-
-    /*
-     * @TODO: Order of sections isn't preserved because of the dynamic callback thing.
-     * @TODO: Comments
-     * @TODO: Less hard-coding
-     * THUS, we need some metadata keeping track of the order of the fields?
-     * Maybe a hidden field that has a "{position}:{id}" storage?
-     *
-     */
 
     /**
      * Stores the caller class name, set in the constructor.
@@ -28,9 +28,14 @@ class PC3_SectionManagerPage_Callbacks {
     public $sPageSlug   = 'manage_sections';
 
     /**
-     * The section slug to add to the tab.
-     *
-    public $sSectionID  = 'my_section_1';
+     * @var string Field id for the sortable sections in our form
+     */
+    public $sSortableFieldId = 'manage_sections__sections';
+
+    /**
+     * @var string Field id for the submit button in our form
+     */
+    public $sSubmitFieldId = 'manage_sections__submit';
 
     /**
      * Variable keeps track of whether or not sections were returned
@@ -40,10 +45,12 @@ class PC3_SectionManagerPage_Callbacks {
     /**
      * Sets up hooks and properties.
      */
-    public function __construct( $sClassName='', $sPageSlug='' ) {
+    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='' ) {
 
         $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
         $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
+        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
 
         // load_ + page slug
         add_action( 'load_' . $this->sPageSlug, array( $this, 'replyToLoadPage' ) );
@@ -55,32 +62,15 @@ class PC3_SectionManagerPage_Callbacks {
      */
     public function replyToLoadPage( $oAdminPage ) {
 
-        /**
-         * Fields to be defined with callback methods - pass only the required keys: 'field_id', 'section_id', and the 'type'.
-         *
-         * Create a hidden field with an announcement that no Sections were found.
-         * If Sections are found, then this gets overridden
-         */
-        $oAdminPage->addSettingFields(
-            array(
-                'field_id'          => 'callback_example',
-                'title'             => __( 'Section Titles', 'one-page-sections' ),
-                'type'              => 'hidden',
-                'default'           => '',
-                // 'hidden' =>    true // <-- the field row can be hidden with this option.
-                'label'             =>
-                    __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
-                'description'       => __( 'Maybe try <a href="http://pcraig3.dev/web/wp/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
-            )
-        );
-
         // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_PC3_SectionManagerPage_callback_example', array( $this, 'field_definition_PC3_SectionManagerPage_callback_example' ) );
+        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId,
+            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId ) );
 
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         //{field_id} = submit_button
-        add_filter( 'field_definition_PC3_SectionManagerPage_submit_button', array( $this, 'field_definition_PC3_SectionManagerPage_submit_button' ) );
+        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSubmitFieldId,
+            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSubmitFieldId ) );
     }
 
     /**
@@ -92,7 +82,7 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_submit_button( $aField ) {
+    public function field_definition_PC3_SectionManagerPage_manage_sections__submit( $aField ) {
 
         if( $this->bIfSections)
             $aField['attributes'] = array(
@@ -111,7 +101,7 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'callback_example'
      * @return array array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_callback_example( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+    public function field_definition_PC3_SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
         $aPosts = $this->_getPosts( 'pc3_section' );
 
@@ -121,7 +111,7 @@ class PC3_SectionManagerPage_Callbacks {
 
         //their sorted order is saved by the AdminPageFramework, but WordPress by default returns most recent Posts first
         //this function reorganises the returned array of Posts
-        $aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts );
+        $aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts, $this->sClassName, $this->sSortableFieldId );
 
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;
@@ -169,11 +159,15 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /**
-     * Function returns posts based on slug.  n our case, we're planning on returning Sections.
+     * Function takes an array of posts and reorders them based on options saved by the Admin Page Framework
      * ~Maybe should be somewhere else
      *
+     * @param $_aPosts array        array of Posts
+     * @param string $_sClassName   Class generating the page on which our fields are being inserted
+     * @param string $_sFieldID     Field ID for the sortable fields
+     * @return array                re-ordered array of Posts
      */
-    private function _reorderPostsBasedOnSortedOptions( $_aPosts, $_sClassName = 'PC3_SectionManagerPage' , $_sFieldID = 'callback_example' ) {
+    private function _reorderPostsBasedOnSortedOptions( $_aPosts, $_sClassName = 'PC3_SectionManagerPage' , $_sFieldID = 'manage_sections__sections' ) {
 
         /*
          * Saved sections are returned as an indexed array filled with Post IDs.  Ex:

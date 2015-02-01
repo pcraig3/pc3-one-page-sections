@@ -49,7 +49,12 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         );
         */
 
-        new PC3_SectionManagerPage_Callbacks();
+        new PC3_SectionManagerPage_Callbacks(
+            'PC3_SectionManagerPage',
+            'manage_sections',
+            'manage_sections__sections',
+            'manage_sections__submit'
+        );
     }
 
 
@@ -65,8 +70,18 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
 
         $this->addSettingFields(
+            array(
+                'field_id'          => 'manage_sections__sections',
+                'title'             => __( 'Section Titles', 'one-page-sections' ),
+                'type'              => 'hidden',
+                'default'           => '',
+                // 'hidden' =>    true // <-- the field row can be hidden with this option.
+                'label'             =>
+                    __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
+                'description'       => __( 'Maybe try <a href="http://pcraig3.dev/web/wp/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
+            ),
             array( // Submit button
-                'field_id'      => 'submit_button',
+                'field_id'      => 'manage_sections__submit',
                 'type'          => 'submit',
                 'attributes'    => array(
                     'disabled'  => 'disabled',
@@ -74,7 +89,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                 )
             )
         );
-
     }
 
     /**
@@ -90,9 +104,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         //echo '<pre>callback_example: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
         echo '<pre>Whole thing: ';
         var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage'));
-        var_dump(AdminPageFramework::getOption('PC4_SectionManagerPage'));
-        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example'));
-        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_examples'));
         echo '</pre>';
 
         echo '<h3>Show all the options as an array</h3>';
