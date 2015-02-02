@@ -11,7 +11,7 @@ get_header(); ?>
     <div id="content" class="site-content" role="main">
 
         <?php
-        // Start the loop.
+            // Start the loop.
         while ( have_posts() ) : the_post();
         ?>
 
@@ -22,7 +22,19 @@ get_header(); ?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
-                <?php the_content(); ?>
+                <?php
+
+                $args = array( 'posts_per_page' => -1, 'offset'=> 0, 'post_type' => 'pc3_section' );
+
+                $myposts = get_posts( $args );
+                foreach ( $myposts as $post ) : setup_postdata( $post );
+
+                    include( do_shortcode('[pc3_locate_template]') );
+
+                endforeach;
+                wp_reset_postdata();?>
+
+
             </div>
         </article>
 

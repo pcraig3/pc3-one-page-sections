@@ -41,6 +41,15 @@ class One_Page_Sections_Public {
 	private $version;
 
 	/**
+	 * The template directory for this plugin
+	 *
+	 * @since    0.3.0
+	 * @access   private
+	 * @var      string    $local_template_directory    The template directory for this plugin
+	 */
+	private $local_template_directory;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.1.0
@@ -51,6 +60,10 @@ class One_Page_Sections_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+
+		$this->local_template_directory = trailingslashit( dirname( __DIR__ ) ) . 'templates/';
+
+		add_shortcode( 'pc3_locate_template', array( $this, 'shortcode_function') );
 	}
 
 	/**
@@ -149,15 +162,10 @@ class One_Page_Sections_Public {
 	 * @return string Absolute path to template
 	 */
 	public function set_pc3_section_template( $template ) {
-		//If WordPress couldn't find a 'usc_jobs' archive template use plug-in instead:
 
-		//@TODO: make this a real variable
-		//@TODO: Name it better
-		$pc3_template_dir = trailingslashit( dirname( __DIR__ ) ) . 'templates/';
-
+		//@TODO: (ahem.) If WordPress can't find a 'usc_jobs' archive template use plug-in instead:
 		if( is_page( 'one-page-sections' ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
-			//@TODO: remove 4th parameter
-			$template = $this->_usc_jobs_locate_template('page-pc3_section.php', false, true, $pc3_template_dir );
+			$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
 
 		return $template;
 	}
@@ -183,22 +191,19 @@ class One_Page_Sections_Public {
 	 * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
 	 * @return string The template filename if one is located.
 	 */
-	private function _usc_jobs_locate_template($template_names, $load = false, $require_once = true, $local_template_dir = '') {
+	private function _pc3_locate_template($template_names, $load = false, $require_once = true) {
 		$located = '';
-		$local_template_dir = empty( $local_template_dir ) ? plugin_dir_url( __DIR__ ) . 'templates' : $local_template_dir;
 
 		$template_dir = get_stylesheet_directory(); //child theme
 		$parent_template_dir = get_template_directory(); //parent theme
 		$stack = apply_filters( 'pc3_section_template_stack', array( $template_dir, $parent_template_dir,
-		$local_template_dir ) );
+		$this->local_template_directory ) );
 
 		foreach ( (array) $template_names as $template_name ) {
 			if ( !$template_name )
 				continue;
 			foreach ( $stack as $template_stack ){
 
-				var_dump('name: ' . $template_name .' // stack: ' . $template_stack);
-				var_dump( file_exists( trailingslashit( $template_stack ) . $template_name ) );
 				echo '<br>';
 
 				if ( file_exists( trailingslashit( $template_stack ) . $template_name ) ) {
@@ -211,6 +216,11 @@ class One_Page_Sections_Public {
 			load_template( $located, $require_once );
 
 		return $located;
+	}
+
+	public function shortcode_function() {
+
+		return $this->_pc3_locate_template('post-pc3_section.php', false, true );
 	}
 
 }
