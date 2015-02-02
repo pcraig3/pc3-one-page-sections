@@ -136,6 +136,11 @@ class One_Page_Sections {
 				require_once $filename;
 		}
 
+		/**
+		 * Include Composer's vendors
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+
 		$this->loader = new One_Page_Sections_Loader();
 
 	}

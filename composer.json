@@ -1,5 +1,13 @@
+
 {
-  "require"    : {
-    "gamajo/template-loader": "~1.0"
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/GaryJones/Gamajo-Template-Loader"
+    }
+  ],
+  "require":
+  {
+    "gamajo/template-loader" : "dev-develop"
   }
 }
