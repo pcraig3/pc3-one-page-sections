@@ -49,6 +49,8 @@ class One_Page_Sections_Public {
 	 */
 	private $local_template_directory;
 
+	private $template_loader;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -61,9 +63,13 @@ class One_Page_Sections_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		$this->template_loader = new PC3_TemplateLoader();
+
 		$this->local_template_directory = trailingslashit( dirname( __DIR__ ) ) . 'templates/';
 
 		add_shortcode( 'pc3_locate_template', array( $this, 'shortcode_function') );
+
+
 	}
 
 	/**
@@ -170,7 +176,14 @@ class One_Page_Sections_Public {
 		return $template;
 	}
 
-	/**
+	//public function pc3_locate_template( $template_names, $load = false, $require_once = true )
+	public function test_pc3_locate_template( $template_names, $load = false, $require_once = true ) {
+
+		return $this->template_loader->locate_template( $template_names, $load = false, $require_once = true );
+	}
+
+
+		/**
 	 * Retrieve the name of the highest priority template file that exists.
 	 *
 	 *

@@ -32,6 +32,17 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
+ * Path directory path.
+ *
+ * @since 0.3.0
+ * @type string ONE_PAGE_SECTIONS_DIR
+ */
+if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
+
+	define( 'ONE_PAGE_SECTIONS_DIR', plugin_dir_path( __FILE__ ) );
+}
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-one-page-sections-activator.php
  */
