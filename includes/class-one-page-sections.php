@@ -188,6 +188,10 @@ class One_Page_Sections {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
+
+		//add_filter( 'template_include', array( $this, 'usc_jobs_set_template' ) ) ;
+
 	}
 
 	/**
