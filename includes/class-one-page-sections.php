@@ -136,11 +136,6 @@ class One_Page_Sections {
 				require_once $filename;
 		}
 
-		/**
-		 * Include Composer's vendors
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
-
 		$this->loader = new One_Page_Sections_Loader();
 
 	}
@@ -193,7 +188,7 @@ class One_Page_Sections {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_filter( 'template_include', $plugin_public, 'test_pc3_locate_template' );
+		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
 
 		//add_filter( 'template_include', array( $this, 'usc_jobs_set_template' ) ) ;
 

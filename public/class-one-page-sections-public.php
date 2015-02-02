@@ -67,9 +67,7 @@ class One_Page_Sections_Public {
 
 		$this->local_template_directory = trailingslashit( dirname( __DIR__ ) ) . 'templates/';
 
-		add_shortcode( 'pc3_locate_template', array( $this, 'shortcode_function') );
-
-
+		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
 	}
 
 	/**
@@ -171,69 +169,16 @@ class One_Page_Sections_Public {
 
 		//@TODO: (ahem.) If WordPress can't find a 'usc_jobs' archive template use plug-in instead:
 		if( is_page( 'one-page-sections' ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
-			$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
+			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
+			$template = $this->template_loader->locate_template( 'page-pc3_section.php', false, true );
 
 		return $template;
 	}
 
-	//public function pc3_locate_template( $template_names, $load = false, $require_once = true )
-	public function test_pc3_locate_template( $template_names, $load = false, $require_once = true ) {
+	public function pc3_locate_template() {
 
-		return $this->template_loader->locate_template( $template_names, $load = false, $require_once = true );
-	}
-
-
-		/**
-	 * Retrieve the name of the highest priority template file that exists.
-	 *
-	 *
-	 * @TODO: Everything hereafter is junk and I'll get to it.
-	 *
-	 * Searches the child theme first, then the parent theme before checking the plug-in templates folder.
-	 * So parent themes can override the default plug-in templates, and child themes can over-ride both.
-	 *
-	 * Behaves almost identically to {@see locate_template()}
-	 *
-	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L38
-	 * @author  Stephen Harris
-	 *
-	 * @since 0.3.0
-	 *
-	 * @param string|array $template_names Template file(s) to search for, in order.
-	 * @param bool $load If true the template file will be loaded if it is found.
-	 * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
-	 * @return string The template filename if one is located.
-	 */
-	private function _pc3_locate_template($template_names, $load = false, $require_once = true) {
-		$located = '';
-
-		$template_dir = get_stylesheet_directory(); //child theme
-		$parent_template_dir = get_template_directory(); //parent theme
-		$stack = apply_filters( 'pc3_section_template_stack', array( $template_dir, $parent_template_dir,
-		$this->local_template_directory ) );
-
-		foreach ( (array) $template_names as $template_name ) {
-			if ( !$template_name )
-				continue;
-			foreach ( $stack as $template_stack ){
-
-				echo '<br>';
-
-				if ( file_exists( trailingslashit( $template_stack ) . $template_name ) ) {
-					$located = trailingslashit( $template_stack ) . $template_name;
-					break;
-				}
-			}
-		}
-		if ( $load && '' !== $located )
-			load_template( $located, $require_once );
-
-		return $located;
-	}
-
-	public function shortcode_function() {
-
-		return $this->_pc3_locate_template('post-pc3_section.php', false, true );
+		return $this->template_loader->locate_template( 'post-pc3_section.php', true, false );
+		//return $this->_pc3_locate_template('post-pc3_section.php', false, true );
 	}
 
 }

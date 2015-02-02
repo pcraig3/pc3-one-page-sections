@@ -43,6 +43,11 @@ if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
 }
 
 /**
+ * Include Composer's vendors
+ */
+require_once ONE_PAGE_SECTIONS_DIR . 'vendor/autoload.php';
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-one-page-sections-activator.php
  */
@@ -82,7 +87,6 @@ function run_one_page_sections() {
 
 	$plugin = new One_Page_Sections();
 
-	//@TODO: Move these out of here.
 	if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
 		//@var pc3_section

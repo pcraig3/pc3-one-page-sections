@@ -24,12 +24,12 @@ get_header(); ?>
             <div class="entry-content">
                 <?php
 
-                $args = array( 'posts_per_page' => -1, 'offset'=> 0, 'post_type' => 'pc3_section' );
+                $args = array( 'posts_per_page' => -1, 'post_type' => 'pc3_section' );
 
                 $myposts = get_posts( $args );
                 foreach ( $myposts as $post ) : setup_postdata( $post );
 
-                    include( do_shortcode('[pc3_locate_template]') );
+                    do_shortcode('[pc3_locate_template]');
 
                 endforeach;
                 wp_reset_postdata();?>
