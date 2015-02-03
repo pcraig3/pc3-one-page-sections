@@ -71,7 +71,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.1.0
+	 * @since    0.5.0
 	 */
 	public function enqueue_styles() {
 
@@ -107,7 +107,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.1.0
+	 * @since    0.5.0
 	 */
 	public function enqueue_scripts() {
 

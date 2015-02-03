@@ -35,6 +35,12 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+#### 0.5.0
+* Unhid the vendor directory so that we can plug and play this thing.
+* Embedded YouTube videos work without too much finagling.
+* Added [page-scroll-to-id](https://github.com/malihu/page-scroll-to-id) with [Bower](http://bower.io/) for some smooth scrolling goodness.
+* Set up the [Pure Marketing Layout](http://purecss.io/layouts/marketing/) as a proof of concept
+
 #### 0.4.0
 * One Page Sections page has template overridden: all sections listed at once.
 * Using [Gamajo_Template_Loader](https://github.com/GaryJones/Gamajo-Template-Loader) to handle template overrides

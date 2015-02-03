@@ -1,3 +1,12 @@
+/**
+ * @TODO
+ *
+ * @since      0.5.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/templates
+ */
+
 (function( $ ) {
     'use strict';
 

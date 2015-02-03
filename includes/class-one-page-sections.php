@@ -64,12 +64,12 @@ class One_Page_Sections {
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
-	 * @since    0.4.0
+	 * @since    0.5.0
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'one-page-sections';
-		$this->version = '0.4.0';
+		$this->version = '0.5.0';
 
 		$this->load_dependencies();
 		$this->set_locale();

@@ -15,7 +15,7 @@
  * Plugin Name:       One Page Sections
  * Plugin URI:        https://github.com/pcraig3/pc3-one-page-sections
  * Description:       Quick and Dirty Plugin Builds One (Scrolling) Page with Sections
- * Version:           0.4.0
+ * Version:           0.5.0
  * Author:            Paul Craig
  * Author URI:        http://pcraig3.ca
  * License:           GPL-2.0+
