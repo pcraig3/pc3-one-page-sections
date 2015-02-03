@@ -4,4 +4,5 @@
 *.idea/
 
 #composer's vendor directory
-vendor
+#on second thought, we have to include this directory, else normal people can't use the plugin off the shelf
+#vendor
