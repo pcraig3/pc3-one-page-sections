@@ -25,7 +25,7 @@
  * @since      0.1.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/includes
- * @author     Your Name <email@example.com>
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
 class One_Page_Sections {
 

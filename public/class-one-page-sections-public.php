@@ -86,9 +86,22 @@ class One_Page_Sections_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/one-page-sections-public.css', array(), $this->version, 'all' );
 
+		//@TODO: Terrible code
+		if( is_page( 'one-page-sections' ) ) {
+
+			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
+			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array(), $this->version, 'all');
+			wp_enqueue_style('pure-grids-responsive-old-ie', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive-old-ie.css', array(), $this->version, 'all');
+
+			wp_enqueue_style('marketing', plugin_dir_url(__FILE__) . 'css/marketing.css', array(), $this->version, 'all');
+			wp_enqueue_style('marketing-old-ie', plugin_dir_url(__FILE__) . 'css/marketing-old-ie.css', array(), $this->version, 'all');
+
+			//hardcoding here is fine: this is the name of the fontawesome plugin's handle
+			//if (!wp_style_is('font-awesome-styles'))
+			//	wp_enqueue_style('font-awesome-styles', plugin_dir_url(__FILE__) . 'css/bower_components/fontawesome/css/font-awesome.css', array(), $this->version, 'all');
+		}
 	}
 
 	/**

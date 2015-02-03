@@ -21,11 +21,7 @@ get_header(); ?>
         while ( have_posts() ) : the_post();
         ?>
 
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-            <header class="entry-header">
-                <h1>Yes!  Alternate template loaded for page <?php the_title(); ?> with an id of <?php the_ID(); ?>.</h1>
-            </header><!-- .entry-header -->
+        <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
             <div class="entry-content">
                 <?php
@@ -42,7 +38,7 @@ get_header(); ?>
 
 
             </div>
-        </article>
+        </div>
 
             <?php
 
