@@ -23,7 +23,7 @@ get_header(); ?>
 
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            <div class="entry-content">
+            <div class="entry-content" id="back_to_top">
                 <?php
 
                 $args = array( 'posts_per_page' => -1, 'post_type' => 'pc3_section' );

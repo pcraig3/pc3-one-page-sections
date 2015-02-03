@@ -95,8 +95,8 @@ class One_Page_Sections_Public {
 			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array(), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive-old-ie', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive-old-ie.css', array(), $this->version, 'all');
 
-			wp_enqueue_style('marketing', plugin_dir_url(__FILE__) . 'css/marketing.css', array(), $this->version, 'all');
-			wp_enqueue_style('marketing-old-ie', plugin_dir_url(__FILE__) . 'css/marketing-old-ie.css', array(), $this->version, 'all');
+			wp_enqueue_style('pc3-marketing', plugin_dir_url(__FILE__) . 'css/marketing.css', array(), $this->version, 'all');
+			wp_enqueue_style('pc3-marketing-old-ie', plugin_dir_url(__FILE__) . 'css/marketing-old-ie.css', array(), $this->version, 'all');
 
 			//hardcoding here is fine: this is the name of the fontawesome plugin's handle
 			//if (!wp_style_is('font-awesome-styles'))
@@ -125,6 +125,13 @@ class One_Page_Sections_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/one-page-sections-public.js', array( 'jquery' ), $this->version, false );
 
+		//@TODO: Terrible code
+		if( is_page( 'one-page-sections' ) ) {
+
+			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, false );
+
+		}
 	}
 
 	/**
