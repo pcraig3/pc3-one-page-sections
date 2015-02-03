@@ -1,7 +1,7 @@
 #### 0.4.0
 * One Page Sections page has template overridden: all sections listed at once.
 * Using [Gamajo_Template_Loader](https://github.com/GaryJones/Gamajo-Template-Loader) to handle template overrides
-* Added [Pure.css](http://purecss.io/) using [Bower](http://bower.io/) so as to quickly do up a demo.
+* Added [Pure.css](http://purecss.io/) and [Fontawesome Icons](https://github.com/FortAwesome/Font-Awesome) using [Bower](http://bower.io/) so as to quickly do up a demo.
 
 #### 0.3.0
 * Submitting options preserves order of sortable Section fields.

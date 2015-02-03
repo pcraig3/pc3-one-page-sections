@@ -64,12 +64,12 @@ class One_Page_Sections {
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
-	 * @since    0.3.0
+	 * @since    0.4.0
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'one-page-sections';
-		$this->version = '0.3.0';
+		$this->version = '0.4.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -178,7 +178,7 @@ class One_Page_Sections {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    0.4.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -189,9 +189,6 @@ class One_Page_Sections {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
-
-		//add_filter( 'template_include', array( $this, 'usc_jobs_set_template' ) ) ;
-
 	}
 
 	/**

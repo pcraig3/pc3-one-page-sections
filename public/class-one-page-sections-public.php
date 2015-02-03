@@ -41,20 +41,20 @@ class One_Page_Sections_Public {
 	private $version;
 
 	/**
-	 * The template directory for this plugin
+	 * The template loading object, happily written for us by Gary Jones
 	 *
-	 * @since    0.3.0
+	 * @see https://github.com/GaryJones/Gamajo-Template-Loader
+	 *
+	 * @since    0.4.0
 	 * @access   private
-	 * @var      string    $local_template_directory    The template directory for this plugin
+	 * @var      object    $template_loader    Template loading object
 	 */
-	private $local_template_directory;
-
 	private $template_loader;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.1.0
+	 * @since    0.4.0
 	 * @var      string    $plugin_name       The name of the plugin.
 	 * @var      string    $version    The version of this plugin.
 	 */
@@ -64,8 +64,6 @@ class One_Page_Sections_Public {
 		$this->version = $version;
 
 		$this->template_loader = new PC3_TemplateLoader();
-
-		$this->local_template_directory = trailingslashit( dirname( __DIR__ ) ) . 'templates/';
 
 		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
 	}
@@ -127,7 +125,7 @@ class One_Page_Sections_Public {
 	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L153
 	 * @author  Stephen Harris
 	 *
-	 * @since    0.3.0
+	 * @since    0.4.0
 	 *
 	 * @param string    $templatePath absolute path to template or filename (with .php extension)
 	 * @param string    $context What the template is for ('usc_jobs','archive-usc_jobs', etc).
@@ -138,7 +136,8 @@ class One_Page_Sections_Public {
 
 		switch($context):
 			case 'page';
-				return $template === 'page-pc3_section.php';
+			//@var page-pc3_section.php
+			return $template === 'page-pc3_section.php';
 			//case 'archive':
 			//	return $template === 'archive-usc_jobs.php';
 
@@ -160,7 +159,7 @@ class One_Page_Sections_Public {
 	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L192
 	 * @author  Stephen Harris
 	 *
-	 * @since    0.3.0
+	 * @since    0.4.0
 	 *
 	 * @param string $template Absolute path to template
 	 * @return string Absolute path to template
@@ -168,6 +167,7 @@ class One_Page_Sections_Public {
 	public function set_pc3_section_template( $template ) {
 
 		//@TODO: (ahem.) If WordPress can't find a 'usc_jobs' archive template use plug-in instead:
+		//@var page-pc3_section.php
 		if( is_page( 'one-page-sections' ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
 			$template = $this->template_loader->locate_template( 'page-pc3_section.php', false, true );
@@ -175,10 +175,17 @@ class One_Page_Sections_Public {
 		return $template;
 	}
 
+	/**
+	 * @TODO: fix this method
+	 *
+	 * @since    0.4.0
+	 *
+	 * @return string
+	 */
 	public function pc3_locate_template() {
 
+		//@var post-pc3_section.php
 		return $this->template_loader->locate_template( 'post-pc3_section.php', true, false );
 		//return $this->_pc3_locate_template('post-pc3_section.php', false, true );
 	}
-
 }

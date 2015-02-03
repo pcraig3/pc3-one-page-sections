@@ -1,8 +1,14 @@
 <?php
 /**
- * Inspired by the WordPress 2015/2013 "page.php" templates.
+ * The template for the page on which all of the pages are displayed.
+ * Based on the WordPress 2015/2013 "page.php" templates.
+ * Basically we want very little other than a container to hold a series of otehr containers.
  * Idea is just to loop through sections and display them.
  *
+ * @since      0.4.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/templates
  */
 
 get_header(); ?>

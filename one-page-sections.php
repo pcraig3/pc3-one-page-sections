@@ -15,7 +15,7 @@
  * Plugin Name:       One Page Sections
  * Plugin URI:        https://github.com/pcraig3/pc3-one-page-sections
  * Description:       Quick and Dirty Plugin Builds One (Scrolling) Page with Sections
- * Version:           0.3.0
+ * Version:           0.4.0
  * Author:            Paul Craig
  * Author URI:        http://pcraig3.ca
  * License:           GPL-2.0+
@@ -32,9 +32,9 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Path directory path.
+ * Plugin directory path.
  *
- * @since 0.3.0
+ * @since 0.4.0
  * @type string ONE_PAGE_SECTIONS_DIR
  */
 if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
@@ -44,6 +44,8 @@ if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
 
 /**
  * Include Composer's vendors
+ *
+ * @since 0.4.0
  */
 require_once ONE_PAGE_SECTIONS_DIR . 'vendor/autoload.php';
 
