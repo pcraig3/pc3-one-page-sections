@@ -20,19 +20,19 @@ class PC3_SectionPostType_MetaLayer {
 
     public function __construct() {
 
-        add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, 'save_post_' ) );
-        add_action( 'wp_trash_post', array( $this, 'wp_trash_post' ) );
+        add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, $this->sPostTypeSlug . '_save_post_' ) );
+        add_action( 'wp_trash_post', array( $this,  $this->sPostTypeSlug . '_wp_trash_post' ) );
 
-        add_action( 'submit_after_' . $this->sPageClass, array( $this, 'submit_after_' ) );
+        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sPostTypeSlug . '_submit_after_' ) );
     }
 
-    public function test_meta_order () {
+    public function pc3_section_test() {
 
         update_post_meta(1935, 'test', 'john');
     }
 
     //I think we can get by with setting order to number of posts.
-    public function save_post_( $post_id ) {
+    public function pc3_section_save_post_( $post_id ) {
 
         //don't fire if post hasn't been actively saved or published by user
         if( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || 'auto-draft' === get_post_status( $post_id ) ||
@@ -40,7 +40,7 @@ class PC3_SectionPostType_MetaLayer {
             return;
 
         //don't fire if post already has an 'order' meta parameter
-        if( array_shift( get_post_meta($post_id, 'order') ) )
+        if( get_post_meta( $post_id, 'order', true ) )
             return;
 
         //@TODO: Move this somewhere else
@@ -57,12 +57,12 @@ class PC3_SectionPostType_MetaLayer {
         $last_post = array_shift( $query->posts );
 
         //returns an string OR null
-        $order = array_shift( get_post_meta($last_post->ID, 'order') );
+        $order = get_post_meta($last_post->ID, 'order', true );
 
         update_post_meta( $post_id, $this->sMetaKey, ++$order );
     }
 
-    public function wp_trash_post( $post_id ) {
+    public function pc3_section_wp_trash_post( $post_id ) {
 
         if ( $this->sPostTypeSlug !== get_post_type( $post_id ) )
             return;
@@ -91,7 +91,7 @@ class PC3_SectionPostType_MetaLayer {
 
     //sort of loses its lustre with this method name
     //public function submit_after_PC3_SectionManagerPage_pc3_section_update_meta() {
-    public function submit_after_() {
+    public function pc3_section_submit_after_() {
 
         $_bAllPostsExist = true;
 
@@ -140,9 +140,5 @@ class PC3_SectionPostType_MetaLayer {
      */
     function post_exists( $id ) {
         return is_string( get_post_status( $id ) );
-    }
-
-    function get_sections() {
-
     }
 }

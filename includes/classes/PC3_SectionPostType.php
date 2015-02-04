@@ -57,6 +57,7 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
 
         $this->setArguments( $args );
 
+
         /*
          * Example code for if we wanted a new taxonomy
          *
@@ -76,6 +77,42 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
             )
         );
         */
+    }
+
+    /*
+     * Modifies the columns of post listing table.
+     *
+     * @remark  columns_{post type slug}
+     */
+    public function columns_pc3_section( $aHeaderColumns ) {
+
+        return array(
+            'cb'    => '<input type="checkbox" />', // Checkbox for bulk actions.
+            'title' => __( 'Title', 'one-page-sections' ), // Post title. Includes "edit", "quick edit", "trash" and "view" links. If $mode (set from $_REQUEST['mode']) is 'excerpt', a post excerpt is included between the title and links.
+            'date' => __( 'Date', 'one-page-sections' ),
+            'order' => __( 'Order', 'one-page-sections' )
+        )
+            // + $aHeaderColumns // uncomment this to enable the default columns.
+            ;
+
+    }
+
+    /**
+     * Modifies the 'order' column cell contents of the post listing table
+     */
+    public function cell_pc3_section_order( $sCell, $iPostID ) { // cell_{post type}_{column key}
+
+        $_sOrder = get_post_meta( $iPostID, 'order', true );
+
+        if( strlen( $_sOrder ) < 1 )
+            $_sOrder = '-';
+
+        return $sCell
+        . '<div class="pc3_section__order-container">'
+        . '<p>' . esc_html($_sOrder)
+        . '</p>'
+        . '</div>';
+
     }
 
 }
