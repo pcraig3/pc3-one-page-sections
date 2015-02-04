@@ -191,7 +191,7 @@ class PC3_SectionManagerPage_Callbacks {
             }
          *
          */
-        $_aSavedSectionIds = AdminPageFramework::getOption( $_sClassName, $_sFieldID );
+        $_aSavedSectionIds = PC3_AdminPageFramework::getOption( $_sClassName, $_sFieldID );
 
         //if no posts are returned, or no saved options are found, then return immediately
         if( empty( $_aPosts ) || empty( $_aSavedSectionIds ) )

@@ -93,12 +93,12 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
         echo '<h3>Saved Fields</h3>';
-        //echo '<pre>callback_example: ' . AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
+        //echo '<pre>callback_example: ' . PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
         echo '<pre>Whole thing: ';
-        var_dump(AdminPageFramework::getOption('PC3_SectionManagerPage'));
+        var_dump(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));
         echo '</pre>';
 
         echo '<h3>Show all the options as an array</h3>';
-        echo $this->oDebug->getArray(AdminPageFramework::getOption('PC3_SectionManagerPage'));
+        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));
     }
 }
