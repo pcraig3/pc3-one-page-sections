@@ -46,6 +46,9 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             'manage_sections__sections',
             'manage_sections__submit'
         );
+
+        new PC3_SectionPostType_MetaLayer();
+
     }
 
     /**

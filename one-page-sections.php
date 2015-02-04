@@ -93,6 +93,14 @@ function run_one_page_sections() {
 
 		//@var pc3_section
 		new PC3_SectionPostType('pc3_section');
+		new PC3_SectionPostType_MetaBox(
+			null,   // meta box ID - can be null.
+			__( 'Debug', 'one-page-sections' ), // title
+			array( 'pc3_section' ),             // post type slugs: post, page, etc.
+			'side',                             // context
+			'default'                               // priority
+		);
+
 		new PC3_SectionManagerPage();
 	}
 
