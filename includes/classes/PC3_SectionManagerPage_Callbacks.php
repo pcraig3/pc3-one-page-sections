@@ -109,7 +109,7 @@ class PC3_SectionManagerPage_Callbacks {
     public function field_definition_PC3_SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
         $aPosts = $this->_getPosts( 'pc3_section' );
-        
+
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
             return $aField;
@@ -148,7 +148,7 @@ class PC3_SectionManagerPage_Callbacks {
 
     /**
      * Function returns posts based on slug.  n our case, we're planning on returning Sections.
-     * ~Maybe should be somewhere else
+     * @TODO: Move this to somewhere else
      *
      * @since      0.3.0
      *

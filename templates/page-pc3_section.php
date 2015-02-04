@@ -26,9 +26,18 @@ get_header(); ?>
             <div class="entry-content" id="back_to_top">
                 <?php
 
-                $args = array( 'posts_per_page' => -1, 'post_type' => 'pc3_section' );
+                $_aArgs         = array(
+                    'post_type' => 'pc3_section',
+                    'orderby'   => 'meta_value_num',
+                    'meta_key'  => 'order',
+                    'order'     => 'ASC',
+                    'post_status' => 'any',
+                    'posts_per_page' => -1
+                );
+                $_oResults      = new WP_Query( $_aArgs );
 
-                $myposts = get_posts( $args );
+                $myposts = $_oResults->posts;
+
                 foreach ( $myposts as $post ) : setup_postdata( $post );
 
                     do_shortcode('[pc3_locate_template]');
