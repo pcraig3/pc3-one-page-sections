@@ -1,11 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Paul
- * Date: 30/01/2015
- * Time: 20:48
+ * The file that builds the Manage Sections page
+ *
+ * Makes no assumptions about Sections.  In fact, assumes that there won't be any.
+ * If sections are found, PC3_SectionManagerPage_Callbacks populates the form created on this page with information
+ * about Sections.
+ *
+ * By default, form displays error message and alerts users that they need to create sections
+ *
+ * @since      0.3.0
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/includes
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
-
 class PC3_SectionManagerPage extends PC3_AdminPageFramework
 {
 
@@ -14,7 +21,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * Here we define the setup() method to set how many pages, page titles and icons etc.
      *
-     * @since      0.3.0
+     * @since      0.6.0
      */
     public function setUp()
     {
@@ -48,7 +55,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         );
 
         new PC3_SectionPostType_MetaLayer();
-
     }
 
     /**
@@ -71,7 +77,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                 // 'hidden' =>    true // <-- the field row can be hidden with this option.
                 'label'             =>
                     __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
-                'description'       => __( 'Maybe try <a href="http://pcraig3.dev/web/wp/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
+                'description'       => __( 'Maybe try <a href="/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
             ),
             array( // Submit button
                 'field_id'      => 'manage_sections__submit',

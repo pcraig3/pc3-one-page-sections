@@ -14,7 +14,6 @@
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/includes/classes
  */
-
 class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
 
     /**
@@ -57,32 +56,22 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
 
         $this->setArguments( $args );
 
-
-        /*
-         * Example code for if we wanted a new taxonomy
-         *
-         * @see http://admin-page-framework.michaeluno.jp/tutorials/12-create-a-custom-post-type-and-custom-taxonomy/
-         *
-        $this->addTaxonomy(
-            'apf_tutorial_example_taxonomy',  // taxonomy slug
-            array(                  // argument - for the argument array keys, refer to : http://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments
-                'labels'                => array(
-                    'name'          => __( 'Tutorial Taxonomy', 'admin-page-framework-tutorial' ),
-                ),
-                'show_ui'               => true,
-                'show_tagcloud'         => false,
-                'hierarchical'          => true,
-                'show_table_filter'     => true,    // framework specific key
-                'show_in_sidebar_menus' => true,    // framework specific key
-            )
-        );
-        */
     }
 
     /*
      * Modifies the columns of post listing table.
      *
      * @remark  columns_{post type slug}
+     */
+    /**
+     * Modifies the columns of post listing table.
+     * In our case, we're adding the 'order' column,
+     * representing the order that the sections will be rendered in on the front-end
+     *
+     * @since    0.6.0
+     *
+     * @param $aHeaderColumns
+     * @return array
      */
     public function columns_pc3_section( $aHeaderColumns ) {
 
@@ -98,7 +87,13 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
     }
 
     /**
-     * Modifies the 'order' column cell contents of the post listing table
+     * Controls the rendering of the 'order' column cell contents of the post listing table
+     *
+     * @since    0.6.0
+     *
+     * @param string $sCell the markup that will become each individual column cell
+     * @param int $iPostID  the post_id
+     * @return string       the markup for the column cell
      */
     public function cell_pc3_section_order( $sCell, $iPostID ) { // cell_{post type}_{column key}
 
@@ -112,7 +107,6 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
         . '<p>' . esc_html($_sOrder)
         . '</p>'
         . '</div>';
-
     }
 
 }

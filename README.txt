@@ -35,6 +35,13 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+#### 0.6.0
+* Updated references to APF static methods that were crashing all over the place
+* Added a debugging MetaBox to Sections
+* Added a MetaLayer that handles logic related to the re-ordering of Sections
+* Nearly standardized `WP_QUERY` calls, although they need to be harmonized
+* Added new 'Order' column to Sections listing in Admin Dashboard
+
 #### 0.5.0
 * Unhid the vendor directory so that we can plug and play this thing.
 * Embedded YouTube videos work without too much finagling.

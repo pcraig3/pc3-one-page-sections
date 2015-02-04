@@ -1,15 +1,18 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Paul
- * Date: 04/02/2015
- * Time: 09:53
+ * Class that deals with keeping the 'order' custom fields in sync for our Sections
+ * Assigns orders to newly created sections, re-indexes orders after a Section has been deleted,
+ * and updates the orders of Sections when using Manage Sections page.
+ *
+ * Pretty dire though, some of the code in here.  Needs a bit of refactoring.
+ **
+ * @since      0.6.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/includes/classes
  */
-
 class PC3_SectionPostType_MetaLayer {
 
-    //@TODO: pull the variable through
-    //@var pc3_section
     private $sPostTypeSlug = 'pc3_section';
 
     private $sPageClass = 'PC3_SectionManagerPage';
@@ -18,6 +21,11 @@ class PC3_SectionPostType_MetaLayer {
     private $sMetaKey = 'order';
 
 
+    /**
+     * @TODO: maybe move these into the Loader somehow
+     *
+     * @since      0.6.0
+     */
     public function __construct() {
 
         add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, $this->sPostTypeSlug . '_save_post_' ) );
@@ -31,7 +39,11 @@ class PC3_SectionPostType_MetaLayer {
         update_post_meta(1935, 'test', 'john');
     }
 
-    //I think we can get by with setting order to number of posts.
+    /**
+     * @since      0.6.0
+     *
+     * @param $post_id
+     */
     public function pc3_section_save_post_( $post_id ) {
 
         //don't fire if post hasn't been actively saved or published by user
@@ -62,6 +74,11 @@ class PC3_SectionPostType_MetaLayer {
         update_post_meta( $post_id, $this->sMetaKey, ++$order );
     }
 
+    /**
+     * @since      0.6.0
+     *
+     * @param $post_id
+     */
     public function pc3_section_wp_trash_post( $post_id ) {
 
         if ( $this->sPostTypeSlug !== get_post_type( $post_id ) )
@@ -69,7 +86,7 @@ class PC3_SectionPostType_MetaLayer {
 
         delete_post_meta( $post_id, $this->sMetaKey );
 
-
+        //@TODO: Move this out of here
         //at this point, get all of the current orders and then just redo the array keys
         $_aArgs         = array(
             'post_type' => 'pc3_section',
@@ -89,8 +106,9 @@ class PC3_SectionPostType_MetaLayer {
             update_post_meta( $_aSections[$i]->ID, $this->sMetaKey, $i );
     }
 
-    //sort of loses its lustre with this method name
-    //public function submit_after_PC3_SectionManagerPage_pc3_section_update_meta() {
+    /**
+     * @since      0.6.0
+     */
     public function pc3_section_submit_after_() {
 
         $_bAllPostsExist = true;
@@ -136,7 +154,7 @@ class PC3_SectionPostType_MetaLayer {
      *
      * @param    int    $id    The ID of the post to check
      * @return   bool          True if the post exists; otherwise, false.
-     * @since    1.0.0
+     * @since    0.6.0
      */
     function post_exists( $id ) {
         return is_string( get_post_status( $id ) );

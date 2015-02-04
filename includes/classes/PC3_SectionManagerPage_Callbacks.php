@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that handles the logic that populates the Section Manager Page.
  *
@@ -103,6 +102,8 @@ class PC3_SectionManagerPage_Callbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
+     * @since      0.6.0
+     *
      * @param $aField array    the field with an id of 'callback_example'
      * @return array array     the field
      */
@@ -113,10 +114,6 @@ class PC3_SectionManagerPage_Callbacks {
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
             return $aField;
-
-        //their sorted order is saved by the AdminPageFramework, but WordPress by default returns most recent Posts first
-        //this function reorganises the returned array of Posts
-        //$aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts, $this->sClassName, $this->sSortableFieldId );
 
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;
@@ -150,7 +147,7 @@ class PC3_SectionManagerPage_Callbacks {
      * Function returns posts based on slug.  n our case, we're planning on returning Sections.
      * @TODO: Move this to somewhere else
      *
-     * @since      0.3.0
+     * @since      0.6.0
      *
      * @param string $sPostTypeSlug
      * @return mixed
@@ -168,61 +165,6 @@ class PC3_SectionManagerPage_Callbacks {
         $_oResults      = new WP_Query( $_aArgs );
 
         return $_oResults->posts;
-    }
-
-    /**
-     * Function takes an array of posts and reorders them based on options saved by the Admin Page Framework
-     * ~Maybe should be somewhere else
-     *
-     * @since      0.3.0
-     *
-     * @param $_aPosts array        array of Posts
-     * @param string $_sClassName   Class generating the page on which our fields are being inserted
-     * @param string $_sFieldID     Field ID for the sortable fields
-     * @return array                re-ordered array of Posts
-     */
-    private function _reorderPostsBasedOnSortedOptions( $_aPosts, $_sClassName = 'PC3_SectionManagerPage' , $_sFieldID = 'manage_sections__sections' ) {
-
-        /*
-         * Saved sections are returned as an indexed array filled with Post IDs.  Ex:
-         *
-         * array(3) {
-              [0]=>
-              string(4) "1902"
-              [1]=>
-              string(4) "1903"
-              [2]=>
-              string(4) "1904"
-            }
-         *
-         */
-        $_aSavedSectionIds = PC3_AdminPageFramework::getOption( $_sClassName, $_sFieldID );
-
-        //if no posts are returned, or no saved options are found, then return immediately
-        if( empty( $_aPosts ) || empty( $_aSavedSectionIds ) )
-            return $_aPosts;
-
-        $aPostsReordered = array();
-
-        foreach( $_aSavedSectionIds as $_sSectionId ) {
-
-            foreach( $_aPosts as $_iIndex => $_oPost ) {
-
-                if( intval( $_sSectionId ) === intval( $_oPost->ID ) ) {
-
-                    //if the value in the saved array of sectionIds matched the current post id,
-                    //push into reordered array and remove from old array
-                    array_push( $aPostsReordered, $_oPost );
-                    unset( $_aPosts[$_iIndex] );
-                }
-            }
-        }
-
-        //all remaining posts are stuck to the end of the reordered array
-        while( ! empty( $_aPosts ) )
-            array_push( $aPostsReordered, array_shift( $_aPosts ) );
-
-        return $aPostsReordered;
     }
 
     /**
