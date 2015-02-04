@@ -21,6 +21,7 @@ class PC3_SectionPostType_MetaLayer {
     public function __construct() {
 
         add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, 'save_post_' ) );
+        add_action( 'wp_trash_post', array( $this, 'wp_trash_post' ) );
 
         add_action( 'submit_after_' . $this->sPageClass, array( $this, 'submit_after_' ) );
     }
@@ -34,14 +35,15 @@ class PC3_SectionPostType_MetaLayer {
     public function save_post_( $post_id ) {
 
         //don't fire if post hasn't been actively saved or published by user
-        if( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || 'auto-draft' === get_post_status( $post_id ) )
+        if( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || 'auto-draft' === get_post_status( $post_id ) ||
+            'trash' === get_post_status( $post_id ))
             return;
 
         //don't fire if post already has an 'order' meta parameter
         if( array_shift( get_post_meta($post_id, 'order') ) )
             return;
 
-        //@TODO: Let's isolate this please
+        //@TODO: Move this somewhere else
         $args = array(
             'post_type' => $this->sPostTypeSlug,
             'orderby'   => 'meta_value_num',
@@ -60,19 +62,31 @@ class PC3_SectionPostType_MetaLayer {
         update_post_meta( $post_id, $this->sMetaKey, ++$order );
     }
 
-    public function remove_post_pc3_section_update_meta_order( $post_id ) {
+    public function wp_trash_post( $post_id ) {
 
-        //*don't need $post_id*
+        if ( $this->sPostTypeSlug !== get_post_type( $post_id ) )
+            return;
+
+        delete_post_meta( $post_id, $this->sMetaKey );
+
 
         //at this point, get all of the current orders and then just redo the array keys
+        $_aArgs         = array(
+            'post_type' => 'pc3_section',
+            'orderby'   => 'meta_value_num',
+            'meta_key'  => 'order',
+            'order'     => 'ASC',
+            'post_status' => 'any',
+            'posts_per_page' => -1
+        );
+        $_oResults      = new WP_Query( $_aArgs );
 
-        //$sections_array = get all sections ordered_by by meta = 'order'
+        $_aSections = $_oResults->posts;
 
+        $_iMax = count( $_aSections );
 
-        //for($i = 0; $i < count($sections_array); $i++ ) {
-        //  update_post_meta( $sections_array[$i]->ID, 'order', $i );
-
-        //done.
+        for($i = 0; $i < $_iMax; $i++)
+            update_post_meta( $_aSections[$i]->ID, $this->sMetaKey, $i );
     }
 
     //sort of loses its lustre with this method name
@@ -126,5 +140,9 @@ class PC3_SectionPostType_MetaLayer {
      */
     function post_exists( $id ) {
         return is_string( get_post_status( $id ) );
+    }
+
+    function get_sections() {
+
     }
 }

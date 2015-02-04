@@ -116,7 +116,7 @@ class PC3_SectionManagerPage_Callbacks {
 
         //their sorted order is saved by the AdminPageFramework, but WordPress by default returns most recent Posts first
         //this function reorganises the returned array of Posts
-        $aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts, $this->sClassName, $this->sSortableFieldId );
+        //$aPosts = $this->_reorderPostsBasedOnSortedOptions( $aPosts, $this->sClassName, $this->sSortableFieldId );
 
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;

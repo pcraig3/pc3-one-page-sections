@@ -26,6 +26,7 @@ get_header(); ?>
             <div class="entry-content" id="back_to_top">
                 <?php
 
+                //@TODO: Move this somewhere else
                 $_aArgs         = array(
                     'post_type' => 'pc3_section',
                     'orderby'   => 'meta_value_num',
