@@ -98,7 +98,13 @@ class PC3_SectionManagerPage_Callbacks {
      */
     public function field_definition_PC3_SectionManagerPage_manage_sections__sections_page( $aField ) {
 
-        $aPages = $this->_getPages();
+        $aPages = PC3_WPQueryLayer::getPosts( array(
+            'post_type' => 'page',
+            'orderby'   => 'title',
+            'order'     => 'ASC',
+            'post_status'   => 'any',
+            'posts_per_page' => -1
+        ) );
 
         if( empty( $aPages ) )
             return $aField;
@@ -122,7 +128,16 @@ class PC3_SectionManagerPage_Callbacks {
      */
     public function field_definition_PC3_SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aPosts = $this->_getPosts( 'pc3_section' );
+        //@var pc3_section
+        //@var order
+        $aPosts = PC3_WPQueryLayer::getPosts( array(
+            'post_type' => 'pc3_section',
+            'orderby'   => 'meta_value_num',
+            'meta_key'  => 'order',
+            'order'     => 'ASC',
+            'post_status' => 'any',
+            'posts_per_page' => -1
+        ) );
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
@@ -174,51 +189,6 @@ class PC3_SectionManagerPage_Callbacks {
             );
 
         return $aField;
-    }
-
-    /**
-     * Function returns posts based on slug.  n our case, we're planning on returning Sections.
-     * @TODO: Move this to somewhere else
-     *
-     * @since      0.6.0
-     *
-     * @param string $sPostTypeSlug
-     * @return mixed
-     */
-    private function _getPosts( $sPostTypeSlug='pc3_section' ) {
-
-        $_aArgs         = array(
-            'post_type' => $sPostTypeSlug,
-            'orderby'   => 'meta_value_num',
-            'meta_key'  => 'order',
-            'order'     => 'ASC',
-            'post_status' => 'any',
-            'posts_per_page' => -1
-        );
-        $_oResults      = new WP_Query( $_aArgs );
-
-        return $_oResults->posts;
-    }
-
-    /**
-     * Function returns pages.
-     * @TODO: Move this to somewhere else
-     *
-     * @since      0.6.0
-     *
-     * @return mixed
-     */
-    private function _getPages() {
-
-        $_aArgs         = array(
-            'post_type' => 'page',
-            'orderby'   => 'title',
-            'order'     => 'ASC',
-            'posts_per_page' => -1
-        );
-        $_oResults      = new WP_Query( $_aArgs );
-
-        return $_oResults->posts;
     }
 
     private function _formatPagesAsLabels( $aPages ) {

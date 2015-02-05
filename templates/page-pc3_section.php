@@ -26,20 +26,16 @@ get_header(); ?>
             <div class="entry-content" id="back_to_top">
                 <?php
 
-                //@TODO: Move this somewhere else
-                $_aArgs         = array(
+                $aPosts = PC3_WPQueryLayer::getPosts( array(
                     'post_type' => 'pc3_section',
                     'orderby'   => 'meta_value_num',
                     'meta_key'  => 'order',
                     'order'     => 'ASC',
                     'post_status' => 'any',
                     'posts_per_page' => -1
-                );
-                $_oResults      = new WP_Query( $_aArgs );
+                ));
 
-                $myposts = $_oResults->posts;
-
-                foreach ( $myposts as $post ) : setup_postdata( $post );
+                foreach ( $aPosts as $post ) : setup_postdata( $post );
 
                     do_shortcode('[pc3_locate_template]');
 

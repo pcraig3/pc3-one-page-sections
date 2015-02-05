@@ -59,18 +59,17 @@ class PC3_SectionPostType_MetaLayer {
         if( get_post_meta( $post_id, $this->sMetaKey, true ) )
             return;
 
-        //@TODO: Move this somewhere else
-        $args = array(
+        //Array with one result
+        $aPosts = PC3_WPQueryLayer::getPosts( array(
             'post_type' => $this->sPostTypeSlug,
             'orderby'   => 'meta_value_num',
             'meta_key'  => $this->sMetaKey,
             'order'     => 'DESC',
-            'post_status ' => 'any',
+            'post_status' => 'any',
             'posts_per_page' => 1
-        );
-        $query = new WP_Query( $args );
+        ) );
 
-        $last_post = array_shift( $query->posts );
+        $last_post = array_shift( $aPosts );
 
         //returns an string OR null
         $order = get_post_meta($last_post->ID, $this->sMetaKey, true );
@@ -90,24 +89,20 @@ class PC3_SectionPostType_MetaLayer {
 
         delete_post_meta( $post_id, $this->sMetaKey );
 
-        //@TODO: Move this out of here
         //at this point, get all of the current orders and then just redo the array keys
-        $_aArgs         = array(
-            'post_type' => 'pc3_section',
+        $aPosts = PC3_WPQueryLayer::getPosts( array(
+            'post_type' => $this->sPostTypeSlug,
             'orderby'   => 'meta_value_num',
-            'meta_key'  => 'order',
+            'meta_key'  => $this->sMetaKey,
             'order'     => 'ASC',
             'post_status' => 'any',
             'posts_per_page' => -1
-        );
-        $_oResults      = new WP_Query( $_aArgs );
+        ) );
 
-        $_aSections = $_oResults->posts;
-
-        $_iMax = count( $_aSections );
+        $_iMax = count( $aPosts );
 
         for($i = 0; $i < $_iMax; $i++)
-            update_post_meta( $_aSections[$i]->ID, $this->sMetaKey, $i );
+            update_post_meta( $aPosts[$i]->ID, $this->sMetaKey, $i );
     }
 
     /**
@@ -135,32 +130,12 @@ class PC3_SectionPostType_MetaLayer {
             update_post_meta($_sPostID, $this->sMetaKey, $_sOrder);
 
             if( $_bAllPostsExist )
-                $_bAllPostsExist = $this->post_exists( $_sPostID );
+                $_bAllPostsExist = PC3_WPQueryLayer::isPostExists( $_sPostID );
         }
 
         //@TODO: reindex sections somehow
         //if( ! $_bAllPostsExist )
             //reindex sections
 
-    }
-
-    /**
-     * Determines if a post, identified by the specified ID, exist
-     * within the WordPress database.
-     *
-     * Note that this function uses the 'acme_' prefix to serve as an
-     * example for how to use the function within a theme. If this were
-     * to be within a class, then the prefix would not be necessary.
-     *
-     * @TODO: MOVE OUT OF HERE
-     *
-     * @see https://tommcfarlin.com/wordpress-post-exists-by-id/
-     *
-     * @param    int    $id    The ID of the post to check
-     * @return   bool          True if the post exists; otherwise, false.
-     * @since    0.6.0
-     */
-    function post_exists( $id ) {
-        return is_string( get_post_status( $id ) );
     }
 }
