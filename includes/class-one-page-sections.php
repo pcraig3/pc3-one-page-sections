@@ -129,6 +129,11 @@ class One_Page_Sections {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/pc3-admin-page-framework.min.php';
 
 		/**
+		 * Include the AdminPageFramework
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/class-gamajo-template-loader.php';
+
+		/**
 		 * Include directory with included classes that extend the APF
 		 * Probably not good practice -.-
 		 *

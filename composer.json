@@ -12,7 +12,8 @@
   },
   "autoload" : {
     "classmap": [
-      "vendor/gamajo/template-loader/class-gamajo-template-loader.php"
+      "vendor/gamajo/template-loader/class-gamajo-template-loader.php",
+      "includes/classes"
     ]
   }
 }

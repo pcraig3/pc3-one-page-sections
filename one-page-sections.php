@@ -43,13 +43,6 @@ if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
 }
 
 /**
- * Include Composer's vendors
- *
- * @since 0.4.0
- */
-require ONE_PAGE_SECTIONS_DIR . 'vendor/autoload.php';
-
-/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-one-page-sections-activator.php
  */

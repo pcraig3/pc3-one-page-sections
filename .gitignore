@@ -6,3 +6,4 @@
 #composer's vendor directory
 #on second thought, we have to include this directory, else normal people can't use the plugin off the shelf
 #vendor
+vendor/gamajo/template-loader/.gitignore
