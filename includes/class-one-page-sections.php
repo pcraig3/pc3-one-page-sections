@@ -66,12 +66,12 @@ class One_Page_Sections {
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
-	 * @since    0.7.0
+	 * @since    0.7.1
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'one-page-sections';
-		$this->version = '0.7.0';
+		$this->version = '0.7.1';
 
 		$this->sections_page = 'one-page-sections';
 
@@ -95,7 +95,7 @@ class One_Page_Sections {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    0.3.0
+	 * @since    0.7.1
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -126,12 +126,12 @@ class One_Page_Sections {
 		/**
 		 * Include the AdminPageFramework
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/pc3-admin-page-framework.min.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/pc3-admin-page-framework.min.php';
 
 		/**
-		 * Include the AdminPageFramework
+		 * Include the Gamajo_Template_Loader
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'library/class-gamajo-template-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/class-gamajo-template-loader.php';
 
 		/**
 		 * Include directory with included classes that extend the APF

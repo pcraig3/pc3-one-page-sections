@@ -1,3 +1,7 @@
+#### 0.7.1
+* Removed Composer's vendor directory and instead just manually added two files :(
+* [GitHub Updater](https://github.com/afragen/github-updater) was breaking my site because composer was using a git submodule for my vendors 
+
 #### 0.7.0
 * Calls to WP_Query somewhat isolated
 * Able to select the page where to display sections = Awesome
