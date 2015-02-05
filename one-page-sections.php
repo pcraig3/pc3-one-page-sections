@@ -47,7 +47,7 @@ if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
  *
  * @since 0.4.0
  */
-require_once ONE_PAGE_SECTIONS_DIR . 'vendor/autoload.php';
+require ONE_PAGE_SECTIONS_DIR . 'vendor/autoload.php';
 
 /**
  * The code that runs during plugin activation.
@@ -110,6 +110,5 @@ function run_one_page_sections() {
 	}
 
 	$plugin->run();
-
 }
 run_one_page_sections();
