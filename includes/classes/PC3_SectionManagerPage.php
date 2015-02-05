@@ -102,6 +102,17 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
 
         $this->addSettingFields(
+            array( // Single Drop-down List
+                'field_id'      => $this->sPageSlug . '__sections_page',
+                'title'         => __( 'One Page Sections Page', 'one-page-sections' ),
+                'type'          => 'select',
+                'label'         => array(
+                    0 => __( '---', 'one-page-sections' ),
+                ),
+                'description' => __( 'This select field should be filled with the names of pages from your site.',
+                        'one-page-sections' )
+                    . ' ' . __( 'Please create at least one Page.', 'one-page-sections' ),
+            ),
             array(
                 'field_id'          => $this->sPageSlug . $this->sSortableFieldId,
                 'title'             => __( 'Section Titles', 'one-page-sections' ),

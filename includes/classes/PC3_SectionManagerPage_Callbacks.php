@@ -27,6 +27,11 @@ class PC3_SectionManagerPage_Callbacks {
     public $sPageSlug   = 'manage_sections';
 
     /**
+     * @var string Field id for the select drop-down list in our form
+     */
+    public $sSelectFieldId = 'manage_sections__sections_page';
+
+    /**
      * @var string Field id for the sortable sections in our form
      */
     public $sSortableFieldId = 'manage_sections__sections';
@@ -50,6 +55,7 @@ class PC3_SectionManagerPage_Callbacks {
 
         $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
         $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
+        //$this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
 
@@ -64,6 +70,10 @@ class PC3_SectionManagerPage_Callbacks {
      * @since      0.3.0
      */
     public function replyToLoadPage( $oAdminPage ) {
+
+        // field_definition_{instantiated class name}_{section id}_{field_id}
+        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSelectFieldId,
+            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSelectFieldId ) );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId,
@@ -86,12 +96,15 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_manage_sections__submit( $aField ) {
+    public function field_definition_PC3_SectionManagerPage_manage_sections__sections_page( $aField ) {
 
-        if( $this->bIfSections)
-            $aField['attributes'] = array(
-                'class' => 'button button-primary'
-            );
+        $aPages = $this->_getPages();
+
+        if( empty( $aPages ) )
+            return $aField;
+
+        $aField['description']  = __( 'Select a Page to be used for your One Page Sections', 'one-page-sections' );
+        $aField['label'] = $this->_formatPagesAsLabels( $aPages );
 
         return $aField;
     }
@@ -144,6 +157,26 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /**
+     * Callback method passed the submit_button field after the Sections have (or haven't) been returned
+     * If sections have been found, Submit button is usable.  Otherwise, it remains disabled
+     *
+     * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
+     *
+     * @since      0.3.0
+     * @param $aField array    the field with an id of 'submit_button'
+     * @return mixed array     the field
+     */
+    public function field_definition_PC3_SectionManagerPage_manage_sections__submit( $aField ) {
+
+        if( $this->bIfSections )
+            $aField['attributes'] = array(
+                'class' => 'button button-primary'
+            );
+
+        return $aField;
+    }
+
+    /**
      * Function returns posts based on slug.  n our case, we're planning on returning Sections.
      * @TODO: Move this to somewhere else
      *
@@ -166,6 +199,48 @@ class PC3_SectionManagerPage_Callbacks {
 
         return $_oResults->posts;
     }
+
+    /**
+     * Function returns pages.
+     * @TODO: Move this to somewhere else
+     *
+     * @since      0.6.0
+     *
+     * @return mixed
+     */
+    private function _getPages() {
+
+        $_aArgs         = array(
+            'post_type' => 'page',
+            'orderby'   => 'title',
+            'order'     => 'ASC',
+            'posts_per_page' => -1
+        );
+        $_oResults      = new WP_Query( $_aArgs );
+
+        return $_oResults->posts;
+    }
+
+    private function _formatPagesAsLabels( $aPages ) {
+
+        $_aLabels = array();
+
+        foreach( $aPages as $_oPage )
+            $_aLabels[$_oPage->ID] = $_oPage->post_title;
+
+        return $_aLabels;
+    }
+
+
+    /*
+     *
+     'label'         => array(
+                    0 => __( 'Red', 'admin-page-framework-demo' ),
+                    1 => __( 'Blue', 'admin-page-framework-demo' ),
+                    2 => __( 'Yellow', 'admin-page-framework-demo' ),
+                    3 => __( 'Orange', 'admin-page-framework-demo' ),
+                ),
+
 
     /**
      * Iterate through Post objects, turning each into an array that an APF Field will understand

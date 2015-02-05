@@ -69,6 +69,11 @@ class One_Page_Sections_Public {
 		$this->template_loader = new PC3_TemplateLoader();
 
 		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
+
+		$_sPageID = PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'manage_sections__sections_page');
+
+		if( $_sPageID )
+			$this->sections_page = $_sPageID;
 	}
 
 	/**
