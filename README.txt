@@ -35,6 +35,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+#### 0.7.0
+* Calls to WP_Query somewhat isolated
+* Able to select the page where to display sections = Awesome
+* Pulled a bunch of variables through = Less hardcoding = Awesome
+
 #### 0.6.0
 * Updated references to APF static methods that were crashing all over the place
 * Added a debugging MetaBox to Sections

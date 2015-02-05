@@ -1,11 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Paul
- * Date: 05/02/2015
- * Time: 11:25
+ * @TODO:
+ *
+ * @since      0.7.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/includes/classes
  */
-
 class PC3_WPQueryLayer {
 
     /**
@@ -14,15 +15,25 @@ class PC3_WPQueryLayer {
      **
      * @see https://tommcfarlin.com/wordpress-post-exists-by-id/
      *
+     * @since    0.7.0
+     *
      * @param    int    $_iPostID   The ID of the post to check
      * @return   bool               True if the post exists; otherwise, false.
-     * @since    0.6.0
      */
     public static function isPostExists( $_iPostID ) {
 
         return is_string( get_post_status( $_iPostID ) );
     }
 
+    /**
+     * Returns posts from WQ_Query.
+     * Takes as a parameter an array of arguments which override the default arguments
+     *
+     * @since    0.7.0
+     *
+     * @param    array $_aUserArgs  User-specified arguments which override the default arguments
+     * @return   array              Posts returned by our query
+     */
     public static function getPosts( array $_aUserArgs ) {
 
         $_iDefaultPostsPerPage = get_option( 'posts_per_page' );
@@ -48,9 +59,7 @@ class PC3_WPQueryLayer {
             'suppress_filters' => true
         );
 
-        $_aArgs = array_merge( $_aDefaultArgs, $_aUserArgs );
-
-        $_oResults = new WP_Query( $_aArgs );
+        $_oResults = new WP_Query( array_merge( $_aDefaultArgs, $_aUserArgs ) );
 
         return $_oResults->posts;
     }

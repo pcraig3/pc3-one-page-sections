@@ -56,9 +56,10 @@ class One_Page_Sections_Public {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.4.0
-	 * @var      string    $plugin_name       The name of the plugin.
-	 * @var      string    $version    The version of this plugin.
+	 * @since    0.7.0
+	 * @var      string    $plugin_name     The name of the plugin.
+	 * @var      string    $version    		The version of this plugin.
+	 * @var 	 string    $sections_page 	The id or slug of the page to use for displaying our sections
 	 */
 	public function __construct( $plugin_name, $version, $sections_page ) {
 
@@ -79,7 +80,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.5.0
+	 * @since    0.7.0
 	 */
 	public function enqueue_styles() {
 
@@ -115,7 +116,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.5.0
+	 * @since    0.7.0
 	 */
 	public function enqueue_scripts() {
 
@@ -187,7 +188,7 @@ class One_Page_Sections_Public {
 	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L192
 	 * @author  Stephen Harris
 	 *
-	 * @since    0.4.0
+	 * @since    0.7.0
 	 *
 	 * @param string $template Absolute path to template
 	 * @return string Absolute path to template
@@ -214,6 +215,5 @@ class One_Page_Sections_Public {
 
 		//@var post-pc3_section.php
 		return $this->template_loader->locate_template( 'post-pc3_section.php', true, false );
-		//return $this->_pc3_locate_template('post-pc3_section.php', false, true );
 	}
 }

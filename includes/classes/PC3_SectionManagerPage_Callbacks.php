@@ -17,31 +17,43 @@
 class PC3_SectionManagerPage_Callbacks {
 
     /**
+     * @since      0.3.0
+     *
      * Stores the caller class name, set in the constructor.
      */
     public $sClassName = 'PC3_SectionManagerPage';
 
     /**
+     * @since      0.3.0
+     *
      * The page slug to add the tab and form elements.
      */
     public $sPageSlug   = 'manage_sections';
 
     /**
+     * @since      0.7.0
+     *
      * @var string Field id for the select drop-down list in our form
      */
     public $sSelectFieldId = 'manage_sections__sections_page';
 
     /**
+     * @since      0.3.0
+     *
      * @var string Field id for the sortable sections in our form
      */
     public $sSortableFieldId = 'manage_sections__sections';
 
     /**
+     * @since      0.3.0
+     *
      * @var string Field id for the submit button in our form
      */
     public $sSubmitFieldId = 'manage_sections__submit';
 
     /**
+     * @since      0.3.0
+     *
      * Variable keeps track of whether or not sections were returned
      */
     private $bIfSections = false;
@@ -49,7 +61,7 @@ class PC3_SectionManagerPage_Callbacks {
     /**
      * Sets up hooks and properties.
      *
-     * @since      0.3.0
+     * @since      0.7.0
      */
     public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='' ) {
 
@@ -67,7 +79,7 @@ class PC3_SectionManagerPage_Callbacks {
     /**
      * Triggered when the tab is loaded.
      *
-     * @since      0.3.0
+     * @since      0.7.0
      */
     public function replyToLoadPage( $oAdminPage ) {
 
@@ -78,7 +90,6 @@ class PC3_SectionManagerPage_Callbacks {
         // field_definition_{instantiated class name}_{section id}_{field_id}
         add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId,
             array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId ) );
-
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         //{field_id} = submit_button
@@ -92,7 +103,7 @@ class PC3_SectionManagerPage_Callbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.3.0
+     * @since      0.7.0
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
@@ -121,7 +132,7 @@ class PC3_SectionManagerPage_Callbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.6.0
+     * @since      0.7.0
      *
      * @param $aField array    the field with an id of 'callback_example'
      * @return array array     the field
@@ -191,6 +202,14 @@ class PC3_SectionManagerPage_Callbacks {
         return $aField;
     }
 
+    /**
+     * Iterate through Post objects, turning each into an entry in an array that an APF 'select' Field will understand
+     *
+     * @since      0.7.0
+     *
+     * @param $aPages array     array of WordPress Post objects
+     * @return array            an array of labels for a 'select' field
+     */
     private function _formatPagesAsLabels( $aPages ) {
 
         $_aLabels = array();
@@ -200,17 +219,6 @@ class PC3_SectionManagerPage_Callbacks {
 
         return $_aLabels;
     }
-
-
-    /*
-     *
-     'label'         => array(
-                    0 => __( 'Red', 'admin-page-framework-demo' ),
-                    1 => __( 'Blue', 'admin-page-framework-demo' ),
-                    2 => __( 'Yellow', 'admin-page-framework-demo' ),
-                    3 => __( 'Orange', 'admin-page-framework-demo' ),
-                ),
-
 
     /**
      * Iterate through Post objects, turning each into an array that an APF Field will understand

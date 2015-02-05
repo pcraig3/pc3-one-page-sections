@@ -5,7 +5,7 @@
  * Basically we want very little other than a container to hold a series of otehr containers.
  * Idea is just to loop through sections and display them.
  *
- * @since      0.6.0
+ * @since      0.7.0
  *
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/templates

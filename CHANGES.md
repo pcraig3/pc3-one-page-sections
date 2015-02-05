@@ -1,3 +1,8 @@
+#### 0.7.0
+* Calls to WP_Query somewhat isolated
+* Able to select the page where to display sections = Awesome
+* Pulled a bunch of variables through = Less hardcoding = Awesome
+
 #### 0.6.0
 * Updated references to APF static methods that were crashing all over the place
 * Added a debugging MetaBox to Sections
@@ -6,13 +11,13 @@
 * Added new 'Order' column to Sections listing in Admin Dashboard
 
 #### 0.5.0
-* Unhid the vendor directory so that we can plug and play this thing.
-* Embedded YouTube videos work without too much finagling.
-* Added [page-scroll-to-id](https://github.com/malihu/page-scroll-to-id) with [Bower](http://bower.io/) for some smooth scrolling goodness.
+* Unhid the vendor directory so that we can plug and play this thing
+* Embedded YouTube videos work without too much finagling
+* Added [page-scroll-to-id](https://github.com/malihu/page-scroll-to-id) with [Bower](http://bower.io/) for some smooth scrolling goodness
 * Set up the [Pure Marketing Layout](http://purecss.io/layouts/marketing/) as a proof of concept
 
 #### 0.4.0
-* One Page Sections page has template overridden: all sections listed at once.
+* One Page Sections page has template overridden: all sections listed at once
 * Using [Gamajo_Template_Loader](https://github.com/GaryJones/Gamajo-Template-Loader) to handle template overrides
 * Added [Pure.css](http://purecss.io/) and [Fontawesome Icons](https://github.com/FortAwesome/Font-Awesome) using [Bower](http://bower.io/) so as to quickly do up a demo.
 

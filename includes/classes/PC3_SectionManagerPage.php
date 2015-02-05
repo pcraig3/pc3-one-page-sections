@@ -15,19 +15,57 @@
  */
 class PC3_SectionManagerPage extends PC3_AdminPageFramework
 {
-
+    /**
+     * The slug used to uniquely identify this page, both in the code and in the URL
+     *
+     * @since   0.7.0
+     * @var     string
+     */
     private $sPageSlug = 'manage_sections';
+
+    /**
+     * The slug for our custom post type (Sections)
+     *
+     * @since   0.7.0
+     * @var     string
+     */
     private $sPostTypeSlug = 'pc3_section';
+
+    /**
+     * The field_id for our sortable field (hopefully to be filled with Sections).
+     *
+     * @since   0.7.0
+     * @var     string
+     */
     private $sSortableFieldId = 'manage_sections__sections';
+
+    /**
+     * The meta key name to keep track of the order in which our sortable fields should be rendered
+     *
+     * @since   0.7.0
+     * @var     string
+     */
     private $sMetaKey = 'order';
 
-    private $sPageClass = 'PC3_SectionManagerPage';
+    /**
+     * The name of this class
+     *
+     * @since   0.7.0
+     * @var     string
+     */
+    private $sPageClass;
 
-
+    /**
+     * @since   0.7.0
+     *
+     * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
+     * @param string $sPostTypeSlug     The slug for our custom post type (Sections)
+     * @param string $sSortableFieldId  The field_id for our sortable field
+     * @param string $sMetaKey          The meta key name to keep track of the order in which our sortable fields should be rendered
+     */
     function __construct($sPageSlug='', $sPostTypeSlug='', $sSortableFieldId='', $sMetaKey='') {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
-
         parent::__construct(
             null,
             null,
@@ -48,7 +86,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * Here we define the setup() method to set how many pages, page titles and icons etc.
      *
-     * @since      0.6.0
+     * @since      0.7.0
      */
     public function setUp()
     {
@@ -96,7 +134,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * Here we add form fields.
      *
-     * @since      0.3.0
+     * @since      0.7.0
      */
     public function load_manage_sections($oAdminPage)
     {
@@ -145,7 +183,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
-        echo '<h3>Saved Fields:</h3>';
+        echo '<h3>Saved Fields</h3>';
         //echo '<pre>callback_example: ' . PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
         echo '<pre>Whole thing: ';
         var_dump(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));

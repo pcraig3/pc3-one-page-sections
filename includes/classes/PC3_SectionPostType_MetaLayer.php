@@ -5,7 +5,7 @@
  * and updates the orders of Sections when using Manage Sections page.
  *
  * Pretty dire though, some of the code in here.  Needs a bit of refactoring.
- **
+ *
  * @since      0.6.0
  *
  * @package    One_Page_Sections
@@ -13,16 +13,36 @@
  */
 class PC3_SectionPostType_MetaLayer {
 
+    /**
+     * @since      0.6.0
+     *
+     * @var string
+     */
     private $sPostTypeSlug = 'pc3_section';
-
-    private $sPageClass = 'PC3_SectionManagerPage';
-    private $sSortableFieldId = 'manage_sections__sections';
-
-    private $sMetaKey = 'order';
-
 
     /**
      * @since      0.6.0
+     *
+     * @var string
+     */
+    private $sPageClass = 'PC3_SectionManagerPage';
+
+    /**
+     * @since      0.7.0
+     *
+     * @var string
+     */
+    private $sSortableFieldId = 'manage_sections__sections';
+
+    /**
+     * @since      0.6.0
+     *
+     * @var string
+     */
+    private $sMetaKey = 'order';
+
+    /**
+     * @since      0.7.0
      */
     public function __construct($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
 
@@ -44,7 +64,7 @@ class PC3_SectionPostType_MetaLayer {
     }
 
     /**
-     * @since      0.6.0
+     * @since      0.7.0
      *
      * @param $post_id
      */
@@ -78,7 +98,7 @@ class PC3_SectionPostType_MetaLayer {
     }
 
     /**
-     * @since      0.6.0
+     * @since      0.7.0
      *
      * @param $post_id
      */
@@ -106,7 +126,7 @@ class PC3_SectionPostType_MetaLayer {
     }
 
     /**
-     * @since      0.6.0
+     * @since      0.7.0
      */
     public function pc3_section_submit_after_() {
 
