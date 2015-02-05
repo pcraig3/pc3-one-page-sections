@@ -101,7 +101,12 @@ function run_one_page_sections() {
 			'default'                               // priority
 		);
 
-		new PC3_SectionManagerPage();
+		new PC3_SectionManagerPage(
+			'manage_sections',
+			'pc3_section',
+			'__sections',
+			'order'
+			);
 	}
 
 	$plugin->run();

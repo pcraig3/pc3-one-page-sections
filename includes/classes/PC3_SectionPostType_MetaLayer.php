@@ -16,18 +16,22 @@ class PC3_SectionPostType_MetaLayer {
     private $sPostTypeSlug = 'pc3_section';
 
     private $sPageClass = 'PC3_SectionManagerPage';
-    private $sPageOptionsFormField = 'manage_sections__sections';
+    private $sSortableFieldId = 'manage_sections__sections';
 
     private $sMetaKey = 'order';
 
 
     /**
-     * @TODO: maybe move these into the Loader somehow
-     *
      * @since      0.6.0
      */
-    public function __construct() {
+    public function __construct($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
 
+        $this->sPostTypeSlug   = $sPostTypeSlug ? $sPostTypeSlug : $this->sPostTypeSlug;
+        $this->sPageClass    = $sPageClass ? $sPageClass : $this->sPageClass;
+        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sMetaKey    = $sMetaKey ? $sMetaKey : $this->sMetaKey;
+
+        // @TODO: maybe move these into the Loader somehow
         add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, $this->sPostTypeSlug . '_save_post_' ) );
         add_action( 'wp_trash_post', array( $this,  $this->sPostTypeSlug . '_wp_trash_post' ) );
 
@@ -52,7 +56,7 @@ class PC3_SectionPostType_MetaLayer {
             return;
 
         //don't fire if post already has an 'order' meta parameter
-        if( get_post_meta( $post_id, 'order', true ) )
+        if( get_post_meta( $post_id, $this->sMetaKey, true ) )
             return;
 
         //@TODO: Move this somewhere else
@@ -69,7 +73,7 @@ class PC3_SectionPostType_MetaLayer {
         $last_post = array_shift( $query->posts );
 
         //returns an string OR null
-        $order = get_post_meta($last_post->ID, 'order', true );
+        $order = get_post_meta($last_post->ID, $this->sMetaKey, true );
 
         update_post_meta( $post_id, $this->sMetaKey, ++$order );
     }
@@ -113,7 +117,7 @@ class PC3_SectionPostType_MetaLayer {
 
         $_bAllPostsExist = true;
 
-        $_aOrdersPostIds = PC3_AdminPageFramework::getOption( $this->sPageClass , $this->sPageOptionsFormField );
+        $_aOrdersPostIds = PC3_AdminPageFramework::getOption( $this->sPageClass , $this->sSortableFieldId );
 
         $_aPostIdsOrders = array_flip( $_aOrdersPostIds );
 

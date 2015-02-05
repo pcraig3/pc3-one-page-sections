@@ -16,6 +16,33 @@
 class PC3_SectionManagerPage extends PC3_AdminPageFramework
 {
 
+    private $sPageSlug = 'manage_sections';
+    private $sPostTypeSlug = 'pc3_section';
+    private $sSortableFieldId = 'manage_sections__sections';
+    private $sMetaKey = 'order';
+
+    private $sPageClass = 'PC3_SectionManagerPage';
+
+
+    function __construct($sPageSlug='', $sPostTypeSlug='', $sSortableFieldId='', $sMetaKey='') {
+
+        //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
+
+        parent::__construct(
+            null,
+            null,
+            'manage_options',
+            'admin-page-framework'
+        );
+
+        $this->sPageSlug        = $sPageSlug ? $sPageSlug : $this->sPageSlug;
+        $this->sPostTypeSlug    = $sPostTypeSlug ? $sPostTypeSlug : $this->sPostTypeSlug;
+        $this->sSortableFieldId = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sMetaKey         = $sMetaKey ? $sMetaKey : $this->sMetaKey;
+
+        $this->sPageClass       = get_class($this);
+    }
+
     /**
      * The set-up method which is triggered automatically with the 'wp_loaded' hook.
      *
@@ -30,8 +57,8 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
 
         //wish there was some way to make this a global variable
         //@var pc3_section
-        if (post_type_exists('pc3_section'))
-            $this->setRootMenuPageBySlug('edit.php?post_type=pc3_section');
+        if (post_type_exists( $this->sPostTypeSlug ))
+            $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sPostTypeSlug );
         else
             $this->setRootMenuPage('Settings');
 
@@ -42,19 +69,25 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         $this->addSubMenuItems(
             array(
                 'title' => 'Manage Sections',  // page and menu title
-                'page_slug' => 'manage_sections',     // page slug
+                'page_slug' => $this->sPageSlug,     // page slug
                 'order' => 5
             )
         );
 
         new PC3_SectionManagerPage_Callbacks(
-            'PC3_SectionManagerPage',
-            'manage_sections',
-            'manage_sections__sections',
-            'manage_sections__submit'
+            $this->sPageClass,
+            $this->sPageSlug,
+            $this->sPageSlug . $this->sSortableFieldId,
+            $this->sPageSlug . '__submit'
         );
 
-        new PC3_SectionPostType_MetaLayer();
+        //($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
+        new PC3_SectionPostType_MetaLayer(
+            $this->sPostTypeSlug,
+            $this->sPageClass,
+            $this->sPageSlug . $this->sSortableFieldId,
+            $this->sMetaKey
+        );
     }
 
     /**
@@ -70,7 +103,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
 
         $this->addSettingFields(
             array(
-                'field_id'          => 'manage_sections__sections',
+                'field_id'          => $this->sPageSlug . $this->sSortableFieldId,
                 'title'             => __( 'Section Titles', 'one-page-sections' ),
                 'type'              => 'hidden',
                 'default'           => '',
@@ -80,7 +113,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                 'description'       => __( 'Maybe try <a href="/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
             ),
             array( // Submit button
-                'field_id'      => 'manage_sections__submit',
+                'field_id'      => $this->sPageSlug . '__submit',
                 'type'          => 'submit',
                 'attributes'    => array(
                     'disabled'  => 'disabled',
@@ -101,7 +134,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
         // Show the saved option value.
         // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
-        echo '<h3>Saved Fields</h3>';
+        echo '<h3>Saved Fields:</h3>';
         //echo '<pre>callback_example: ' . PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
         echo '<pre>Whole thing: ';
         var_dump(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));

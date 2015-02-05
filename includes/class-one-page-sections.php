@@ -57,6 +57,8 @@ class One_Page_Sections {
 	 */
 	protected $version;
 
+	protected $sections_page;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -70,6 +72,8 @@ class One_Page_Sections {
 
 		$this->plugin_name = 'one-page-sections';
 		$this->version = '0.6.0';
+
+		$this->sections_page = 'one-page-sections';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -183,7 +187,11 @@ class One_Page_Sections {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new One_Page_Sections_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new One_Page_Sections_Public(
+			$this->get_plugin_name(),
+			$this->get_version(),
+			$this->sections_page
+		);
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
