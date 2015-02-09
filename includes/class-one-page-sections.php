@@ -137,7 +137,7 @@ class One_Page_Sections {
 		 * Include the Gamajo_Template_Loader
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/Gamajo-Template-Loader/class-gamajo-template-loader.php';
-		
+
 		/**
 		 * Include directory with included classes that extend the APF
 		 * Probably not good practice -.-

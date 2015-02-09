@@ -59,17 +59,32 @@ class PC3_SectionManagerPage_Callbacks {
     private $bIfSections = false;
 
     /**
-     * Sets up hooks and properties.
+     * @since      0.8.0
      *
-     * @since      0.7.0
+     * Object reads and writes to our custom CSS file
      */
-    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='' ) {
+    private $oCSSFileEditor;
+
+    /**
+     *
+     * @since      0.8.0
+     *
+     * @param string $sClassName                Stores the classname of the object that called this one
+     * @param string $sPageSlug                 The page slug to add the tab and form elements.
+     * @param string $sSortableFieldId          Field id for the sortable sections in our form
+     * @param string $sSubmitFieldId            Field id for the sortable sections in our form
+     * @param PC3_CSSFileEditor $oCSSFileEditor reads and writes to our custom CSS file
+     */
+    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='', PC3_CSSFileEditor $oCSSFileEditor) {
+
+        //@TODO: drop-down form
 
         $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
         $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
         //$this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+        $this->oCSSFileEditor    = $oCSSFileEditor ? $oCSSFileEditor : $this->oCSSFileEditor;
 
         // load_ + page slug
         add_action( 'load_' . $this->sPageSlug, array( $this, 'replyToLoadPage' ) );
@@ -90,6 +105,10 @@ class PC3_SectionManagerPage_Callbacks {
         // field_definition_{instantiated class name}_{section id}_{field_id}
         add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId,
             array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId ) );
+
+        //@TODO: @var __editor
+        add_filter( 'field_definition_' . $this->sClassName . '_' . 'manage_sections__editor',
+            array( $this,  'field_definition_' . $this->sClassName . '_' . 'manage_sections__editor' ) );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         //{field_id} = submit_button
@@ -158,7 +177,7 @@ class PC3_SectionManagerPage_Callbacks {
         $this->bIfSections = true;
 
         $aField['type']         = 'text';
-        $aField['description']  = sprintf( __( 'This description is inserted with the callback method: <code>%1$s</code>.', 'one-page-sections' ), __METHOD__ );
+        $aField['description']  = __( 'Reorder the sections to modify the order they appear on your page.', 'one-page-sections' );
         $aField['sortable']     = true;
 
         //first section must exist because array is not empty
@@ -183,13 +202,34 @@ class PC3_SectionManagerPage_Callbacks {
     }
 
     /**
+     * Callback method passed the content of our CSS file to fill in the form's CSS editor
+     *
+     * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
+     *
+     * @TODO Errors or something
+     *
+     * @since      0.8.0
+     * @param $aField array    the field with an id of 'manage_sections__editor'
+     * @return mixed array     the field
+     */
+    public function field_definition_PC3_SectionManagerPage_manage_sections__editor( $aField ) {
+
+        $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
+
+        if( ! empty( $sContent ) )
+            $aField['value'] = $sContent;
+
+        return $aField;
+    }
+
+    /**
      * Callback method passed the submit_button field after the Sections have (or haven't) been returned
      * If sections have been found, Submit button is usable.  Otherwise, it remains disabled
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
      * @since      0.3.0
-     * @param $aField array    the field with an id of 'submit_button'
+     * @param $aField array    the field with an id of 'manage_sections__submit'
      * @return mixed array     the field
      */
     public function field_definition_PC3_SectionManagerPage_manage_sections__submit( $aField ) {

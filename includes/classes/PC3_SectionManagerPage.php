@@ -90,7 +90,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      */
     public function setUp()
     {
-
         // Create the root menu - specifies to which parent menu to add.
 
         //wish there was some way to make this a global variable
@@ -112,11 +111,15 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             )
         );
 
+        //@TODO: This is not dependency-injected
+        $oCSSFileEditor = new PC3_CSSFileEditor( ONE_PAGE_SECTIONS_DIR . 'public/css/custom.css' );
+
         new PC3_SectionManagerPage_Callbacks(
             $this->sPageClass,
             $this->sPageSlug,
             $this->sPageSlug . $this->sSortableFieldId,
-            $this->sPageSlug . '__submit'
+            $this->sPageSlug . '__submit',
+            $oCSSFileEditor
         );
 
         //($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
@@ -124,7 +127,8 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
             $this->sPostTypeSlug,
             $this->sPageClass,
             $this->sPageSlug . $this->sSortableFieldId,
-            $this->sMetaKey
+            $this->sMetaKey,
+            $oCSSFileEditor
         );
     }
 
@@ -138,6 +142,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      */
     public function load_manage_sections($oAdminPage)
     {
+        $this->registerFieldTypes( $this->sPageClass );
 
         $this->addSettingFields(
             array( // Single Drop-down List
@@ -161,6 +166,27 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                     __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
                 'description'       => __( 'Maybe try <a href="/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
             ),
+            array(  // Ace Custom Field
+                'field_id'          => $this->sPageSlug . '__editor',
+                'title'             => __('CSS Editor', 'one-page-sections' ),
+                'description'       => __('Custom CSS goes here.', 'one-page-sections' ),
+                'type'              => 'ace',
+                //'default'           => '.abc { color: #fff; }',
+                //'repeatable'        => true,
+                // The attributes below are the defaults, i.e. if you want theses you don't have to set them
+                'attributes' =>  array(
+                    'cols'          =>  96,
+                    'rows'          =>  14,
+                ),
+                // The options below are the  defaults, i.e. if you want theses you don't have to set them
+                'options'    => array(
+                    'language'      => 'css', // available languages https://github.com/ajaxorg/ace/tree/master/lib/ace/mode
+                    'theme'         => 'dreamweaver', //available themes https://github.com/ajaxorg/ace/tree/master/lib/ace/theme
+                    'gutter'        => true,
+                    'readonly'      => false,
+                    'fontsize'      => 14,
+                )
+            ),
             array( // Submit button
                 'field_id'      => $this->sPageSlug . '__submit',
                 'type'          => 'submit',
@@ -170,6 +196,21 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
                 )
             )
         );
+    }
+
+    /**
+     * Register custom field types.
+     *
+     * @since      0.8.0
+     *
+     * @param string $sClassName    the name of this class
+     */
+    private function registerFieldTypes( $sClassName ) {
+
+        if ( ! class_exists('AceCustomFieldType') )
+            require_once ONE_PAGE_SECTIONS_DIR . 'vendor/AceCustomFieldType/AceCustomFieldType.php';
+
+        new AceCustomFieldType();
     }
 
     /**
