@@ -129,10 +129,15 @@ class One_Page_Sections {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/pc3-admin-page-framework.min.php';
 
 		/**
+		 * Include the Code Editor ACE Custom field type (extends the AdminPageFramework)
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/AceCustomFieldType/AceCustomFieldType.php';
+
+		/**
 		 * Include the Gamajo_Template_Loader
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/class-gamajo-template-loader.php';
-
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/Gamajo-Template-Loader/class-gamajo-template-loader.php';
+		
 		/**
 		 * Include directory with included classes that extend the APF
 		 * Probably not good practice -.-
