@@ -26,14 +26,7 @@ get_header(); ?>
             <div class="entry-content" id="back_to_top">
                 <?php
 
-                $aPosts = PC3_WPQueryLayer::getPosts( array(
-                    'post_type' => 'pc3_section',
-                    'orderby'   => 'meta_value_num',
-                    'meta_key'  => 'order',
-                    'order'     => 'ASC',
-                    'post_status' => 'any',
-                    'posts_per_page' => -1
-                ));
+                $aPosts = PC3_WPQueryLayer::getSectionsByOrderASC();
 
                 foreach ( $aPosts as $post ) : setup_postdata( $post );
 

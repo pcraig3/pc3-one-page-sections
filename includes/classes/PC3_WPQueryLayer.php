@@ -141,6 +141,47 @@ class PC3_WPQueryLayer {
     }
 
     /**
+     * Function returns array of Sections by meta_key 'order' from least to greatest.
+     *
+     * @since    0.8.0
+     *
+     * @return array    array of Sections
+     */
+    public static function getSectionsByOrderASC() {
+
+        //@var pc3_section / order
+        return PC3_WPQueryLayer::getPosts( array(
+            'post_type' => 'pc3_section',
+            'orderby'   => 'meta_value_num',
+            'meta_key'  => 'order',
+            'order'     => 'ASC',
+            'post_status' => 'any',
+            'posts_per_page' => -1
+        ));
+    }
+
+    /**
+     * Function returns Section with highest numeric 'order' value is returned.
+     * Section is returned in an array
+     *
+     * @since    0.8.0
+     * 
+     * @return array    array with one Section
+     */
+    public static function getSectionWithLargestOrder() {
+
+        //@var pc3_section / order
+        return PC3_WPQueryLayer::getPosts( array(
+            'post_type' => 'pc3_section',
+            'orderby'   => 'meta_value_num',
+            'meta_key'  => 'order',
+            'order'     => 'DESC',
+            'post_status' => 'any',
+            'posts_per_page' => 1
+        ) );
+    }
+
+    /**
      * Returns posts from WQ_Query.
      * Takes as a parameter an array of arguments which override the default arguments
      *

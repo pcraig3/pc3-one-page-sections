@@ -158,16 +158,7 @@ class PC3_SectionManagerPage_Callbacks {
      */
     public function field_definition_PC3_SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        //@var pc3_section
-        //@var order
-        $aPosts = PC3_WPQueryLayer::getPosts( array(
-            'post_type' => 'pc3_section',
-            'orderby'   => 'meta_value_num',
-            'meta_key'  => 'order',
-            'order'     => 'ASC',
-            'post_status' => 'any',
-            'posts_per_page' => -1
-        ) );
+        $aPosts = PC3_WPQueryLayer::getSectionsByOrderASC();
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )

@@ -98,25 +98,19 @@ class PC3_SectionPostType_MetaLayer {
             return;
 
         //Array with one result
-        $aPosts = PC3_WPQueryLayer::getPosts( array(
-            'post_type' => $this->sPostTypeSlug,
-            'orderby'   => 'meta_value_num',
-            'meta_key'  => $this->sMetaKey,
-            'order'     => 'DESC',
-            'post_status' => 'any',
-            'posts_per_page' => 1
-        ) );
+        $aSections = PC3_WPQueryLayer::getSectionWithLargestOrder();
 
-        $last_post = array_shift( $aPosts );
+        $oLastSection = array_shift( $aSections );
 
         //returns an string OR null
-        $order = get_post_meta($last_post->ID, $this->sMetaKey, true );
+        $sOrder = get_post_meta($oLastSection->ID, $this->sMetaKey, true );
 
-        update_post_meta( $post_id, $this->sMetaKey, ++$order );
+        if( ! is_null( $sOrder ) )
+            update_post_meta( $post_id, $this->sMetaKey, ++$sOrder );
     }
 
     /**
-     * @since      0.7.0
+     * @since      0.8.0
      *
      * @param $post_id
      */
@@ -127,24 +121,11 @@ class PC3_SectionPostType_MetaLayer {
 
         delete_post_meta( $post_id, $this->sMetaKey );
 
-        //at this point, get all of the current orders and then just redo the array keys
-        $aPosts = PC3_WPQueryLayer::getPosts( array(
-            'post_type' => $this->sPostTypeSlug,
-            'orderby'   => 'meta_value_num',
-            'meta_key'  => $this->sMetaKey,
-            'order'     => 'ASC',
-            'post_status' => 'any',
-            'posts_per_page' => -1
-        ) );
-
-        $_iMax = count( $aPosts );
-
-        for($i = 0; $i < $_iMax; $i++)
-            update_post_meta( $aPosts[$i]->ID, $this->sMetaKey, $i );
+        $this->reindexSections();
     }
 
     /**
-     * @since      0.7.0
+     * @since      0.8.0
      */
     public function pc3_section_submit_after_() {
 
@@ -155,8 +136,8 @@ class PC3_SectionPostType_MetaLayer {
         $_aPostIdsOrders = array_flip( $_aOrdersPostIds );
 
         //Okay, so check that all posts exist
-        //can't just use the return value of update_post_meta because of
-        //*It also returns false if the value submitted is the same as the value that is already in the database.*
+        //can't just use the return value of update_post_meta because
+        //"It also returns false if the value submitted is the same as the value that is already in the database."
         //http://codex.wordpress.org/Function_Reference/update_post_meta
 
         //if any posts _don't_ exist (maybe they were deleted after the page was loaded)
@@ -171,11 +152,31 @@ class PC3_SectionPostType_MetaLayer {
                 $_bAllPostsExist = PC3_WPQueryLayer::isPostExists( $_sPostID );
         }
 
-        //@TODO: reindex sections somehow
-        //if( ! $_bAllPostsExist )
-            //reindex sections
-
+        //re-index the sections now so that our orders are sequential
+        if( ! $_bAllPostsExist )
+            $this->reindexSections();
     }
+
+    /**
+     * Function hopes to forestall any number anomalies.  Returns all Sections (or accepts an array of sections)
+     * and sets their 'order' meta to their index in the array.
+     * This way, 'order' meta values should always be between 0 and (count( $aSections ) - 1)
+     *
+     * @since      0.8.0
+     *
+     * @param array $aSections  an array of Section Custom Post Types
+     */
+    private function reindexSections( array $aSections = array() ) {
+
+        if( empty( $aSections ) )
+            $aSections = PC3_WPQueryLayer::getSectionsByOrderASC();
+
+        $_iMax = count( $aSections );
+
+        for($i = 0; $i < $_iMax; $i++)
+            update_post_meta( $aSections[$i]->ID, $this->sMetaKey, $i );
+    }
+
 
     /**
      * @since      0.7.0
