@@ -99,17 +99,13 @@ class One_Page_Sections_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/one-page-sections-public.css', array(), $this->version, 'all' );
 
 		//@TODO: improve this, and check for empty values
-		if( is_page( $this->sections_page ) ) {
+		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
 
 			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array(), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive-old-ie', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive-old-ie.css', array(), $this->version, 'all');
 
 			wp_enqueue_style('pc3-custom', plugin_dir_url(__FILE__) . 'css/custom.css', array(), $this->version, 'all');
-
-			//hardcoding here is fine: this is the name of the fontawesome plugin's handle
-			//if (!wp_style_is('font-awesome-styles'))
-			//	wp_enqueue_style('font-awesome-styles', plugin_dir_url(__FILE__) . 'css/bower_components/fontawesome/css/font-awesome.css', array(), $this->version, 'all');
 		}
 	}
 
@@ -135,7 +131,7 @@ class One_Page_Sections_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/one-page-sections-public.js', array( 'jquery' ), $this->version, false );
 
 		//@TODO: improve this, and check for empty values
-		if( is_page( $this->sections_page ) ) {
+		if( ! empty( $this->sections_page ) &&  is_page( $this->sections_page ) ) {
 
 			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, false );
@@ -197,7 +193,7 @@ class One_Page_Sections_Public {
 
 		//@TODO: improve this, and check for empty values
 		//@var page-pc3_section.php
-		if( is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
+		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
 			$template = $this->template_loader->locate_template( 'page-pc3_section.php', false, true );
 
