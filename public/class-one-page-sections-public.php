@@ -97,7 +97,7 @@ class One_Page_Sections_Public {
 		 */
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/one-page-sections-public.css', array(), $this->version, 'all' );
 
-		//@TODO: Terrible code
+		//@TODO: improve this, and check for empty values
 		if( is_page( $this->sections_page ) ) {
 
 			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
@@ -134,7 +134,7 @@ class One_Page_Sections_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/one-page-sections-public.js', array( 'jquery' ), $this->version, false );
 
-		//@TODO: Terrible code
+		//@TODO: improve this, and check for empty values
 		if( is_page( $this->sections_page ) ) {
 
 			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
@@ -195,7 +195,7 @@ class One_Page_Sections_Public {
 	 */
 	public function set_pc3_section_template( $template ) {
 
-		//@TODO: (ahem.) If WordPress can't find a 'usc_jobs' archive template use plug-in instead:
+		//@TODO: improve this, and check for empty values
 		//@var page-pc3_section.php
 		if( is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );

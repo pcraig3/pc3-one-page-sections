@@ -40,7 +40,7 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
 
         $args = apply_filters( 'pc3_section_args', array(
             'labels'                => $labels,
-            'description'           => __( 'This is the description', 'one-page-sections' ),
+            'description'           => __( 'Sections for a one-page layout', 'one-page-sections' ),
             'public'                => false,
             'exclude_from_search'   => true,
             'publicly_queryable'    => true,

@@ -17,6 +17,8 @@ class PC3_SectionPostType_MetaBox extends PC3_AdminPageFramework_MetaBox  {
 
         global $post;
 
+        echo '<pre>';
         var_dump( get_post_meta($post->ID) );
+        echo '</pre>';
     }
 }
