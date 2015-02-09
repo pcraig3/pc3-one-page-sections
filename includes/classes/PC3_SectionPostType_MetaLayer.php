@@ -76,7 +76,8 @@ class PC3_SectionPostType_MetaLayer {
             return;
 
         //don't fire if post already has an 'order' meta parameter
-        if( get_post_meta( $post_id, $this->sMetaKey, true ) )
+        //CHECK FOR THE STRING LENGTH BECAUSE '0' IS A VALID ORDER VALUE
+        if( strlen( get_post_meta( $post_id, $this->sMetaKey, true ) ) > 0 )
             return;
 
         //Array with one result
