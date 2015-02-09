@@ -3,7 +3,7 @@
  * AceCustomFieldType, for the  Admin Page Framework by Michael Uno, is written by Per Soderlind - http://soderlind.no
  */
 if ( ! class_exists( 'AceCustomFieldType' ) ) :
-class AceCustomFieldType extends AdminPageFramework_FieldType {
+class AceCustomFieldType extends PC3_AdminPageFramework_FieldType {
 
     /**
      * Defines the field type slugs used for this field type.
