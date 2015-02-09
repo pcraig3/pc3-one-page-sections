@@ -187,17 +187,9 @@ class PC3_SectionPostType_MetaLayer {
 
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
-
-
-        if ( ! empty( $_sEditorRules ) && ( esc_textarea($sContent) === $_sEditorRules ) ) {
-           $this->writeToCustomCSSFile( esc_textarea($sContent) );
-        }
-
-
-        if ( esc_textarea($sContent)  === $_sEditorRules) {
-
-            var_dump( 'SAME' );die();
-        }
+        //@TODO maybe a callback method on success
+        if ( ! empty( $_sEditorRules ) && ( $sContent !== $_sEditorRules ) )
+            $this->oCSSFileEditor->writeToCustomCSSFile( esc_url($sContent) );
 
     }
 }

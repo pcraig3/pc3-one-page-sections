@@ -105,8 +105,7 @@ class One_Page_Sections_Public {
 			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array(), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive-old-ie', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive-old-ie.css', array(), $this->version, 'all');
 
-			wp_enqueue_style('pc3-marketing', plugin_dir_url(__FILE__) . 'css/marketing.css', array(), $this->version, 'all');
-			wp_enqueue_style('pc3-marketing-old-ie', plugin_dir_url(__FILE__) . 'css/marketing-old-ie.css', array(), $this->version, 'all');
+			wp_enqueue_style('pc3-custom', plugin_dir_url(__FILE__) . 'css/custom.css', array(), $this->version, 'all');
 
 			//hardcoding here is fine: this is the name of the fontawesome plugin's handle
 			//if (!wp_style_is('font-awesome-styles'))
