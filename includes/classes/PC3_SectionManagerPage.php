@@ -86,7 +86,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * Here we define the setup() method to set how many pages, page titles and icons etc.
      *
-     * @since      0.7.0
+     * @since      0.8.0
      */
     public function setUp()
     {
@@ -138,7 +138,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * Here we add form fields.
      *
-     * @since      0.7.0
+     * @since      0.8.0
      */
     public function load_manage_sections($oAdminPage)
     {
@@ -218,18 +218,11 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
      *
      * ie, do_{page slug}
      *
-     * @since      0.3.0
+     * @since      0.8.0
      */
     public function do_manage_sections()
     {
         // Show the saved option value.
-        // The extended class name is used as the option key. This can be changed by passing a custom string to the constructor.
-        echo '<h3>Saved Fields</h3>';
-        //echo '<pre>callback_example: ' . PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'callback_example', 'default value') . '</pre>';
-        echo '<pre>Whole thing: ';
-        var_dump(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));
-        echo '</pre>';
-
         echo '<h3>Show all the options as an array</h3>';
         echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));
     }

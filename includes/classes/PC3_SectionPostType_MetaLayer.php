@@ -81,7 +81,7 @@ class PC3_SectionPostType_MetaLayer {
     }
 
     /**
-     * @since      0.7.0
+     * @since      0.8.0
      *
      * @param $post_id
      */
@@ -179,7 +179,7 @@ class PC3_SectionPostType_MetaLayer {
 
 
     /**
-     * @since      0.7.0
+     * @since      0.8.0
      */
     public function pc3_section_submit_after_css() {
 

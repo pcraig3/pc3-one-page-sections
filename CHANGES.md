@@ -1,3 +1,11 @@
+#### 0.8.0
+* Added `pc3_section_link` shortcode to return on-page hashtag links to other Sections 
+* Added method to return Sections by `ID`, by `post_name`, or by `post_title`
+* Added Code Editor [AceCustomFieldType](https://github.com/soderlind/AceCustomFieldType) which extends the [AdminPageFramework](https://wordpress.org/plugins/admin-page-framework/)
+* Added ability to edit custom CSS code from the Admin Dashboard
+* Fixed small bug when updating 'order' meta values
+* Hardened 'order' meta value logic
+
 #### 0.7.1
 * Removed Composer's vendor directory and instead just manually added two files :(
 * [GitHub Updater](https://github.com/afragen/github-updater) was breaking my site because composer was using a git submodule for my vendors 

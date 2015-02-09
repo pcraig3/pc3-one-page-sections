@@ -33,7 +33,24 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 (or jpg, jpeg, gif).
 2. This is the second screen shot
 
+== TODOs ==
+
+* Hide metaboxes and editor in selected Page, as content is no longer used.
+* Section URLs redirect to index, or to page with sections.
+* Use a variable for Section templates?
+* Hunt down the TODOs -- mostly this means more in-code documentation
+* grunt or something.
+* Maybe use Archives page? (and not be able to extend plugin?)
+
 == Changelog ==
+
+#### 0.8.0
+* Added `pc3_section_link` shortcode to return on-page hashtag links to other Sections 
+* Added method to return Sections by `ID`, by `post_name`, or by `post_title`
+* Added Code Editor [AceCustomFieldType](https://github.com/soderlind/AceCustomFieldType) which extends the [AdminPageFramework](https://wordpress.org/plugins/admin-page-framework/)
+* Added ability to edit custom CSS code from the Admin Dashboard
+* Fixed small bug when updating 'order' meta values
+* Hardened 'order' meta value logic
 
 #### 0.7.1
 * Removed Composer's vendor directory and instead just manually added two files :(

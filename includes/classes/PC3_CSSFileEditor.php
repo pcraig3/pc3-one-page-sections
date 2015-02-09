@@ -7,8 +7,14 @@
  */
 class PC3_CSSFileEditor {
 
+	/**
+	 * @since      0.8.0
+	 */
 	private $sFilename;
 
+	/**
+	 * @since      0.8.0
+	 */
 	function __construct( $_sFilename ) {
 
 		if( ! file_exists( $_sFilename ) )
@@ -17,6 +23,9 @@ class PC3_CSSFileEditor {
 		$this->sFilename = $_sFilename;
 	}
 
+	/**
+	 * @since      0.8.0
+	 */
 	public function readContentOfCustomCSSFile() {
 
 		$oFileHandler = $this->getSplFileObject( 'r' );
@@ -31,6 +40,9 @@ class PC3_CSSFileEditor {
 		return $sContent;
 	}
 
+	/**
+	 * @since      0.8.0
+	 */
 	public function writeToCustomCSSFile( $sContent ) {
 
 		if( strlen( $sContent ) < 1 )
@@ -44,6 +56,9 @@ class PC3_CSSFileEditor {
 		return $iWritten;
 	}
 
+	/**
+	 * @since      0.8.0
+	 */
 	private function getSplFileObject( $prefix ) {
 
 		return new SplFileObject( $this->sFilename, $prefix );

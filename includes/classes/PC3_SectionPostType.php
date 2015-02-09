@@ -19,7 +19,7 @@ class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
     /**
      * Automatically called with the 'wp_loaded' hook.
      *
- 	 * @since    0.2.0
+ 	 * @since    0.8.0
      */
     public function setUp() {
 

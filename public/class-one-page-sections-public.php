@@ -81,7 +81,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.7.0
+	 * @since    0.8.0
 	 */
 	public function enqueue_styles() {
 
@@ -112,7 +112,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.7.0
+	 * @since    0.8.0
 	 */
 	public function enqueue_scripts() {
 
@@ -184,7 +184,7 @@ class One_Page_Sections_Public {
 	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L192
 	 * @author  Stephen Harris
 	 *
-	 * @since    0.7.0
+	 * @since    0.8.0
 	 *
 	 * @param string $template Absolute path to template
 	 * @return string Absolute path to template

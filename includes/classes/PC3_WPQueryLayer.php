@@ -165,7 +165,7 @@ class PC3_WPQueryLayer {
      * Section is returned in an array
      *
      * @since    0.8.0
-     * 
+     *
      * @return array    array with one Section
      */
     public static function getSectionWithLargestOrder() {
@@ -219,5 +219,4 @@ class PC3_WPQueryLayer {
 
         return $_oResults->posts;
     }
-
 }
