@@ -70,6 +70,7 @@ class One_Page_Sections_Public {
 		$this->template_loader = new PC3_TemplateLoader();
 
 		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
+		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_return_link') );
 
 		$_sPageID = PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'manage_sections__sections_page');
 
@@ -215,5 +216,77 @@ class One_Page_Sections_Public {
 
 		//@var post-pc3_section.php
 		return $this->template_loader->locate_template( 'post-pc3_section.php', true, false );
+	}
+
+	/**
+	 * Method returns hashtag links to other sections on the same page.
+	 * Intended to be used as part of 'pc3_section_link' shortcode
+	 *
+	 * Will return link formatted '#pc3_section__{post_name}' if atts['section'] contains
+	 * the ID, post_title, or post_name of a valid section
+	 *
+	 * Defaults to returning HTML code for anchor tag, but can be set to return just the link
+	 *
+	 * Sets the link text to the Section Title if section is found and $content is empty
+	 *
+	 * title, class, and rel attributes can be passed in
+	 *
+	 * @since    0.8.0
+	 *
+	 * @param array $atts   array of values passed into our shortcode
+	 * @param null $content link text for our anchor tag
+	 *
+	 * @return string       an anchor tag or just a hashtag 'href' string
+	 */
+	public function pc3_section_return_link( $atts, $content = null ) {
+
+		//@var pc3_section
+		$atts = shortcode_atts( array(
+			'section' => '',
+			'class' => '',
+			'title' => '',
+			'rel' => '',
+			'class_not_found' => 'pc3_section--not-found',
+			'href' => '0',
+		), $atts );
+
+		$sSection = esc_sql( $atts['section'] );
+		$sContent =  esc_html( $content );
+
+
+		//if no section to look for, don't bother doing the query
+		if( empty( $sSection ) )
+			return '<a class="pc3_section--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+
+		$aFoundSectionArray = PC3_WPQueryLayer::getSectionByTitleOrID( $sSection );
+
+		//if no post is returned, return an empty link
+		if( empty( $aFoundSectionArray ) )
+			return '<a class="pc3_section--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+
+		//else, at this point we have a section.
+		$aSection = array_shift( $aFoundSectionArray );
+
+		//if no content, post_title will be used
+		if( empty( $sContent ) )
+			$sContent = esc_html( $aSection->post_title );
+
+		$sHref = '#pc3_section__' . esc_attr( $aSection->post_name );
+		$sClasses = 'pc3_section--link ' . esc_attr( $atts['class'] );
+		$sTitle = esc_attr( $atts['title'] );
+		$sRel = esc_attr( $atts['rel'] );
+
+		if( $atts['href'] === "true" || intval($atts['href']) !== 0 )
+			return $sHref;
+
+		$sAnchor = '<a ';
+		$sAnchor .= 'href="' . $sHref . '" ';
+		$sAnchor .= 'class="' .$sClasses . '" ';
+		$sAnchor .= $sTitle ? 'title="' . $sTitle . '" ' : '';
+		$sAnchor .= $sRel ? 'rel="' . $sRel . '" ' : '';
+
+		$sAnchor .= '>' . $sContent . '</a>';
+
+		return $sAnchor;
 	}
 }

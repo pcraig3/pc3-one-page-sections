@@ -20,5 +20,9 @@ class PC3_SectionPostType_MetaBox extends PC3_AdminPageFramework_MetaBox  {
         echo '<pre>';
         var_dump( get_post_meta($post->ID) );
         echo '</pre>';
+
+        echo '<pre>';
+        var_dump( PC3_WPQueryLayer::getSectionByTitleOrID( 1938 ) );
+        echo '</pre>';
     }
 }

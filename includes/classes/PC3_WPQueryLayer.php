@@ -10,72 +10,118 @@
 class PC3_WPQueryLayer {
 
     /**
-     * @TODO
+     * Function returns one sections by post.ID or post.post_title or post.post_name
+     *
+     * In case of a collision between ID, post_title, and post_names:
+     * - matching post_name is returned first
+     * - matching post_title is returned second
+     * - matching post_id is returned last
+     *
+     * Probably this is an unlikely practical scenario, however
      *
      * @see: http://wordpress.stackexchange.com/questions/18703/wp-query-with-post-title-like-something
      *
-     * @param $_sSectionTitleOrID
+     * @since    0.8.0
      *
-     * @return WP_Query
+     * @param string $_sSectionTitleOrID    a post ID or name or title
+     *
+     * @return array                        an array with one post if one is matched, else an empty array
      */
     public static function getSectionByTitleOrID( $_sSectionTitleOrID ) {
-
-        //if numeric, check postID AND title
-
-        //else, only check title.
 
         //@var pc3_section
         $args = array(
             'post_type' => 'pc3_section',
             'posts_per_page' => 1,
-            'pc3_section__title' => $_sSectionTitleOrID,
+            'pc3_section__post_title' => $_sSectionTitleOrID,
+            'pc3_section__post_name' => $_sSectionTitleOrID,
             'post_status' => 'any',
-            'orderby'     => 'title',
-            'order'       => 'ASC'
         );
 
+        //if numeric, check postID AND title
         if( is_numeric( $_sSectionTitleOrID ) )
-            $args['pc3_section__id'] = $_sSectionTitleOrID;
+            $args['pc3_section__ID'] = $_sSectionTitleOrID;
 
-        add_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'title_filter'), 10, 2 );
+        add_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'whereClauseFilter'), 10, 2 );
         $wp_query = new WP_Query($args);
-        remove_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'title_filter'), 10, 2 );
+        remove_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'whereClauseFilter'), 10, 2 );
 
         return $wp_query->posts;
     }
 
-
     /**
-     * @TODO
+     * Function modifies the WHERE clause of WP_Query so that we can return one
+     * Section by post.ID or post.post_title or post.post_name
      *
      * @see: http://wordpress.stackexchange.com/questions/18703/wp-query-with-post-title-like-something
      *
-     * @param $where
-     * @param $wp_query
+     * @since    0.8.0
      *
-     * @return string
+     * @param string $where     where clause for wp_query before execution
+     * @param object $wp_query  object executes queries on WP database
+     *
+     * @return string           modified or original where clause
      */
-    public static function title_filter($where, &$wp_query){
-
-        //if numeric, check postID AND title
+    public static function whereClauseFilter($where, &$wp_query){
 
         global $wpdb;
 
-        $where .= ' AND ';
+        $aSectionQueryKeys = array(
+            'pc3_section__ID',
+            'pc3_section__post_title',
+            'pc3_section__post_name'
+        );
 
-        if($id_to_match = $wp_query->get( 'pc3_section__id' )){
-            $id_to_match = esc_sql( $id_to_match );
-            $id_to_match = ' \'' . $id_to_match . '\'';
-            $where .= $wpdb->posts . '.ID = '.$id_to_match . ' OR ';
-        }
+        $aWhereClauseExtensions = array();
 
-        if($title_to_match = $wp_query->get( 'pc3_section__title' )){
-            $title_to_match = esc_sql( $title_to_match );
-            $title_to_match = ' \'' . $title_to_match . '\'';
-            $where .= $wpdb->posts . '.post_title = '. $title_to_match;
-        }
+        foreach( $aSectionQueryKeys as $sQueryKey )
+            //if a value has been assigned to our custom key (ie, in the getSectionByTitleOrID method above)
+            if( $sValue = $wp_query->get( $sQueryKey ) )
+                //either returns a where clause or an empty string
+                if( $sWhereClause = PC3_WPQueryLayer::returnWhereClauseExtension( $sQueryKey, $sValue ) )
+                    array_push( $aWhereClauseExtensions, $sWhereClause );
+
+        //extend where clause if $aWhereClauseExtensions is not empty
+        if( ! empty( $aWhereClauseExtensions ) )
+            $where .= ' AND ( ' . implode( ' OR ', $aWhereClauseExtensions ) . ' ) ';
 
         return $where;
+    }
+
+    /**
+     * Function takes a custom-set WP_Query array key and the value returned by the key, and
+     * returns a string we can use to extend our WHERE clause.
+     * If either parameter is empty, function returns an empty string.
+     * If $_sQueryKey isn't formatted {post_type}__{post_attr}, function either returns empty string
+     * or a meaningless where clause extension
+     *
+     * @since    0.8.0
+     *
+     * @param string $_sQueryKey    a custom WP_Query array key, formatted {post_type}__{post_attr}
+     * @param string $_sValue       value assigned to WQ_Query[$_sQueryKey]
+     *
+     * @return string               an properly formatted extension of the WHERE clause
+     */
+    private static function returnWhereClauseExtension( $_sQueryKey, $_sValue ) {
+
+        global $wpdb;
+
+        //if either of the passed-in values are empty strings, then exit
+        if( $_sQueryKey === '' or $_sValue === '' )
+            return '';
+
+        $_aQueryKey = explode('__', $_sQueryKey);
+
+        //if passed_in $_sSectionQueryKey isn't formatted like 'pc3_section__ID', then exit
+        if( count( $_aQueryKey ) < 2 )
+            return '';
+
+        $_sPostAttribute = array_pop( $_aQueryKey );
+
+        $_sValue = esc_sql( $_sValue );
+        $_sValue = ' \'' . $_sValue . '\'';
+
+        return $wpdb->posts . '.' . $_sPostAttribute  . ' = '. $_sValue;
     }
 
     /**
