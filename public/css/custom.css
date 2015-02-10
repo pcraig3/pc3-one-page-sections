@@ -46,6 +46,17 @@
     box-sizing: border-box;
 }
 
+#orbit #featured {
+    
+    height: auto;
+    display: none;
+}
+
+.full-height {
+    min-height: 100vh;
+    height: auto !important;
+}
+
 /* DEBUG */
 .pc3_section__wrapper .debug * {
     outline: 1px yellow solid;
@@ -104,10 +115,6 @@
  * I want to customize how my .pure-menu looks at the top of the page
  */
 
-.home-menu {
-
-}
-
 
 /*
  * -- SPLASH STYLES --
@@ -155,6 +162,7 @@
 .pc3_section__wrapper .splash__title h2 {
     font-family: 'lavanderia_sturdy', cursive;
     text-transform: lowercase;
+    font-weight: normal;
 }
 
 .pc3_section__wrapper .splash__title--mm h2 {
