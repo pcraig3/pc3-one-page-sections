@@ -189,10 +189,9 @@ class PC3_SectionPostType_MetaLayer {
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
         //@TODO maybe a callback method on success
-        //esc_html removes '&' symbols and '"' (quote) symbols.
-        //we'll see if this becomes a problem.
+        //@TODO sanitize CSS content?
         if ( ! empty( $_sEditorRules ) && ( $sContent !== $_sEditorRules ) )
-            $this->oCSSFileEditor->writeToCustomCSSFile( esc_html( $_sEditorRules ) );
+            $this->oCSSFileEditor->writeToCustomCSSFile( $_sEditorRules );
 
 
     }

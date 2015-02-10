@@ -23,7 +23,7 @@ get_header(); ?>
 
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            <div class="entry-content" id="back_to_top">
+            <div class="entry-content pc3_section__wrapper" id="back_to_top">
                 <?php
 
                 $aPosts = PC3_WPQueryLayer::getSectionsByOrderASC();

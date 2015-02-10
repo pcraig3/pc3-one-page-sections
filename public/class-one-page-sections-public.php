@@ -284,4 +284,20 @@ class One_Page_Sections_Public {
 
 		return $sAnchor;
 	}
+
+	/**
+	 *
+	 * @since    0.8.0
+	 *
+	 * @param $content
+	 *
+	 * @return mixed
+	 */
+	function pc3_remove_autop_for_posttype( $content )
+	{
+		# edit the post type here
+		//@var pc3_section
+		'pc3_section' === get_post_type() && remove_filter( 'the_content', 'wpautop' );
+		return $content;
+	}
 }

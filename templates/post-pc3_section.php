@@ -8,6 +8,11 @@
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/templates
  */
+
+global $post
 ?>
+
+<section class="pc3_section pc3_section__<?php echo $post->post_name; ?>" id="pc3_section__<?php echo $post->post_name; ?>">
    <?php the_content(); ?>
+</section>
 

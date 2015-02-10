@@ -207,6 +207,7 @@ class One_Page_Sections {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
+		$this->loader->add_filter( 'the_content', $plugin_public, 'pc3_remove_autop_for_posttype', 0 );
 	}
 
 	/**
