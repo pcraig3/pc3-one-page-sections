@@ -132,6 +132,11 @@
     background: rgb(0, 102, 203);
 }
 
+.color--white {
+
+    color: rgb(255, 255, 255);
+}
+
 .bg--white {
 
     background: rgb(255, 255, 255);
@@ -206,7 +211,6 @@
  */
 
 .pc3_section__wrapper .splash {
-    background: rgb(0, 102, 203); /* bg--blue */
     /* The following styles are required for the "scroll-over" effect */
     width: 100%;
     height: 600px;
@@ -217,10 +221,14 @@
     padding: 8em 0;
 }
 
-.pc3_section__wrapper .splash__title {
+
+.pc3_section__wrapper .splash__title,
+.pc3_section__wrapper .summary [class^="summary--"],
+.pc3_section__wrapper .video,
+.pc3_section__wrapper .resources [class^="resources--"] {
 
     text-align: center;
-    margin: 1em 0;
+    padding-top: 1.2em;
 }
 
 .pc3_section__wrapper .center-vertical {
@@ -278,7 +286,6 @@
 .pc3_section__wrapper .splash__title h2 {
 
     line-height: 96px;
-    color: white;
     margin: 0;
     font-size: 96px;
 }
@@ -302,18 +309,6 @@
     padding: 0 24px;
 }
 
-
-.pc3_section__wrapper .summary {
-
-    background: rgb(253, 243, 207); /* color--cream */
-}
-
-.pc3_section__wrapper .summary [class^="summary--"] {
-
-    text-align: center;
-    padding-top: 1.2em;
- }
-
 .pc3_section__wrapper .summary .summary--b {
 
     padding-bottom: 1.2em;
@@ -322,7 +317,6 @@
 .pc3_section__wrapper .summary--t h2 {
 
     padding: 0 10%;
-    color: #FFFFFF;
     font-size: 48px;
     text-transform: uppercase;
 }
@@ -339,7 +333,6 @@
 
 .pc3_section__wrapper .note {
 
-    color: #ffffff;
     position: relative;
     padding: 1em 1.5em;
     /* background: #97C02F; */
@@ -403,17 +396,10 @@
 
 }
 
-.pc3_section__wrapper .video {
-
-    text-align: center;
-}
-
 .pc3_section__wrapper .video__title {
 
     font-size: 96px;
-    color: #ffffff;
 }
-
 
 .pc3_section__wrapper .video__container {
 
@@ -431,17 +417,84 @@
     height: 100%;
 }
 
-/* This is the class used for the dark-background areas. */
-.ribbon {
-    background: #2d3e50;
-    color: #aaa;
+.pc3_section__wrapper .resources--t h2 {
+
+    padding: 0 10%;
+    font-size: 48px;
+    text-transform: uppercase;
 }
 
-/* This is the class used for the footer */
-.footer {
-    background: #111;
+.pc3_section__wrapper .resources--t .triangle {
+    width: 0;
+    height: 0;
+    border-top: 36px solid transparent;
+    border-bottom: 36px solid transparent;
+
+    position: absolute;
+    z-index: 15;
 }
 
+.pc3_section__wrapper .resources--t .triangle--l {
+
+    border-left: 36px solid rgb(253, 243, 207);
+    left: 0;
+}
+
+.pc3_section__wrapper .resources--t .triangle--r {
+
+    border-right: 36px solid rgb(253, 243, 207);
+    right: 0;
+}
+
+.pc3_section__wrapper .resources--m ul {
+
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-align: left;
+}
+
+.pc3_section__wrapper .resources .subhead {
+
+    padding: 0 10%;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+.pc3_section__wrapper .resources--m  a,
+.pc3_section__wrapper .resources--m  i {
+
+    font-size: 20px;
+    line-height: 19px;
+}
+
+.pc3_section__wrapper .resources--m  a {
+
+    display: block;
+    background: rgb(86, 196, 196);
+    color: #ffffff;
+    margin-bottom: .5em;
+    padding-right: .5em;
+}
+
+.pc3_section__wrapper .resources--m a i {
+
+    display: inline-block;
+    padding: .5em;
+    color: rgb(86, 196, 196);
+    background: rgb(0, 102, 203);
+}
+
+
+/* salmon: color: rgb(255, 77, 101); */
+
+ /* teal: color: rgb(86, 196, 196); */
+
+  /* cream:  color: rgb(253, 243, 207); */
+
+   /* blue:  color: rgb(0, 102, 203); */
+
+    /* white: color: rgb(255, 255, 255); */
 
 
 /*
