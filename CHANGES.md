@@ -1,3 +1,6 @@
+#### 0.8.1
+* Lots of CSS changes.  Added some fonts.  Basically, just bad practice stuff.
+
 #### 0.8.0
 * Added `pc3_section_link` shortcode to return on-page hashtag links to other Sections 
 * Added method to return Sections by `ID`, by `post_name`, or by `post_title`

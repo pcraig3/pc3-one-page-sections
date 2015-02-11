@@ -311,12 +311,12 @@
 .pc3_section__wrapper .summary [class^="summary--"] {
 
     text-align: center;
-    padding-top: 2em;
+    padding-top: 1.2em;
  }
 
 .pc3_section__wrapper .summary .summary--b {
 
-    padding-bottom: 2em;
+    padding-bottom: 1.2em;
 }
 
 .pc3_section__wrapper .summary--t h2 {
@@ -403,41 +403,32 @@
 
 }
 
-/* This is the class used for the main content headers (<h2>) */
-.content-head {
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 2em 0 1em;
+.pc3_section__wrapper .video {
+
+    text-align: center;
 }
 
-/* This is a modifier class used when the content-head is inside a ribbon */
-.content-head-ribbon {
-    color: white;
+.pc3_section__wrapper .video__title {
+
+    font-size: 96px;
+    color: #ffffff;
 }
 
-/* This is the class used for the content sub-headers (<h3>) */
-.content-subhead {
-    color: #1f8dd6;
-}
-.content-subhead i {
-    margin-right: 7px;
-}
 
-.entry-content .section__video-container {
-    background: #ececec;
+.pc3_section__wrapper .video__container {
+
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
     padding-top: 25px;
     height: 0;
 }
 
-.entry-content .section__video-container iframe {
+.pc3_section__wrapper .video__container iframe {
     position: absolute;
-    top: 5%;
-    left: 3%;
-    width: 94%;
-    height: 90%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* This is the class used for the dark-background areas. */
