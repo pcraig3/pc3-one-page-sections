@@ -102,13 +102,13 @@ class One_Page_Sections_Public {
 		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
 
 			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
-			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array(), $this->version, 'all');
-			wp_enqueue_style('pure-grids-responsive-old-ie', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive-old-ie.css', array(), $this->version, 'all');
+			wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array( 'pure' ), $this->version, 'all');
+			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array( 'pure', 'pure-grids' ), $this->version, 'all');
 
-			wp_enqueue_style('pc3-custom', plugin_dir_url(__FILE__) . 'css/custom.css', array(), $this->version, 'all');
+			wp_enqueue_style('pc3-custom', plugin_dir_url(__FILE__) . 'css/custom.css', array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
 
 			//@TODO Not the best place for this
-			remove_action( 'wp_enqueue_scripts', 'include_slider_scripts' );
+			//remove_action( 'wp_enqueue_scripts', 'include_slider_scripts' );
 			remove_action( 'wp_footer', 'orbit_functioncall', 1000 );
 		}
 	}
