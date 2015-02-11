@@ -138,7 +138,7 @@ class One_Page_Sections_Public {
 		if( ! empty( $this->sections_page ) &&  is_page( $this->sections_page ) ) {
 
 			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, false );
+			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, true );
 
 			wp_enqueue_script( 'jquery-sticky', plugin_dir_url( __FILE__ ) . 'js/bower_components/jquery-sticky/jquery.sticky.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( 'pc3-sticky', plugin_dir_url( __FILE__ ) . 'js/sticky.js', array( 'jquery', 'jquery-sticky' ), $this->version, false );

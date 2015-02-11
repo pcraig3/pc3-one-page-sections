@@ -206,6 +206,11 @@
 .home-menu {
 
     text-align: center;
+    z-index: 100;
+}
+
+#jquery-sticky {
+    z-index: 100;
 }
 
 /*
@@ -352,7 +357,7 @@
     left: 0;
     border-width: 0 30px 30px 0;
     border-style: solid;
-    border-color: rgb(86, 196, 196) rgb(86, 196, 196) rgb(253, 243, 207) rgb(253, 243, 207); /* color--teal *2  color--cream *2 */
+    border-color: rgb(86, 196, 196) rgb(86, 196, 196) #FFFFFF #FFFFFF; /* color--teal *2  color--white *2 */
     background: rgb(86, 196, 196);
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
     -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.3), -1px 1px 1px rgba(0,0,0,0.2);
@@ -439,13 +444,13 @@
 
 .pc3_section__wrapper .resources--t .triangle--l {
 
-    border-left: 36px solid rgb(253, 243, 207);
+    border-left: 36px solid #FFFFFF;
     left: 0;
 }
 
 .pc3_section__wrapper .resources--t .triangle--r {
 
-    border-right: 36px solid rgb(253, 243, 207);
+    border-right: 36px solid #FFFFFF;
     right: 0;
 }
 

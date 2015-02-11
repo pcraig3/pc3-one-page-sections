@@ -17,8 +17,7 @@
         var $admin_bar = $('#wpadminbar');
 
         if ( $admin_bar )
-            offset = $admin_bar.height();
-
+            offset += $admin_bar.height();
 
         $("#jquery-sticky").sticky({topSpacing:offset});
 
