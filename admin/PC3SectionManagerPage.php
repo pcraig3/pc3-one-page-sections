@@ -21,7 +21,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @since   0.7.0
      * @var     string
      */
-    private $sPageSlug = 'manage_sections';
+    private $sPageSlug;
 
     /**
      * The slug for our custom post type (Sections)
@@ -29,7 +29,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @since   0.7.0
      * @var     string
      */
-    private $sPostTypeSlug = 'pc3_section';
+    private $sCustomPostTypeSlug;
 
     /**
      * The field_id for our sortable field (hopefully to be filled with Sections).
@@ -45,7 +45,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @since   0.7.0
      * @var     string
      */
-    private $sMetaKey = 'order';
+    private $sMetaKey;
 
     /**
      * The name of this class
@@ -59,11 +59,11 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @since   0.7.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
-     * @param string $sPostTypeSlug     The slug for our custom post type (Sections)
+     * @param string $sCustomPostTypeSlug     The slug for our custom post type (Sections)
      * @param string $sSortableFieldId  The field_id for our sortable field
      * @param string $sMetaKey          The meta key name to keep track of the order in which our sortable fields should be rendered
      */
-    function __construct($sPageSlug='', $sPostTypeSlug='', $sSortableFieldId='', $sMetaKey='') {
+    function __construct($sPageSlug, $sCustomPostTypeSlug, $sSortableFieldId='', $sMetaKey) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -73,10 +73,10 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
             'admin-page-framework'
         );
 
-        $this->sPageSlug        = $sPageSlug ? $sPageSlug : $this->sPageSlug;
-        $this->sPostTypeSlug    = $sPostTypeSlug ? $sPostTypeSlug : $this->sPostTypeSlug;
+        $this->sPageSlug = $sPageSlug;
+        $this->sCustomPostTypeSlug = $sCustomPostTypeSlug;
         $this->sSortableFieldId = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
-        $this->sMetaKey         = $sMetaKey ? $sMetaKey : $this->sMetaKey;
+        $this->sMetaKey = $sMetaKey;
 
         $this->sPageClass       = get_class($this);
     }
@@ -91,11 +91,8 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
     public function setUp()
     {
         // Create the root menu - specifies to which parent menu to add.
-
-        //wish there was some way to make this a global variable
-        //@var pc3_section
-        if (post_type_exists( $this->sPostTypeSlug ))
-            $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sPostTypeSlug );
+        if (post_type_exists( $this->sCustomPostTypeSlug ))
+            $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sCustomPostTypeSlug );
         else
             $this->setRootMenuPage('Settings');
 
@@ -122,9 +119,9 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
             $oCSSFileEditor
         );
 
-        //($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
+        //($sCustomPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
         new Admin_PC3SectionPostTypeMetaLayer(
-            $this->sPostTypeSlug,
+            $this->sCustomPostTypeSlug,
             $this->sPageClass,
             $this->sPageSlug . $this->sSortableFieldId,
             $this->sMetaKey,

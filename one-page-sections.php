@@ -94,26 +94,6 @@ function run_one_page_sections() {
 
 	$plugin = new One_Page_Sections();
 
-	if ( class_exists( 'PC3_AdminPageFramework' ) ) {
-
-		//@var pc3_section
-		new Public_PC3SectionPostType('pc3_section');
-		new Admin_PC3SectionPostTypeMetaBox(
-			null,   // meta box ID - can be null.
-			__( 'Debug', 'one-page-sections' ), // title
-			array( 'pc3_section' ),             // post type slugs: post, page, etc.
-			'side',                             // context
-			'default'                           // priority
-		);
-
-		new Admin_PC3SectionManagerPage(
-			'manage_sections',
-			'pc3_section',
-			'__sections',
-			'order'
-			);
-	}
-
 	$plugin->run();
 }
 run_one_page_sections();

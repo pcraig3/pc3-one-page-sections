@@ -53,19 +53,23 @@ class One_Page_Sections_Public {
 
 	private $sections_page;
 
+    private $container;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.7.0
 	 * @var      string    $plugin_name     The name of the plugin.
 	 * @var      string    $version    		The version of this plugin.
-	 * @var 	 string    $sections_page 	The id or slug of the page to use for displaying our sections
+     * @var 	 string    $sections_page 	The id or slug of the page to use for displaying our sections
+     * @var 	 Lib_PC3Container    $container 	    Depenency injection and variable knower-abouter.
 	 */
-	public function __construct( $plugin_name, $version, $sections_page ) {
+	public function __construct( $plugin_name, $version, $sections_page, Lib_PC3Container $container ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->sections_page;
+        $this->container = $container;
 
 		$this->template_loader = new Lib_PC3TemplateLoader();
 
@@ -107,8 +111,7 @@ class One_Page_Sections_Public {
 
 			wp_enqueue_style('pc3-custom', plugin_dir_url(__FILE__) . 'css/custom.css', array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
 
-			//@TODO Not the best place for this
-			//remove_action( 'wp_enqueue_scripts', 'include_slider_scripts' );
+			//@TODO GET RID OF THIS
 			remove_action( 'wp_footer', 'orbit_functioncall', 1000 );
 		}
 	}
@@ -169,7 +172,7 @@ class One_Page_Sections_Public {
 		switch($context):
 			case 'page';
 			//@var page-pc3_section.php
-			return $template === 'page-pc3_section.php';
+			return $template === $this->container->getParameter('template__page');
 			//case 'archive':
 			//	return $template === 'archive-usc_jobs.php';
 
@@ -202,7 +205,7 @@ class One_Page_Sections_Public {
 		//@var page-pc3_section.php
 		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
-			$template = $this->template_loader->locate_template( 'page-pc3_section.php', false, true );
+			$template = $this->template_loader->locate_template( $this->container->getParameter('template__page'), false, true );
 
 		return $template;
 	}
@@ -217,7 +220,7 @@ class One_Page_Sections_Public {
 	public function pc3_locate_template() {
 
 		//@var post-pc3_section.php
-		return $this->template_loader->locate_template( 'post-pc3_section.php', true, false );
+		return $this->template_loader->locate_template( $this->container->getParameter('template__post'), true, false );
 	}
 
 	/**
@@ -242,13 +245,14 @@ class One_Page_Sections_Public {
 	 */
 	public function pc3_section_return_link( $atts, $content = null ) {
 
-		//@var pc3_section
+        $custom_post_type_name = $this->container->getParameter('custom_post_type__slug');
+
 		$atts = shortcode_atts( array(
 			'section' => '',
 			'class' => '',
 			'title' => '',
 			'rel' => '',
-			'class_not_found' => 'pc3_section--not-found',
+			'class_not_found' => $custom_post_type_name . '--not-found',
 			'href' => '0',
 		), $atts );
 
@@ -258,13 +262,13 @@ class One_Page_Sections_Public {
 
 		//if no section to look for, don't bother doing the query
 		if( empty( $sSection ) )
-			return '<a class="pc3_section--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+			return '<a class="' . $custom_post_type_name . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
 		$aFoundSectionArray = Lib_PC3WPQueryFacade::getSectionByTitleOrID( $sSection );
 
 		//if no post is returned, return an empty link
 		if( empty( $aFoundSectionArray ) )
-			return '<a class="pc3_section--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+			return '<a class="' . $custom_post_type_name . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
 		//else, at this point we have a section.
 		$aSection = array_shift( $aFoundSectionArray );
@@ -273,8 +277,8 @@ class One_Page_Sections_Public {
 		if( empty( $sContent ) )
 			$sContent = esc_html( $aSection->post_title );
 
-		$sHref = '#pc3_section__' . esc_attr( $aSection->post_name );
-		$sClasses = 'pc3_section--link ' . esc_attr( $atts['class'] );
+		$sHref = '#' . $custom_post_type_name . '__' . esc_attr( $aSection->post_name );
+		$sClasses = $custom_post_type_name . '--link ' . esc_attr( $atts['class'] );
 		$sTitle = esc_attr( $atts['title'] );
 		$sRel = esc_attr( $atts['rel'] );
 
@@ -303,8 +307,7 @@ class One_Page_Sections_Public {
 	function pc3_remove_autop_for_posttype( $content )
 	{
 		# edit the post type here
-		//@var pc3_section
-		'pc3_section' === get_post_type() && remove_filter( 'the_content', 'wpautop' );
+        $this->container->getParameter('custom_post_type__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
 		return $content;
 	}
 }

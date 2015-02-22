@@ -14,12 +14,15 @@ class Lib_PC3Container {
 
     //@TODO: mayhaps some post template variables
 
-    function __construct( array $defaults = null ) {
+    function __construct() {
 
         $_aParameters = apply_filters( 'pc3_container_args', array(
-            'custom_post_type__name'        => 'pc3_section',
+            'custom_post_type__slug'        => 'pc3_section',
             'custom_post_type__meta_key'    => 'order',
-            'page__manage'                  => 'manage_sections'
+            'page__manage'                  => 'manage_sections',
+            'template__post'                => 'post-pc3_section.php',
+            'template__page'                => 'page-pc3_section.php',
+            'debug'                         => true
         ) );
 
         $this->aParameters = $_aParameters;

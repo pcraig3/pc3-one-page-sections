@@ -77,12 +77,17 @@ class One_Page_Sections {
 
 		$this->sections_page = 'one-page-sections';
 
-		$this->load_dependencies();
-		$this->set_locale();
+        $this->load_dependencies();
+        //autoloader loads all new classes classes
+        new PC3AutoLoader('/' . ONE_PAGE_SECTIONS_BASENAME);
+        $this->container = new Lib_PC3Container();
+
+
+        $this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
-	}
+    }
 
 	/**
 	 * Load the required dependencies for this plugin.
@@ -145,9 +150,6 @@ class One_Page_Sections {
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'lib/PC3AutoLoader.php';
 
-        //don't know if this is the best way to do this
-        new PC3AutoLoader('/' . ONE_PAGE_SECTIONS_BASENAME);
-
 		$this->loader = new One_Page_Sections_Loader();
 	}
 
@@ -183,6 +185,24 @@ class One_Page_Sections {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+        if ( class_exists( 'PC3_AdminPageFramework' ) ) {
+
+            //@var pc3_section
+            new Admin_PC3SectionPostTypeMetaBox(
+                null,   // meta box ID - can be null.
+                __('Debug', 'one-page-sections'), // title
+                array( $this->container->getParameter('custom_post_type__slug') ),             // post type slugs: post, page, etc.
+                'side',                             // context
+                'default'                           // priority
+            );
+
+            new Admin_PC3SectionManagerPage(
+                $this->container->getParameter('page__manage'),
+                $this->container->getParameter('custom_post_type__slug'),
+                '__sections',
+                $this->container->getParameter('custom_post_type__meta_key')
+            );
+        }
 	}
 
 	/**
@@ -194,10 +214,11 @@ class One_Page_Sections {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new One_Page_Sections_Public(
+        $plugin_public = new One_Page_Sections_Public(
 			$this->get_plugin_name(),
 			$this->get_version(),
-			$this->sections_page
+			$this->sections_page,
+            $this->container
 		);
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -205,7 +226,12 @@ class One_Page_Sections {
 
 		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'pc3_remove_autop_for_posttype', 0 );
-	}
+
+        if ( class_exists( 'PC3_AdminPageFramework' ) ) {
+
+            new Public_PC3SectionPostType( $this->container->getParameter('custom_post_type__slug') );
+        }
+    }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.

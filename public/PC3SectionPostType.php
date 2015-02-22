@@ -79,6 +79,7 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
             'cb'    => '<input type="checkbox" />', // Checkbox for bulk actions.
             'title' => __( 'Title', 'one-page-sections' ), // Post title. Includes "edit", "quick edit", "trash" and "view" links. If $mode (set from $_REQUEST['mode']) is 'excerpt', a post excerpt is included between the title and links.
             'date' => __( 'Date', 'one-page-sections' ),
+            //@var: order
             'order' => __( 'Order', 'one-page-sections' )
         )
             // + $aHeaderColumns // uncomment this to enable the default columns.
@@ -97,11 +98,13 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
      */
     public function cell_pc3_section_order( $sCell, $iPostID ) { // cell_{post type}_{column key}
 
+        //@var: order
         $_sOrder = get_post_meta( $iPostID, 'order', true );
 
         if( strlen( $_sOrder ) < 1 )
             $_sOrder = '-';
 
+        //@var: pc3_section / order
         return $sCell
         . '<div class="pc3_section__order-container">'
         . '<p>' . esc_html($_sOrder)

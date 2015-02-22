@@ -18,7 +18,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *
      * @var string
      */
-    private $sPostTypeSlug = 'pc3_section';
+    private $sCustomPostTypeSlug = 'pc3_section';
 
     /**
      * @since      0.6.0
@@ -39,7 +39,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *
      * @var string
      */
-    private $sMetaKey = 'order';
+    private $sMetaKey;
 
     /**
      * @since      0.8.0
@@ -51,28 +51,28 @@ class Admin_PC3SectionPostTypeMetaLayer {
     /**
      * @since      0.8.0
      *
-     * @param string $sPostTypeSlug
+     * @param string $sCustomPostTypeSlug
      * @param string $sPageClass
      * @param string $sSortableFieldId              Field id for the sortable sections in our form
      * @param string $sMetaKey
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
      */
-    public function __construct($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='', Lib_PC3CSSFileEditor $oCSSFileEditor = null) {
+    public function __construct($sCustomPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey, Lib_PC3CSSFileEditor $oCSSFileEditor = null) {
 
-        $this->sPostTypeSlug   = $sPostTypeSlug ? $sPostTypeSlug : $this->sPostTypeSlug;
+        $this->sCustomPostTypeSlug   = $sCustomPostTypeSlug ? $sCustomPostTypeSlug : $this->sCustomPostTypeSlug;
         $this->sPageClass    = $sPageClass ? $sPageClass : $this->sPageClass;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
-        $this->sMetaKey    = $sMetaKey ? $sMetaKey : $this->sMetaKey;
+        $this->sMetaKey    = $sMetaKey;
         $this->oCSSFileEditor    = $oCSSFileEditor ? $oCSSFileEditor : $this->oCSSFileEditor;
 
         // @TODO: maybe move these into the Loader somehow
-        add_action( 'save_post_' . $this->sPostTypeSlug, array( $this, $this->sPostTypeSlug . '_save_post_' ) );
-        add_action( 'wp_trash_post', array( $this,  $this->sPostTypeSlug . '_wp_trash_post' ) );
+        add_action( 'save_post_' . $this->sCustomPostTypeSlug, array( $this, $this->sCustomPostTypeSlug . '_save_post_' ) );
+        add_action( 'wp_trash_post', array( $this,  $this->sCustomPostTypeSlug . '_wp_trash_post' ) );
 
-        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sPostTypeSlug . '_submit_after_' ) );
+        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sCustomPostTypeSlug . '_submit_after_' ) );
 
         //@TODO: This is a really bad place for this
-        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sPostTypeSlug . '_submit_after_css' ) );
+        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sCustomPostTypeSlug . '_submit_after_css' ) );
     }
 
     public function pc3_section_test() {
@@ -116,7 +116,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      */
     public function pc3_section_wp_trash_post( $post_id ) {
 
-        if ( $this->sPostTypeSlug !== get_post_type( $post_id ) )
+        if ( $this->sCustomPostTypeSlug !== get_post_type( $post_id ) )
             return;
 
         delete_post_meta( $post_id, $this->sMetaKey );
