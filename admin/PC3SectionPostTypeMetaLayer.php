@@ -9,9 +9,9 @@
  * @since      0.6.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/classes
+ * @subpackage One_Page_Sections/admin
  */
-class PC3_SectionPostType_MetaLayer {
+class Admin_PC3SectionPostTypeMetaLayer {
 
     /**
      * @since      0.6.0
@@ -25,7 +25,7 @@ class PC3_SectionPostType_MetaLayer {
      *
      * @var string
      */
-    private $sPageClass = 'PC3_SectionManagerPage';
+    private $sPageClass = 'Admin_PC3SectionManagerPage';
 
     /**
      * @since      0.7.0
@@ -55,9 +55,9 @@ class PC3_SectionPostType_MetaLayer {
      * @param string $sPageClass
      * @param string $sSortableFieldId              Field id for the sortable sections in our form
      * @param string $sMetaKey
-     * @param PC3_CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
+     * @param Lib_PC3CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
      */
-    public function __construct($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='', PC3_CSSFileEditor $oCSSFileEditor = null) {
+    public function __construct($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='', Lib_PC3CSSFileEditor $oCSSFileEditor = null) {
 
         $this->sPostTypeSlug   = $sPostTypeSlug ? $sPostTypeSlug : $this->sPostTypeSlug;
         $this->sPageClass    = $sPageClass ? $sPageClass : $this->sPageClass;
@@ -98,7 +98,7 @@ class PC3_SectionPostType_MetaLayer {
             return;
 
         //Array with one result
-        $aSections = PC3_WPQueryLayer::getSectionWithLargestOrder();
+        $aSections = Lib_PC3WPQueryFacade::getSectionWithLargestOrder();
 
         $oLastSection = array_shift( $aSections );
 
@@ -149,7 +149,7 @@ class PC3_SectionPostType_MetaLayer {
             update_post_meta($_sPostID, $this->sMetaKey, $_sOrder);
 
             if( $_bAllPostsExist )
-                $_bAllPostsExist = PC3_WPQueryLayer::isPostExists( $_sPostID );
+                $_bAllPostsExist = Lib_PC3WPQueryFacade::isPostExists( $_sPostID );
         }
 
         //re-index the sections now so that our orders are sequential
@@ -169,7 +169,7 @@ class PC3_SectionPostType_MetaLayer {
     private function reindexSections( array $aSections = array() ) {
 
         if( empty( $aSections ) )
-            $aSections = PC3_WPQueryLayer::getSectionsByOrderASC();
+            $aSections = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
 
         $_iMax = count( $aSections );
 

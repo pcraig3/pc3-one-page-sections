@@ -5,9 +5,9 @@
  * @since      0.7.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/classes
+ * @subpackage One_Page_Sections/lib
  */
-class PC3_WPQueryLayer {
+class Lib_PC3WPQueryFacade {
 
     /**
      * Function returns one sections by post.ID or post.post_title or post.post_name
@@ -42,9 +42,9 @@ class PC3_WPQueryLayer {
         if( is_numeric( $_sSectionTitleOrID ) )
             $args['pc3_section__ID'] = $_sSectionTitleOrID;
 
-        add_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'whereClauseFilter'), 10, 2 );
+        add_filter( 'posts_where', array( 'Lib_PC3WPQueryFacade', 'whereClauseFilter'), 10, 2 );
         $wp_query = new WP_Query($args);
-        remove_filter( 'posts_where', array( 'PC3_WPQueryLayer', 'whereClauseFilter'), 10, 2 );
+        remove_filter( 'posts_where', array( 'Lib_PC3WPQueryFacade', 'whereClauseFilter'), 10, 2 );
 
         return $wp_query->posts;
     }
@@ -78,7 +78,7 @@ class PC3_WPQueryLayer {
             //if a value has been assigned to our custom key (ie, in the getSectionByTitleOrID method above)
             if( $sValue = $wp_query->get( $sQueryKey ) )
                 //either returns a where clause or an empty string
-                if( $sWhereClause = PC3_WPQueryLayer::returnWhereClauseExtension( $sQueryKey, $sValue ) )
+                if( $sWhereClause = Lib_PC3WPQueryFacade::returnWhereClauseExtension( $sQueryKey, $sValue ) )
                     array_push( $aWhereClauseExtensions, $sWhereClause );
 
         //extend where clause if $aWhereClauseExtensions is not empty
@@ -150,7 +150,7 @@ class PC3_WPQueryLayer {
     public static function getSectionsByOrderASC() {
 
         //@var pc3_section / order
-        return PC3_WPQueryLayer::getPosts( array(
+        return Lib_PC3WPQueryFacade::getPosts( array(
             'post_type' => 'pc3_section',
             'orderby'   => 'meta_value_num',
             'meta_key'  => 'order',
@@ -171,7 +171,7 @@ class PC3_WPQueryLayer {
     public static function getSectionWithLargestOrder() {
 
         //@var pc3_section / order
-        return PC3_WPQueryLayer::getPosts( array(
+        return Lib_PC3WPQueryFacade::getPosts( array(
             'post_type' => 'pc3_section',
             'orderby'   => 'meta_value_num',
             'meta_key'  => 'order',

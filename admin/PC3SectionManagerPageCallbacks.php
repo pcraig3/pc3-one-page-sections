@@ -11,17 +11,17 @@
  *
  * @since      0.3.0
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes
+ * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class PC3_SectionManagerPage_Callbacks {
+class Admin_PC3SectionManagerPageCallbacks {
 
     /**
      * @since      0.3.0
      *
      * Stores the caller class name, set in the constructor.
      */
-    public $sClassName = 'PC3_SectionManagerPage';
+    public $sClassName = 'Admin_PC3SectionManagerPage';
 
     /**
      * @since      0.3.0
@@ -73,9 +73,9 @@ class PC3_SectionManagerPage_Callbacks {
      * @param string $sPageSlug                 The page slug to add the tab and form elements.
      * @param string $sSortableFieldId          Field id for the sortable sections in our form
      * @param string $sSubmitFieldId            Field id for the sortable sections in our form
-     * @param PC3_CSSFileEditor $oCSSFileEditor reads and writes to our custom CSS file
+     * @param Lib_PC3CSSFileEditor $oCSSFileEditor reads and writes to our custom CSS file
      */
-    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='', PC3_CSSFileEditor $oCSSFileEditor) {
+    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='', Lib_PC3CSSFileEditor $oCSSFileEditor) {
 
         //@TODO: drop-down form
 
@@ -126,9 +126,9 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'submit_button'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_manage_sections__sections_page( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections_page( $aField ) {
 
-        $aPages = PC3_WPQueryLayer::getPosts( array(
+        $aPages = Lib_PC3WPQueryFacade::getPosts( array(
             'post_type' => 'page',
             'orderby'   => 'title',
             'order'     => 'ASC',
@@ -156,9 +156,9 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'callback_example'
      * @return array array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aPosts = PC3_WPQueryLayer::getSectionsByOrderASC();
+        $aPosts = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )
@@ -203,7 +203,7 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'manage_sections__editor'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_manage_sections__editor( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__editor( $aField ) {
 
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
@@ -223,7 +223,7 @@ class PC3_SectionManagerPage_Callbacks {
      * @param $aField array    the field with an id of 'manage_sections__submit'
      * @return mixed array     the field
      */
-    public function field_definition_PC3_SectionManagerPage_manage_sections__submit( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__submit( $aField ) {
 
         if( $this->bIfSections )
             $aField['attributes'] = array(

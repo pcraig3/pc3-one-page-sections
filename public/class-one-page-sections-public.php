@@ -67,12 +67,12 @@ class One_Page_Sections_Public {
 		$this->version = $version;
 		$this->sections_page;
 
-		$this->template_loader = new PC3_TemplateLoader();
+		$this->template_loader = new Lib_PC3TemplateLoader();
 
 		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
 		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_return_link') );
 
-		$_sPageID = PC3_AdminPageFramework::getOption('PC3_SectionManagerPage', 'manage_sections__sections_page');
+		$_sPageID = PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage', 'manage_sections__sections_page');
 
 		if( $_sPageID )
 			$this->sections_page = $_sPageID;
@@ -260,7 +260,7 @@ class One_Page_Sections_Public {
 		if( empty( $sSection ) )
 			return '<a class="pc3_section--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
-		$aFoundSectionArray = PC3_WPQueryLayer::getSectionByTitleOrID( $sSection );
+		$aFoundSectionArray = Lib_PC3WPQueryFacade::getSectionByTitleOrID( $sSection );
 
 		//if no post is returned, return an empty link
 		if( empty( $aFoundSectionArray ) )

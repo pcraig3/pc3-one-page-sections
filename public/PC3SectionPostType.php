@@ -12,9 +12,9 @@
  * @since      0.2.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/classes
+ * @subpackage One_Page_Sections/public
  */
-class PC3_SectionPostType extends PC3_AdminPageFramework_PostType {
+class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
 
     /**
      * Automatically called with the 'wp_loaded' hook.

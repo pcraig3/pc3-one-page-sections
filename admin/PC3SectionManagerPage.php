@@ -3,17 +3,17 @@
  * The file that builds the Manage Sections page
  *
  * Makes no assumptions about Sections.  In fact, assumes that there won't be any.
- * If sections are found, PC3_SectionManagerPage_Callbacks populates the form created on this page with information
+ * If sections are found, Admin_PC3SectionManagerPage_Callbacks populates the form created on this page with information
  * about Sections.
  *
  * By default, form displays error message and alerts users that they need to create sections
  *
  * @since      0.3.0
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes
+ * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class PC3_SectionManagerPage extends PC3_AdminPageFramework
+class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
 {
     /**
      * The slug used to uniquely identify this page, both in the code and in the URL
@@ -112,9 +112,9 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         );
 
         //@TODO: This is not dependency-injected
-        $oCSSFileEditor = new PC3_CSSFileEditor( ONE_PAGE_SECTIONS_DIR . 'public/css/custom.css' );
+        $oCSSFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
 
-        new PC3_SectionManagerPage_Callbacks(
+        new Admin_PC3SectionManagerPageCallbacks(
             $this->sPageClass,
             $this->sPageSlug,
             $this->sPageSlug . $this->sSortableFieldId,
@@ -123,7 +123,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
         );
 
         //($sPostTypeSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
-        new PC3_SectionPostType_MetaLayer(
+        new Admin_PC3SectionPostTypeMetaLayer(
             $this->sPostTypeSlug,
             $this->sPageClass,
             $this->sPageSlug . $this->sSortableFieldId,
@@ -208,7 +208,7 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     private function registerFieldTypes( $sClassName ) {
 
         if ( ! class_exists('AceCustomFieldType') )
-            require_once ONE_PAGE_SECTIONS_DIR . 'vendor/AceCustomFieldType/AceCustomFieldType.php';
+            require_once ONE_PAGE_SECTIONS_DIR_PATH . 'vendor/AceCustomFieldType/AceCustomFieldType.php';
 
         new AceCustomFieldType();
     }
@@ -224,6 +224,6 @@ class PC3_SectionManagerPage extends PC3_AdminPageFramework
     {
         // Show the saved option value.
         echo '<h3>Show all the options as an array</h3>';
-        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption('PC3_SectionManagerPage'));
+        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage'));
     }
 }

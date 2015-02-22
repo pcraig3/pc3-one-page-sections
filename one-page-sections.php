@@ -35,12 +35,24 @@ if ( ! defined( 'WPINC' ) ) {
  * Plugin directory path.
  *
  * @since 0.4.0
- * @type string ONE_PAGE_SECTIONS_DIR
+ * @type string ONE_PAGE_SECTIONS_DIR_PATH
  */
-if ( ! defined( 'ONE_PAGE_SECTIONS_DIR' ) ) {
+if ( ! defined( 'ONE_PAGE_SECTIONS_DIR_PATH' ) ) {
 
-	define( 'ONE_PAGE_SECTIONS_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'ONE_PAGE_SECTIONS_DIR_PATH', plugin_dir_path( __FILE__ ) );
 }
+
+/**
+ * Plugin directory basename (ie, 'pc3-one-page-sections'
+ *
+ * @since 0.4.0
+ * @type string ONE_PAGE_SECTIONS_DIR_PATH
+ */
+if ( ! defined( 'ONE_PAGE_SECTIONS_BASENAME' ) ) {
+
+    define( 'ONE_PAGE_SECTIONS_BASENAME', plugin_basename( __DIR__ ) );
+}
+
 
 /**
  * The code that runs during plugin activation.
@@ -85,8 +97,8 @@ function run_one_page_sections() {
 	if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
 		//@var pc3_section
-		new PC3_SectionPostType('pc3_section');
-		new PC3_SectionPostType_MetaBox(
+		new Public_PC3SectionPostType('pc3_section');
+		new Admin_PC3SectionPostTypeMetaBox(
 			null,   // meta box ID - can be null.
 			__( 'Debug', 'one-page-sections' ), // title
 			array( 'pc3_section' ),             // post type slugs: post, page, etc.
@@ -94,7 +106,7 @@ function run_one_page_sections() {
 			'default'                               // priority
 		);
 
-		new PC3_SectionManagerPage(
+		new Admin_PC3SectionManagerPage(
 			'manage_sections',
 			'pc3_section',
 			'__sections',

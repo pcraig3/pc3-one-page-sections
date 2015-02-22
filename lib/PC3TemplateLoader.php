@@ -9,9 +9,9 @@
  * @since      0.4.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/classes
+ * @subpackage One_Page_Sections/includes/lib
  */
-class PC3_TemplateLoader extends Gamajo_Template_Loader {
+class Lib_PC3TemplateLoader extends Gamajo_Template_Loader {
     /**
      * Prefix for filter names.
      *
@@ -29,5 +29,5 @@ class PC3_TemplateLoader extends Gamajo_Template_Loader {
      *
      * @var string
      */
-    protected $plugin_directory = ONE_PAGE_SECTIONS_DIR;
+    protected $plugin_directory = ONE_PAGE_SECTIONS_DIR_PATH;
 }

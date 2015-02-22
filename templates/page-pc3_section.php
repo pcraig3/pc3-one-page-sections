@@ -26,7 +26,7 @@ get_header(); ?>
             <div class="entry-content pc3_section__wrapper" id="back_to_top">
                 <?php
 
-                $aPosts = PC3_WPQueryLayer::getSectionsByOrderASC();
+                $aPosts = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
 
                 foreach ( $aPosts as $post ) : setup_postdata( $post );
 

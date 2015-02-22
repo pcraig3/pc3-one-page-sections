@@ -9,11 +9,11 @@
  * @since      0.6.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/classes
+ * @subpackage One_Page_Sections/admin
  */
-class PC3_SectionPostType_MetaBox extends PC3_AdminPageFramework_MetaBox  {
+class Admin_PC3SectionPostTypeMetaBox extends PC3_AdminPageFramework_MetaBox  {
 
-    public function do_PC3_SectionPostType_MetaBox( $oMetaBox ) {
+    public function do_Admin_PC3SectionPostTypeMetaBox( $oMetaBox ) {
 
         global $post;
 

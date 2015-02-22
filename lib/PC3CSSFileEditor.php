@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class PC3_CSSFileEditor
+ * Class Lib_PC3CSSFileEditor
  *
  * @TODO: Commenting
  */
-class PC3_CSSFileEditor {
+class Lib_PC3CSSFileEditor {
 
 	/**
 	 * @since      0.8.0

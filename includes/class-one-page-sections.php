@@ -138,20 +138,15 @@ class One_Page_Sections {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/Gamajo-Template-Loader/class-gamajo-template-loader.php';
 
-		/**
-		 * Include directory with included classes that extend the APF
-		 * Probably not good practice -.-
-		 *
-		 * @see http://www.paulund.co.uk/php-include-files-folder
-		 */
-		foreach (glob(plugin_dir_path( dirname( __FILE__ ) ) . 'includes/classes/*.php') as $filename)
-		{
-			if( file_exists($filename))
-				require_once $filename;
-		}
+        /**
+         * Include our autoloader
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'lib/PC3AutoLoader.php';
+
+        //don't know if this is the best way to do this
+        new PC3AutoLoader('/' . ONE_PAGE_SECTIONS_BASENAME);
 
 		$this->loader = new One_Page_Sections_Loader();
-
 	}
 
 	/**
