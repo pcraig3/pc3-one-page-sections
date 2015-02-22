@@ -59,6 +59,8 @@ class One_Page_Sections {
 
 	protected $sections_page;
 
+    protected $container;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *

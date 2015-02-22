@@ -103,7 +103,7 @@ function run_one_page_sections() {
 			__( 'Debug', 'one-page-sections' ), // title
 			array( 'pc3_section' ),             // post type slugs: post, page, etc.
 			'side',                             // context
-			'default'                               // priority
+			'default'                           // priority
 		);
 
 		new Admin_PC3SectionManagerPage(
