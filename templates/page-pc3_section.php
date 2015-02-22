@@ -1,8 +1,8 @@
 <?php
 /**
- * The template for the page on which all of the pages are displayed.
+ * The template for the page on which all of the sections are displayed.
  * Based on the WordPress 2015/2013 "page.php" templates.
- * Basically we want very little other than a container to hold a series of otehr containers.
+ * Basically we want very little other than a container to hold a series of other containers.
  * Idea is just to loop through sections and display them.
  *
  * @since      0.8.0
@@ -23,7 +23,7 @@ get_header(); ?>
 
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-            <div class="entry-content pc3_section__wrapper" id="back_to_top">
+            <div class="entry-content <?php echo do_shortcode('[pc3_get_parameter]'); ?>__wrapper" id="back_to_top">
                 <?php
 
                 $aPosts = Lib_PC3WPQueryFacade::getSectionsByOrderASC();

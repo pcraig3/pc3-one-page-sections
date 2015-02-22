@@ -73,7 +73,8 @@ class One_Page_Sections_Public {
 
 		$this->template_loader = new Lib_PC3TemplateLoader();
 
-		add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
+        add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
+        add_shortcode( 'pc3_get_parameter', array( $this, 'pc3_get_parameter') );
 		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_return_link') );
 
 		$_sPageID = PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage', 'manage_sections__sections_page');
@@ -171,10 +172,7 @@ class One_Page_Sections_Public {
 
 		switch($context):
 			case 'page';
-			//@var page-pc3_section.php
 			return $template === $this->container->getParameter('template__page');
-			//case 'archive':
-			//	return $template === 'archive-usc_jobs.php';
 
 		endswitch;
 		return false;
@@ -223,6 +221,33 @@ class One_Page_Sections_Public {
 		return $this->template_loader->locate_template( $this->container->getParameter('template__post'), true, false );
 	}
 
+    /**
+     * @since    0.8.2
+     *
+     * @param $atts
+     * @return string
+     */
+    public function pc3_get_parameter( $atts ) {
+
+        $atts = shortcode_atts(array(
+            'parameter' => 'section__slug',
+        ), $atts);
+
+        $message = "Sorry, parameter invalid.";
+
+        try {
+
+            $message = $this->container->getParameter( $atts['parameter'] );
+
+        } catch(Exception $e) {
+            //throw $e;
+            return $message;
+        }
+
+        return $message;
+    }
+
+
 	/**
 	 * Method returns hashtag links to other sections on the same page.
 	 * Intended to be used as part of 'pc3_section_link' shortcode
@@ -245,14 +270,14 @@ class One_Page_Sections_Public {
 	 */
 	public function pc3_section_return_link( $atts, $content = null ) {
 
-        $custom_post_type_name = $this->container->getParameter('custom_post_type__slug');
+        $section__slug = $this->container->getParameter('section__slug');
 
 		$atts = shortcode_atts( array(
 			'section' => '',
 			'class' => '',
 			'title' => '',
 			'rel' => '',
-			'class_not_found' => $custom_post_type_name . '--not-found',
+			'class_not_found' => $section__slug . '--not-found',
 			'href' => '0',
 		), $atts );
 
@@ -262,13 +287,13 @@ class One_Page_Sections_Public {
 
 		//if no section to look for, don't bother doing the query
 		if( empty( $sSection ) )
-			return '<a class="' . $custom_post_type_name . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+			return '<a class="' . $section__slug . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
 		$aFoundSectionArray = Lib_PC3WPQueryFacade::getSectionByTitleOrID( $sSection );
 
 		//if no post is returned, return an empty link
 		if( empty( $aFoundSectionArray ) )
-			return '<a class="' . $custom_post_type_name . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
+			return '<a class="' . $section__slug . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
 		//else, at this point we have a section.
 		$aSection = array_shift( $aFoundSectionArray );
@@ -277,8 +302,8 @@ class One_Page_Sections_Public {
 		if( empty( $sContent ) )
 			$sContent = esc_html( $aSection->post_title );
 
-		$sHref = '#' . $custom_post_type_name . '__' . esc_attr( $aSection->post_name );
-		$sClasses = $custom_post_type_name . '--link ' . esc_attr( $atts['class'] );
+		$sHref = '#' . $section__slug . '__' . esc_attr( $aSection->post_name );
+		$sClasses = $section__slug . '--link ' . esc_attr( $atts['class'] );
 		$sTitle = esc_attr( $atts['title'] );
 		$sRel = esc_attr( $atts['rel'] );
 
@@ -307,7 +332,7 @@ class One_Page_Sections_Public {
 	function pc3_remove_autop_for_posttype( $content )
 	{
 		# edit the post type here
-        $this->container->getParameter('custom_post_type__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
+        $this->container->getParameter('section__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
 		return $content;
 	}
 }

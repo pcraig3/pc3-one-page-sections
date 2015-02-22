@@ -9,10 +9,12 @@
  * @subpackage One_Page_Sections/templates
  */
 
-global $post
+global $post;
+
+$section__slug = do_shortcode('[pc3_get_parameter]');
 ?>
 
-<section class="pc3_section pc3_section__<?php echo $post->post_name; ?>" id="pc3_section__<?php echo $post->post_name; ?>">
+<section class="<?php echo $section__slug; ?> <?php echo $section__slug; ?>__<?php echo $post->post_name; ?>" id="<?php $section__slug; ?>__<?php echo $post->post_name; ?>">
    <?php the_content(); ?>
 </section>
 

@@ -191,16 +191,16 @@ class One_Page_Sections {
             new Admin_PC3SectionPostTypeMetaBox(
                 null,   // meta box ID - can be null.
                 __('Debug', 'one-page-sections'), // title
-                array( $this->container->getParameter('custom_post_type__slug') ),             // post type slugs: post, page, etc.
+                array( $this->container->getParameter('section__slug') ),             // post type slugs: post, page, etc.
                 'side',                             // context
                 'default'                           // priority
             );
 
             new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
-                $this->container->getParameter('custom_post_type__slug'),
+                $this->container->getParameter('section__slug'),
                 '__sections',
-                $this->container->getParameter('custom_post_type__meta_key')
+                $this->container->getParameter('section__meta_key')
             );
         }
 	}
@@ -229,7 +229,7 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-            new Public_PC3SectionPostType( $this->container->getParameter('custom_post_type__slug') );
+            new Public_PC3SectionPostType( $this->container->getParameter('section__slug') );
         }
     }
 
