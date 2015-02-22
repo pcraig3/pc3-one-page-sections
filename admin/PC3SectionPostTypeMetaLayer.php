@@ -18,7 +18,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *
      * @var string
      */
-    private $sSectionSlug = 'pc3_section';
+    private $sSectionSlug;
 
     /**
      * @since      0.6.0
@@ -57,9 +57,9 @@ class Admin_PC3SectionPostTypeMetaLayer {
      * @param string $sMetaKey
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
      */
-    public function __construct($sSectionSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey, Lib_PC3CSSFileEditor $oCSSFileEditor = null) {
+    public function __construct($sSectionSlug, $sPageClass='', $sSortableFieldId='', $sMetaKey, Lib_PC3CSSFileEditor $oCSSFileEditor = null) {
 
-        $this->sSectionSlug   = $sSectionSlug ? $sSectionSlug : $this->sSectionSlug;
+        $this->sSectionSlug   = $sSectionSlug;
         $this->sPageClass    = $sPageClass ? $sPageClass : $this->sPageClass;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sMetaKey    = $sMetaKey;

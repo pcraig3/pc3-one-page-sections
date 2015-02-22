@@ -73,9 +73,9 @@ class One_Page_Sections_Public {
 
 		$this->template_loader = new Lib_PC3TemplateLoader();
 
-        add_shortcode( 'pc3_locate_template', array( $this, 'pc3_locate_template') );
+        add_shortcode( 'pc3_locate_section_template', array( $this, 'pc3_locate_section_template') );
         add_shortcode( 'pc3_get_parameter', array( $this, 'pc3_get_parameter') );
-		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_return_link') );
+		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_link') );
 
 		$_sPageID = PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage', 'manage_sections__sections_page');
 
@@ -200,7 +200,6 @@ class One_Page_Sections_Public {
 	public function set_pc3_section_template( $template ) {
 
 		//@TODO: improve this, and check for empty values
-		//@var page-pc3_section.php
 		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
 			$template = $this->template_loader->locate_template( $this->container->getParameter('template__page'), false, true );
@@ -215,9 +214,8 @@ class One_Page_Sections_Public {
 	 *
 	 * @return string
 	 */
-	public function pc3_locate_template() {
+	public function pc3_locate_section_template() {
 
-		//@var post-pc3_section.php
 		return $this->template_loader->locate_template( $this->container->getParameter('template__post'), true, false );
 	}
 
@@ -252,7 +250,7 @@ class One_Page_Sections_Public {
 	 * Method returns hashtag links to other sections on the same page.
 	 * Intended to be used as part of 'pc3_section_link' shortcode
 	 *
-	 * Will return link formatted '#pc3_section__{post_name}' if atts['section'] contains
+	 * Will return link formatted '#{pc3_section}__{post_name}' if atts['section'] contains
 	 * the ID, post_title, or post_name of a valid section
 	 *
 	 * Defaults to returning HTML code for anchor tag, but can be set to return just the link
@@ -268,7 +266,7 @@ class One_Page_Sections_Public {
 	 *
 	 * @return string       an anchor tag or just a hashtag 'href' string
 	 */
-	public function pc3_section_return_link( $atts, $content = null ) {
+	public function pc3_section_link( $atts, $content = null ) {
 
         $section__slug = $this->container->getParameter('section__slug');
 
@@ -322,7 +320,8 @@ class One_Page_Sections_Public {
 	}
 
 	/**
-	 *
+	 * @TODO: comments
+     *
 	 * @since    0.8.0
 	 *
 	 * @param $content
@@ -335,4 +334,36 @@ class One_Page_Sections_Public {
         $this->container->getParameter('section__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
 		return $content;
 	}
+
+
+    /**
+     *
+     * @TODO: Comments
+     *
+     * @since    0.8.0
+     *
+     * @param $query
+     */
+    function pc3_inject_pc3_sections_into_main_query( $query ) {
+
+        $queried_object = $query->queried_object;
+
+        if( ! is_null( $queried_object )  ) {
+
+            if( $queried_object->ID === intval( $this->sections_page ) ||
+                $queried_object->post_name === $this->sections_page ||
+                $queried_object->post_title === $this->sections_page ) {
+
+                $section__slug = $this->container->getParameter('section__slug');
+                $query->$section__slug = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
+            }
+        }
+
+        //if sections page, put in paul;
+        //if($query->queried_object_id === )
+        //var_dump($this->sections_page);
+        //var_dump($query->queried_object);
+        //var_dump($query);
+
+    }
 }

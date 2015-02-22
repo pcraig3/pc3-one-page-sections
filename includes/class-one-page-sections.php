@@ -187,7 +187,6 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-            //@var pc3_section
             new Admin_PC3SectionPostTypeMetaBox(
                 null,   // meta box ID - can be null.
                 __('Debug', 'one-page-sections'), // title
@@ -225,7 +224,8 @@ class One_Page_Sections {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'template_include', $plugin_public, 'set_pc3_section_template' );
-		$this->loader->add_filter( 'the_content', $plugin_public, 'pc3_remove_autop_for_posttype', 0 );
+        $this->loader->add_filter( 'the_content', $plugin_public, 'pc3_remove_autop_for_posttype', 0 );
+        $this->loader->add_filter( 'pre_get_posts', $plugin_public, 'pc3_inject_pc3_sections_into_main_query' );
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 

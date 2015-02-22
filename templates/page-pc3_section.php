@@ -11,7 +11,10 @@
  * @subpackage One_Page_Sections/templates
  */
 
-get_header(); ?>
+get_header();
+
+global $wp_query;
+?>
 
 <div id="primary" class="content-area">
     <div id="content" class="site-content" role="main">
@@ -22,18 +25,25 @@ get_header(); ?>
         ?>
 
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
             <div class="entry-content <?php echo do_shortcode('[pc3_get_parameter]'); ?>__wrapper" id="back_to_top">
                 <?php
 
-                $aPosts = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
+                $pc3_section = do_shortcode('[pc3_get_parameter]');
 
-                foreach ( $aPosts as $post ) : setup_postdata( $post );
+                //a `pre_get_posts` filter adds our sections to the main wp_query->{section__slug} if this page is queried
+                if( ! is_null( $wp_query->$pc3_section ) ) {
+                    $aPosts = $wp_query->$pc3_section;
 
-                    do_shortcode('[pc3_locate_template]');
+                    foreach ($aPosts as $post) : setup_postdata($post);
 
-                endforeach;
-                wp_reset_postdata();?>
+                        do_shortcode('[pc3_locate_section_template]');
+
+                    endforeach;
+                }
+                else
+                    echo '<p>Sorry, no sections were found.</p>';
+
+                ?>
 
 
             </div>
