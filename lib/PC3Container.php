@@ -10,6 +10,8 @@ class Lib_PC3Container {
 
     private $aParameters = array();
 
+    private $wpQueryFacade;
+
     //@TODO: field names for page :/
 
     //@TODO: mayhaps some post template variables
@@ -37,6 +39,17 @@ class Lib_PC3Container {
             self::throwExceptionIfParameterNotFound($sParameter);
 
         return $sParameter;
+    }
+
+    public function getWPQueryFacade() {
+
+            if (!isset($this->wpQueryFacade)) {
+                $this->wpQueryFacade = new Lib_PC3WPQueryFacade(
+                    $this->getParameter('section__slug'),
+                    $this->getParameter('section__meta_key')
+                );
+            }
+            return $this->wpQueryFacade;
     }
 
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php

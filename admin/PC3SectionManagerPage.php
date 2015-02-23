@@ -63,7 +63,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @param string $sSortableFieldId  The field_id for our sortable field
      * @param string $sMetaKey          The meta key name to keep track of the order in which our sortable fields should be rendered
      */
-    function __construct($sPageSlug, $sSectionSlug, $sSortableFieldId='', $sMetaKey) {
+    public function __construct($sPageSlug, $sSectionSlug, $sSortableFieldId='', $sMetaKey) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -106,26 +106,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
                 'page_slug' => $this->sPageSlug,     // page slug
                 'order' => 5
             )
-        );
-
-        //@TODO: This is not dependency-injected
-        $oCSSFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
-
-        new Admin_PC3SectionManagerPageCallbacks(
-            $this->sPageClass,
-            $this->sPageSlug,
-            $this->sPageSlug . $this->sSortableFieldId,
-            $this->sPageSlug . '__submit',
-            $oCSSFileEditor
-        );
-
-        //($sSectionSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
-        new Admin_PC3SectionPostTypeMetaLayer(
-            $this->sSectionSlug,
-            $this->sPageClass,
-            $this->sPageSlug . $this->sSortableFieldId,
-            $this->sMetaKey,
-            $oCSSFileEditor
         );
     }
 

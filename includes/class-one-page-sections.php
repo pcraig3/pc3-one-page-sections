@@ -195,11 +195,34 @@ class One_Page_Sections {
                 'default'                           // priority
             );
 
-            new Admin_PC3SectionManagerPage(
+            $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
                 '__sections',
                 $this->container->getParameter('section__meta_key')
+            );
+            
+            //@TODO: This is not dependency-injected
+            //@TODO: hardcoded var CSS file
+            $oCSSFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
+
+            new Admin_PC3SectionManagerPageCallbacks(
+                get_class( $sectionManagerPage ),
+                $this->container->getParameter('page__manage'),
+                $this->container->getParameter('page__manage') . '__sections',
+                $this->container->getParameter('page__manage') . '__submit',
+                $oCSSFileEditor,
+                $this->container->getWPQueryFacade()
+            );
+
+            //($sSectionSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
+            new Admin_PC3SectionPostTypeMetaLayer(
+                $this->container->getParameter('section__slug'),
+                get_class( $sectionManagerPage ),
+                $this->container->getParameter('page__manage') . '__sections',
+                $this->container->getParameter('section__meta_key'),
+                $oCSSFileEditor,
+                $this->container->getWPQueryFacade()
             );
         }
 	}
@@ -229,7 +252,11 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-            new Public_PC3SectionPostType( $this->container->getParameter('section__slug') );
+            new Public_PC3SectionPostType(
+                $this->container->getParameter('section__slug'),
+                $this->container->getParameter('section__meta_key')
+            );
+
         }
     }
 

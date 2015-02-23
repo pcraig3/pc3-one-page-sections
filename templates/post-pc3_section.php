@@ -14,7 +14,7 @@ global $post;
 $section__slug = do_shortcode('[pc3_get_parameter]');
 ?>
 
-<section class="<?php echo $section__slug; ?> <?php echo $section__slug; ?>__<?php echo $post->post_name; ?>" id="<?php $section__slug; ?>__<?php echo $post->post_name; ?>">
+<section class="<?php echo $section__slug; ?> <?php echo $section__slug; ?>__<?php echo $post->post_name; ?>" id="<?php echo $section__slug; ?>__<?php echo $post->post_name; ?>">
    <?php the_content(); ?>
 </section>
 

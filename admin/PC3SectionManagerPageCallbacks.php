@@ -66,6 +66,13 @@ class Admin_PC3SectionManagerPageCallbacks {
     private $oCSSFileEditor;
 
     /**
+     * @since      0.8.2
+     *
+     * Object executes queries on the database, mostly using the WP_Query class
+     */
+    private $oWPQueryFacade;
+
+    /**
      *
      * @since      0.8.0
      *
@@ -75,16 +82,17 @@ class Admin_PC3SectionManagerPageCallbacks {
      * @param string $sSubmitFieldId            Field id for the sortable sections in our form
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor reads and writes to our custom CSS file
      */
-    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='', Lib_PC3CSSFileEditor $oCSSFileEditor) {
+    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='',
+                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         //@TODO: drop-down form
-
         $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
         $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
         //$this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
-        $this->oCSSFileEditor    = $oCSSFileEditor ? $oCSSFileEditor : $this->oCSSFileEditor;
+        $this->oCSSFileEditor    = $oCSSFileEditor;
+        $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // load_ + page slug
         add_action( 'load_' . $this->sPageSlug, array( $this, 'replyToLoadPage' ) );
@@ -128,7 +136,7 @@ class Admin_PC3SectionManagerPageCallbacks {
      */
     public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections_page( $aField ) {
 
-        $aPages = Lib_PC3WPQueryFacade::getPosts( array(
+        $aPages = $this->oWPQueryFacade->getPosts( array(
             'post_type' => 'page',
             'orderby'   => 'title',
             'order'     => 'ASC',
@@ -158,7 +166,7 @@ class Admin_PC3SectionManagerPageCallbacks {
      */
     public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
 
-        $aPosts = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
+        $aPosts = $this->oWPQueryFacade->getSectionsByOrderASC();
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) )

@@ -9,6 +9,15 @@
  */
 class Lib_PC3WPQueryFacade {
 
+    private $sSectionSlug;
+    private $sSectionMetaKey;
+
+    function __construct( $sSectionSlug, $sSectionMetaKey ) {
+
+        $this->sSectionSlug = $sSectionSlug;
+        $this->sSectionMetaKey = $sSectionMetaKey;
+    }
+
     /**
      * Function returns one sections by post.ID or post.post_title or post.post_name
      *
@@ -27,11 +36,10 @@ class Lib_PC3WPQueryFacade {
      *
      * @return array                        an array with one post if one is matched, else an empty array
      */
-    public static function getSectionByTitleOrID( $_sSectionTitleOrID ) {
+    public function getSectionByTitleOrID( $_sSectionTitleOrID ) {
 
-        //@var pc3_section
         $args = array(
-            'post_type' => 'pc3_section',
+            'post_type' => $this->sSectionSlug,
             'posts_per_page' => 1,
             'pc3_section__post_title' => $_sSectionTitleOrID,
             'pc3_section__post_name' => $_sSectionTitleOrID,
@@ -42,9 +50,9 @@ class Lib_PC3WPQueryFacade {
         if( is_numeric( $_sSectionTitleOrID ) )
             $args['pc3_section__ID'] = $_sSectionTitleOrID;
 
-        add_filter( 'posts_where', array( 'Lib_PC3WPQueryFacade', 'whereClauseFilter'), 10, 2 );
+        add_filter( 'posts_where', array( $this, 'whereClauseFilter'), 10, 2 );
         $wp_query = new WP_Query($args);
-        remove_filter( 'posts_where', array( 'Lib_PC3WPQueryFacade', 'whereClauseFilter'), 10, 2 );
+        remove_filter( 'posts_where', array( $this, 'whereClauseFilter'), 10, 2 );
 
         return $wp_query->posts;
     }
@@ -62,9 +70,7 @@ class Lib_PC3WPQueryFacade {
      *
      * @return string           modified or original where clause
      */
-    public static function whereClauseFilter($where, &$wp_query){
-
-        global $wpdb;
+    public function whereClauseFilter($where, &$wp_query){
 
         $aSectionQueryKeys = array(
             'pc3_section__ID',
@@ -78,7 +84,7 @@ class Lib_PC3WPQueryFacade {
             //if a value has been assigned to our custom key (ie, in the getSectionByTitleOrID method above)
             if( $sValue = $wp_query->get( $sQueryKey ) )
                 //either returns a where clause or an empty string
-                if( $sWhereClause = Lib_PC3WPQueryFacade::returnWhereClauseExtension( $sQueryKey, $sValue ) )
+                if( $sWhereClause = $this->returnWhereClauseExtension( $sQueryKey, $sValue ) )
                     array_push( $aWhereClauseExtensions, $sWhereClause );
 
         //extend where clause if $aWhereClauseExtensions is not empty
@@ -102,7 +108,7 @@ class Lib_PC3WPQueryFacade {
      *
      * @return string               an properly formatted extension of the WHERE clause
      */
-    private static function returnWhereClauseExtension( $_sQueryKey, $_sValue ) {
+    private function returnWhereClauseExtension( $_sQueryKey, $_sValue ) {
 
         global $wpdb;
 
@@ -135,7 +141,7 @@ class Lib_PC3WPQueryFacade {
      * @param    int    $_iPostID   The ID of the post to check
      * @return   bool               True if the post exists; otherwise, false.
      */
-    public static function isPostExists( $_iPostID ) {
+    public function isPostExists( $_iPostID ) {
 
         return is_string( get_post_status( $_iPostID ) );
     }
@@ -147,13 +153,12 @@ class Lib_PC3WPQueryFacade {
      *
      * @return array    array of Sections
      */
-    public static function getSectionsByOrderASC() {
+    public function getSectionsByOrderASC() {
 
-        //@var pc3_section / order
-        return Lib_PC3WPQueryFacade::getPosts( array(
-            'post_type' => 'pc3_section',
+        return $this->getPosts( array(
+            'post_type' => $this->sSectionSlug,
             'orderby'   => 'meta_value_num',
-            'meta_key'  => 'order',
+            'meta_key'  => $this->sSectionMetaKey,
             'order'     => 'ASC',
             'post_status' => 'any',
             'posts_per_page' => -1
@@ -168,13 +173,12 @@ class Lib_PC3WPQueryFacade {
      *
      * @return array    array with one Section
      */
-    public static function getSectionWithLargestOrder() {
+    public function getSectionWithLargestOrder() {
 
-        //@var pc3_section / order
-        return Lib_PC3WPQueryFacade::getPosts( array(
-            'post_type' => 'pc3_section',
+        return $this->getPosts( array(
+            'post_type' => $this->sSectionSlug,
             'orderby'   => 'meta_value_num',
-            'meta_key'  => 'order',
+            'meta_key'  => $this->sSectionMetaKey,
             'order'     => 'DESC',
             'post_status' => 'any',
             'posts_per_page' => 1
@@ -190,7 +194,7 @@ class Lib_PC3WPQueryFacade {
      * @param    array $_aUserArgs  User-specified arguments which override the default arguments
      * @return   array              Posts returned by our query
      */
-    public static function getPosts( array $_aUserArgs ) {
+    public function getPosts( array $_aUserArgs ) {
 
         $_iDefaultPostsPerPage = get_option( 'posts_per_page' );
 

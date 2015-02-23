@@ -16,6 +16,35 @@
  */
 class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
 
+
+    /**
+     * The slug for our custom post type (Sections)
+     *
+     * @since   0.8.2
+     * @var     string
+     */
+    private $sSectionSlug;
+
+    /**
+     * The meta key name to keep track of the order in which our sortable fields should be rendered
+     *
+     * @since   0.8.0
+     * @var     string
+     */
+    private $sMetaKey;
+
+
+    public function __construct($sSectionSlug, $sMetaKey) {
+
+        //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
+        parent::__construct(
+            $sSectionSlug
+        );
+
+        $this->sSectionSlug = $sSectionSlug;
+        $this->sMetaKey = $sMetaKey;
+    }
+
     /**
      * Automatically called with the 'wp_loaded' hook.
      *
@@ -80,7 +109,7 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
             'title' => __( 'Title', 'one-page-sections' ), // Post title. Includes "edit", "quick edit", "trash" and "view" links. If $mode (set from $_REQUEST['mode']) is 'excerpt', a post excerpt is included between the title and links.
             'date' => __( 'Date', 'one-page-sections' ),
             //@var: order
-            'order' => __( 'Order', 'one-page-sections' )
+            $this->sMetaKey => __( 'Order', 'one-page-sections' )
         )
             // + $aHeaderColumns // uncomment this to enable the default columns.
             ;
@@ -98,18 +127,14 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
      */
     public function cell_pc3_section_order( $sCell, $iPostID ) { // cell_{post type}_{column key}
 
-        //@var: order
-        $_sOrder = get_post_meta( $iPostID, 'order', true );
+        $_sOrder = get_post_meta( $iPostID, $this->sMetaKey, true );
 
         if( strlen( $_sOrder ) < 1 )
             $_sOrder = '-';
 
-        //@var: pc3_section / order
         return $sCell
-        . '<div class="pc3_section__order-container">'
-        . '<p>' . esc_html($_sOrder)
-        . '</p>'
-        . '</div>';
+        . '<span>' . esc_html($_sOrder)
+        . '</span>';
     }
 
 }

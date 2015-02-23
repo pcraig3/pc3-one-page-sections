@@ -167,7 +167,7 @@ class One_Page_Sections_Public {
 	 * @param string    $context What the template is for ('usc_jobs','archive-usc_jobs', etc).
 	 * @return bool     return true if template is recognised as an 'event' template. False otherwise.
 	 */
-	private function _is_pc3_section_template($templatePath,$context=''){
+	private function is_pc3_section_template($templatePath,$context=''){
 		$template = basename($templatePath);
 
 		switch($context):
@@ -200,7 +200,7 @@ class One_Page_Sections_Public {
 	public function set_pc3_section_template( $template ) {
 
 		//@TODO: improve this, and check for empty values
-		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->_is_pc3_section_template( $template, 'page' ) )
+		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->is_pc3_section_template( $template, 'page' ) )
 			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
 			$template = $this->template_loader->locate_template( $this->container->getParameter('template__page'), false, true );
 
@@ -287,7 +287,7 @@ class One_Page_Sections_Public {
 		if( empty( $sSection ) )
 			return '<a class="' . $section__slug . '--link ' . $atts['class_not_found'] . '" href="#">' . $sContent . '</a>';
 
-		$aFoundSectionArray = Lib_PC3WPQueryFacade::getSectionByTitleOrID( $sSection );
+		$aFoundSectionArray = $this->container->getWPQueryFacade()->getSectionByTitleOrID( $sSection );
 
 		//if no post is returned, return an empty link
 		if( empty( $aFoundSectionArray ) )
@@ -344,7 +344,7 @@ class One_Page_Sections_Public {
      *
      * @param $query
      */
-    function pc3_inject_pc3_sections_into_main_query( $query ) {
+    public function pc3_inject_pc3_sections_into_main_query( $query ) {
 
         $queried_object = $query->queried_object;
 
@@ -355,7 +355,7 @@ class One_Page_Sections_Public {
                 $queried_object->post_title === $this->sections_page ) {
 
                 $section__slug = $this->container->getParameter('section__slug');
-                $query->$section__slug = Lib_PC3WPQueryFacade::getSectionsByOrderASC();
+                $query->$section__slug = $this->container->getWPQueryFacade()->getSectionsByOrderASC();
             }
         }
 

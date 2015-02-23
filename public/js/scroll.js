@@ -29,6 +29,7 @@
          *
          * @see  http://manos.malihu.gr/page-scroll-to-id
          */
+        //@var pc3_section
         $(".pc3_section__wrapper a[href^='#']").mPageScroll2id({
             scrollSpeed: 300,
             scrollEasing: "easeInOutQuad",
