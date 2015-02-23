@@ -18,14 +18,14 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *
      * @var string
      */
-    private $sSectionSlug;
+    private $sPageClass;
 
     /**
      * @since      0.6.0
      *
      * @var string
      */
-    private $sPageClass = 'Admin_PC3SectionManagerPage';
+    private $sSectionSlug;
 
     /**
      * @since      0.7.0
@@ -64,15 +64,15 @@ class Admin_PC3SectionPostTypeMetaLayer {
      * @param string $sMetaKey
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
      */
-    public function __construct($sSectionSlug, $sPageClass='', $sSortableFieldId='', $sMetaKey,
+    public function __construct($sPageClass, $sSectionSlug, $sSortableFieldId='', $sMetaKey,
                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
-        $this->sSectionSlug   = $sSectionSlug;
-        $this->sPageClass    = $sPageClass ? $sPageClass : $this->sPageClass;
-        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
-        $this->sMetaKey    = $sMetaKey;
-        $this->oCSSFileEditor    = $oCSSFileEditor;
-        $this->oWPQueryFacade    = $oWPQueryFacade;
+        $this->sSectionSlug     = $sSectionSlug;
+        $this->sPageClass       = $sPageClass;
+        $this->sSortableFieldId = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sMetaKey         = $sMetaKey;
+        $this->oCSSFileEditor   = $oCSSFileEditor;
+        $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // @TODO: maybe move these into the Loader somehow
         add_action( 'save_post_' . $this->sSectionSlug, array( $this, $this->sSectionSlug . '_save_post_' ) );

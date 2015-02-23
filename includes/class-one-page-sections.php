@@ -201,27 +201,25 @@ class One_Page_Sections {
                 '__sections',
                 $this->container->getParameter('section__meta_key')
             );
-            
-            //@TODO: This is not dependency-injected
-            //@TODO: hardcoded var CSS file
-            $oCSSFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
 
+            ///@TODO: reorder these
+            ///@TODO: figure out the ids for the form
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('page__manage') . '__submit',
-                $oCSSFileEditor,
+                $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
 
             //($sSectionSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
             new Admin_PC3SectionPostTypeMetaLayer(
-                $this->container->getParameter('section__slug'),
                 get_class( $sectionManagerPage ),
+                $this->container->getParameter('section__slug'),
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('section__meta_key'),
-                $oCSSFileEditor,
+                $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
         }

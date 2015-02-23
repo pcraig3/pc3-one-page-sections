@@ -11,6 +11,7 @@ class Lib_PC3Container {
     private $aParameters = array();
 
     private $wpQueryFacade;
+    private $cssFileEditor;
 
     //@TODO: field names for page :/
 
@@ -44,12 +45,26 @@ class Lib_PC3Container {
     public function getWPQueryFacade() {
 
             if (!isset($this->wpQueryFacade)) {
+
                 $this->wpQueryFacade = new Lib_PC3WPQueryFacade(
                     $this->getParameter('section__slug'),
                     $this->getParameter('section__meta_key')
                 );
             }
+
             return $this->wpQueryFacade;
+    }
+
+
+
+    public function getCSSFileEditor() {
+
+        if (!isset($this->cssFileEditor)) {
+
+            $this->cssFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
+        }
+
+        return $this->cssFileEditor;
     }
 
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
