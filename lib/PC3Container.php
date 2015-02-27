@@ -1,11 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Paul
- * Date: 21/02/2015
- * Time: 20:45
- */
 
+/**
+ * My attempt at a dependency injection container.
+ * Heavily modelled on one used by Mike Toppa in his Shashin plugin
+ *
+ * @see: https://github.com/toppa/Shashin/blob/master/lib/ShashinContainer.php
+ * @see: http://www.toppa.com/2013/dependency-injection-for-wordpress-plugins/
+ *
+ * @since      0.8.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/lib
+ */
 class Lib_PC3Container {
 
     private $aParameters = array();

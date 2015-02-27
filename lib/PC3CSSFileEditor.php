@@ -1,9 +1,13 @@
 <?php
 
 /**
- * Class Lib_PC3CSSFileEditor
+ * Class exists to overwrite a custom CSS file applied on the 'sections' page of our site.
+ * Pretty sure that the way it works right now is the bare minimum and we need to improve this.
  *
- * @TODO: Commenting
+ * @since      0.8.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/lib
  */
 class Lib_PC3CSSFileEditor {
 

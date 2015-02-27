@@ -1,10 +1,10 @@
 /**
- * @TODO
+ * Short bit of JavaScript which will stick any element with a #jquery-sticky id to the top of the screen.
  *
  * @since      0.8.2
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/templates
+ * @subpackage One_Page_Sections/public/js
  */
 
 (function( $ ) {

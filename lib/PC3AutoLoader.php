@@ -1,6 +1,17 @@
 <?php
 
-//https://github.com/toppa/Shashin/blob/6252018a78085f3408cc594c1e01d78078ab41a4/lib/ShashinAutoLoader.php
+/**
+ * My blatantly ripped-off Autoloader.  Means that I don't have to manually include all of my classes
+ * in `One_Page_Sections->load_dependencies()`
+ * Heavily modelled on one used by Mike Toppa in his Shashin plugin
+ *
+ * @see: https://github.com/toppa/Shashin/blob/6252018a78085f3408cc594c1e01d78078ab41a4/lib/ShashinAutoLoader.php
+ *
+ * @since      0.9.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/lib
+ */
 class PC3AutoLoader {
     private $relativePath;
     private $className;

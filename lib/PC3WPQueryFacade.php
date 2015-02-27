@@ -1,6 +1,6 @@
 <?php
 /**
- * @TODO:
+ * Provide an interface with WP_Query so as to query the WP database in various ways
  *
  * @since      0.7.0
  *

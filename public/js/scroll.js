@@ -1,5 +1,6 @@
 /**
- * @TODO
+ * Short bit of JavaScript which will apply a scroll-to-id effect to
+ * anchor tags within the .pc3_section__wrapper class
  *
  * @since      0.5.0
  *

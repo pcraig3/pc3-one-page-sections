@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @TODO:
+ * Provides an easy way to include custom templates in our plugin that can be optionally overwritten by intermediate users.
+ * Extends the Gamajo_Template_Loader
  *
  * @see: https://github.com/audiotheme/cue/blob/develop/includes/class-cue-template-loader.php
  * @see: https://github.com/GaryJones/Gamajo-Template-Loader
@@ -9,7 +10,7 @@
  * @since      0.4.0
  *
  * @package    One_Page_Sections
- * @subpackage One_Page_Sections/includes/lib
+ * @subpackage One_Page_Sections/lib
  */
 class Lib_PC3TemplateLoader extends Gamajo_Template_Loader {
     /**

@@ -319,7 +319,8 @@ class One_Page_Sections_Public {
 	}
 
 	/**
-	 * @TODO: comments
+	 * Method stops WordPress from automatically inserting '<p>' tags to content in our editor boxes
+     * for our 'sections' custom post type.
      *
 	 * @since    0.8.0
 	 *
@@ -329,7 +330,7 @@ class One_Page_Sections_Public {
 	 */
 	function pc3_remove_autop_for_posttype( $content )
 	{
-		# edit the post type here
+		//edit the post type here
         $this->container->getParameter('section__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
 		return $content;
 	}
@@ -337,7 +338,9 @@ class One_Page_Sections_Public {
 
     /**
      *
-     * @TODO: Comments
+     * If page being loaded is the 'sections_page', our 'sections' custom post types are injected into a
+     * custom key into the main WP_Query object, which is then used by the page-pc3_section template to iterate
+     * through our sections and print them to the screen.
      *
      * @since    0.8.0
      *
@@ -357,12 +360,6 @@ class One_Page_Sections_Public {
                 $query->$section__slug = $this->container->getWPQueryFacade()->getSectionsByOrderASC();
             }
         }
-
-        //if sections page, put in paul;
-        //if($query->queried_object_id === )
-        //var_dump($this->sections_page);
-        //var_dump($query->queried_object);
-        //var_dump($query);
 
     }
 }
