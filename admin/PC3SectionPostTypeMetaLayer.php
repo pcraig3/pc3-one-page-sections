@@ -28,18 +28,39 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $sSectionSlug;
 
     /**
-     * @since      0.7.0
-     *
-     * @var string
-     */
-    private $sSortableFieldId = 'manage_sections__sections';
-
-    /**
      * @since      0.6.0
      *
      * @var string
      */
     private $sMetaKey;
+
+    /**
+     * @since      0.7.0
+     *
+     * @var string Field id for the select drop-down list in our form
+     */
+    public $sSelectFieldId = 'manage_sections__sections_page';
+
+    /**
+     * @since      0.3.0
+     *
+     * @var string Field id for the sortable sections in our form
+     */
+    public $sSortableFieldId = 'manage_sections__sections';
+
+    /**
+     * @since      0.8.2
+     *
+     * @var string Field id for the editor field in our form
+     */
+    public $sEditorFieldId = 'manage_sections__editor';
+
+    /**
+     * @since      0.3.0
+     *
+     * @var string Field id for the submit button in our form
+     */
+    public $sSubmitFieldId = 'manage_sections__submit';
 
     /**
      * @since      0.8.0
@@ -56,25 +77,34 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $oWPQueryFacade;
 
     /**
-     * @since      0.8.0
-     *
-     * @param string $sSectionSlug
-     * @param string $sPageClass
+     * @param string $sPageClass                    Classname of the page these callbacks are registered to
+     * @param string $sSectionSlug                  Slug of the 'Section' custom post types
+     * @param string $sMetaKey                      Key for the meta value recording the 'order' of each section
+     * @param string $sSelectFieldId                Field id for the select box in our form
      * @param string $sSortableFieldId              Field id for the sortable sections in our form
-     * @param string $sMetaKey
-     * @param Lib_PC3CSSFileEditor $oCSSFileEditor     reads and writes to our custom CSS file
+     * @param string $sSubmitFieldId                Field id for the submit button in our form
+     * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
+     * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
+     * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
-    public function __construct($sPageClass, $sSectionSlug, $sSortableFieldId='', $sMetaKey,
+    public function __construct($sPageClass, $sSectionSlug, $sMetaKey,
+                                $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sSectionSlug     = $sSectionSlug;
         $this->sPageClass       = $sPageClass;
-        $this->sSortableFieldId = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sMetaKey         = $sMetaKey;
-        $this->oCSSFileEditor   = $oCSSFileEditor;
+
+        //@TODO this is a pretty ugly solution
+        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
+        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
+        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+
+        $this->oCSSFileEditor    = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
-        // @TODO: maybe move these into the Loader somehow
+        //@TODO: maybe move these into the Loader somehow
         add_action( 'save_post_' . $this->sSectionSlug, array( $this, $this->sSectionSlug . '_save_post_' ) );
         add_action( 'wp_trash_post', array( $this,  $this->sSectionSlug . '_wp_trash_post' ) );
 
@@ -82,11 +112,6 @@ class Admin_PC3SectionPostTypeMetaLayer {
 
         //@TODO: This is a really bad place for this
         add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sSectionSlug . '_submit_after_css' ) );
-    }
-
-    public function pc3_section_test() {
-
-        update_post_meta(1935, 'test', 'john');
     }
 
     /**
@@ -192,8 +217,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      */
     public function pc3_section_submit_after_css() {
 
-        //@TODO: @var manage_sections__editor
-        $_sEditorRules = PC3_AdminPageFramework::getOption( $this->sPageClass, 'manage_sections__editor' );
+        $_sEditorRules = PC3_AdminPageFramework::getOption( $this->sPageClass, $this->sEditorFieldId );
 
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 

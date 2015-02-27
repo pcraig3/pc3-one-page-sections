@@ -37,12 +37,16 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 * Hide metaboxes and editor in selected Page, as content is no longer used.
 * Section URLs redirect to index, or to page with sections.
-* Use a variable for Section templates?
 * Hunt down the TODOs -- mostly this means more in-code documentation
 * grunt or something.
-* Maybe use Archives page? (and not be able to extend plugin?)
+* Settings Page with debug flag, as well as options to (de)queue libraries.
+* Ability to update parameters in container using Settings pages.
 
 == Changelog ==
+
+#### 0.9.0
+* More CSS changes.
+* Added jquery-sticky plugin.
 
 #### 0.8.2
 * More CSS changes.

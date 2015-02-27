@@ -202,23 +202,31 @@ class One_Page_Sections {
                 $this->container->getParameter('section__meta_key')
             );
 
-            ///@TODO: reorder these
-            ///@TODO: figure out the ids for the form
+            //$sPageClass, $sPageSlug,
+            //$sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+            //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('page__manage'),
+                $this->container->getParameter('page__manage') . '__sections_page',
                 $this->container->getParameter('page__manage') . '__sections',
+                $this->container->getParameter('page__manage') . '__editor',
                 $this->container->getParameter('page__manage') . '__submit',
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
 
-            //($sSectionSlug='', $sPageClass='', $sSortableFieldId='', $sMetaKey='') {
+            //($sPageClass, $sSectionSlug, $sMetaKey,
+            //$sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+            //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade
             new Admin_PC3SectionPostTypeMetaLayer(
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
-                $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('section__meta_key'),
+                $this->container->getParameter('page__manage') . '__sections_page',
+                $this->container->getParameter('page__manage') . '__sections',
+                $this->container->getParameter('page__manage') . '__editor',
+                $this->container->getParameter('page__manage') . '__submit',
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );

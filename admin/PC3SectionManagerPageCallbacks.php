@@ -21,14 +21,14 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Stores the caller class name, set in the constructor.
      */
-    public $sClassName = 'Admin_PC3SectionManagerPage';
+    public $sPageClass;
 
     /**
      * @since      0.3.0
      *
      * The page slug to add the tab and form elements.
      */
-    public $sPageSlug   = 'manage_sections';
+    public $sPageSlug;
 
     /**
      * @since      0.7.0
@@ -45,18 +45,18 @@ class Admin_PC3SectionManagerPageCallbacks {
     public $sSortableFieldId = 'manage_sections__sections';
 
     /**
+     * @since      0.8.2
+     *
+     * @var string Field id for the editor field in our form
+     */
+    public $sEditorFieldId = 'manage_sections__editor';
+
+    /**
      * @since      0.3.0
      *
      * @var string Field id for the submit button in our form
      */
     public $sSubmitFieldId = 'manage_sections__submit';
-
-    /**
-     * @since      0.3.0
-     *
-     * Variable keeps track of whether or not sections were returned
-     */
-    private $bIfSections = false;
 
     /**
      * @since      0.8.0
@@ -73,30 +73,39 @@ class Admin_PC3SectionManagerPageCallbacks {
     private $oWPQueryFacade;
 
     /**
+     * @since      0.3.0
      *
-     * @since      0.8.0
-     *
-     * @param string $sClassName                Stores the classname of the object that called this one
-     * @param string $sPageSlug                 The page slug to add the tab and form elements.
-     * @param string $sSortableFieldId          Field id for the sortable sections in our form
-     * @param string $sSubmitFieldId            Field id for the sortable sections in our form
-     * @param Lib_PC3CSSFileEditor $oCSSFileEditor reads and writes to our custom CSS file
+     * Variable keeps track of whether or not sections were returned
      */
-    public function __construct( $sClassName='', $sPageSlug='', $sSortableFieldId='', $sSubmitFieldId='',
+    private $bIfSections = false;
+    
+    /**
+     * @param string $sPageClass                    Classname of the page these callbacks are registered to
+     * @param string $sPageSlug                     Slug of the page these callbacks are registered to
+     * @param string $sSelectFieldId                Field id for the select box in our form
+     * @param string $sSortableFieldId              Field id for the sortable sections in our form
+     * @param string $sSubmitFieldId                Field id for the submit button in our form
+     * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
+     * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
+     * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
+     */
+    public function __construct( $sPageClass, $sPageSlug,
+                                 $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
                                  Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
-        //@TODO: drop-down form
-        $this->sClassName   = $sClassName ? $sClassName : $this->sClassName;
-        $this->sPageSlug    = $sPageSlug ? $sPageSlug : $this->sPageSlug;
-        //$this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
+        $this->sPageClass   = $sPageClass;
+        $this->sPageSlug    = $sPageSlug;
+        //@TODO this is a pretty ugly solution
+        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
         $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+
         $this->oCSSFileEditor    = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // load_ + page slug
         add_action( 'load_' . $this->sPageSlug, array( $this, 'replyToLoadPage' ) );
-
     }
 
     /**
@@ -107,21 +116,21 @@ class Admin_PC3SectionManagerPageCallbacks {
     public function replyToLoadPage( $oAdminPage ) {
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSelectFieldId,
-            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSelectFieldId ) );
+        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId,
+            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId ) );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId,
-            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSortableFieldId ) );
+        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId,
+            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId ) );
 
-        //@TODO: @var __editor
-        add_filter( 'field_definition_' . $this->sClassName . '_' . 'manage_sections__editor',
-            array( $this,  'field_definition_' . $this->sClassName . '_' . 'manage_sections__editor' ) );
+        // field_definition_{instantiated class name}_{section id}_{field_id}
+        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId,
+            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId ) );
 
         // field_definition_{instantiated class name}_{section id}_{field_id}
         //{field_id} = submit_button
-        add_filter( 'field_definition_' . $this->sClassName . '_' . $this->sSubmitFieldId,
-            array( $this,  'field_definition_' . $this->sClassName . '_' . $this->sSubmitFieldId ) );
+        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSubmitFieldId,
+            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSubmitFieldId ) );
     }
 
     /**

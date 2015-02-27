@@ -14,14 +14,12 @@ class Lib_PC3Container {
     private $cssFileEditor;
 
     //@TODO: field names for page :/
-
-    //@TODO: mayhaps some post template variables
-
     function __construct() {
 
         $_aParameters = apply_filters( 'pc3_container_args', array(
             'section__slug'                 => 'pc3_section',
             'section__meta_key'             => 'order',
+            'page__sections'                => 'one-page-sections',
             'page__manage'                  => 'manage_sections',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
@@ -61,7 +59,7 @@ class Lib_PC3Container {
 
         if (!isset($this->cssFileEditor)) {
 
-            $this->cssFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/custom.css' );
+            $this->cssFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/one-page-sections-public.css' );
         }
 
         return $this->cssFileEditor;
