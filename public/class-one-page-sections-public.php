@@ -68,7 +68,7 @@ class One_Page_Sections_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->sections_page;
+		$this->sections_page = $sections_page;
         $this->container = $container;
 
 		$this->template_loader = new Lib_PC3TemplateLoader();
@@ -76,11 +76,6 @@ class One_Page_Sections_Public {
         add_shortcode( 'pc3_locate_section_template', array( $this, 'pc3_locate_section_template') );
         add_shortcode( 'pc3_get_parameter', array( $this, 'pc3_get_parameter') );
 		add_shortcode( 'pc3_section_link', array( $this, 'pc3_section_link') );
-
-		$_sPageID = PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage', 'manage_sections__sections_page');
-
-		if( $_sPageID )
-			$this->sections_page = $_sPageID;
 	}
 
 	/**

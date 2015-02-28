@@ -230,6 +230,16 @@ class One_Page_Sections {
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
+
+
+            //fair enough this sets our local variable, but we want it to set a container variable
+            $_sPageID = PC3_AdminPageFramework::getOption(
+                get_class( $sectionManagerPage ),
+                $this->container->getParameter('page__manage') . '__sections_page'
+            );
+
+            if( $_sPageID )
+                $this->sections_page = $_sPageID;
         }
 	}
 
