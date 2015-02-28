@@ -57,8 +57,6 @@ class One_Page_Sections {
 	 */
 	protected $version;
 
-	protected $sections_page;
-
     protected $container;
 
 	/**
@@ -74,8 +72,6 @@ class One_Page_Sections {
 
 		$this->plugin_name = 'one-page-sections';
 		$this->version = '0.8.2';
-
-		$this->sections_page = 'one-page-sections';
 
         $this->load_dependencies();
         //autoloader loads all new classes classes
@@ -238,8 +234,12 @@ class One_Page_Sections {
                 $this->container->getParameter('page__manage') . '__sections_page'
             );
 
+            //if a value exists, than overwrite it in our container
             if( $_sPageID )
-                $this->sections_page = $_sPageID;
+                $this->container->setParameter(
+                    $this->container->getParameter('page__manage') . '__sections_page',
+                    $_sPageID
+                );
         }
 	}
 
@@ -255,7 +255,6 @@ class One_Page_Sections {
         $plugin_public = new One_Page_Sections_Public(
 			$this->get_plugin_name(),
 			$this->get_version(),
-			$this->sections_page,
             $this->container
 		);
 

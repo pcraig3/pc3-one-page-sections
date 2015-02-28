@@ -64,13 +64,13 @@ class One_Page_Sections_Public {
      * @var 	 string    $sections_page 	The id or slug of the page to use for displaying our sections
      * @var 	 Lib_PC3Container    $container 	    Depenency injection and variable knower-abouter.
 	 */
-	public function __construct( $plugin_name, $version, $sections_page, Lib_PC3Container $container ) {
+	public function __construct( $plugin_name, $version, Lib_PC3Container $container ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->sections_page = $sections_page;
         $this->container = $container;
 
+        $this->sections_page = $this->container->getParameter('page__sections');
 		$this->template_loader = new Lib_PC3TemplateLoader();
 
         add_shortcode( 'pc3_locate_section_template', array( $this, 'pc3_locate_section_template') );

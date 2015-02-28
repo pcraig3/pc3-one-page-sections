@@ -15,6 +15,7 @@
 class Lib_PC3Container {
 
     private $aParameters = array();
+    private $aModifiableParameters = array();
 
     private $wpQueryFacade;
     private $cssFileEditor;
@@ -22,7 +23,7 @@ class Lib_PC3Container {
     //@TODO: field names for page :/
     function __construct() {
 
-        $_aParameters = apply_filters( 'pc3_container_args', array(
+        $this->aParameters = array(
             'section__slug'                 => 'pc3_section',
             'section__meta_key'             => 'order',
             'page__sections'                => 'one-page-sections',
@@ -30,9 +31,18 @@ class Lib_PC3Container {
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
             'debug'                         => true
-        ) );
+        );
 
-        $this->aParameters = $_aParameters;
+        //keys with values that correspond to $aParameter keys will be modifiable.
+        //so, for example, if we want to be able to modify 'page__sections',
+        //we could set $aModifiableParameters['set_sections_page'] => 'page__sections'
+        //and then call $container->setParameter('set_sections_page', 'new-sections-page');
+
+        $this->aModifiableParameters = array(
+
+            'manage_sections__sections_page' => 'page__sections'
+        );
+
     }
 
     public function getParameter( $sParameter ) {
@@ -44,6 +54,26 @@ class Lib_PC3Container {
             self::throwExceptionIfParameterNotFound($sParameter);
 
         return $sParameter;
+    }
+
+    public function setParameter( $sParameter, $value, $ifOverwriteExisting = true) {
+
+        //key => handle
+        //value => key of aParameters.
+
+        $ParameterKey = $this->aModifiableParameters[$sParameter];
+
+        //first, make sure that this is a parameter which can be overwritten
+        if( is_null( $ParameterKey ) )
+            self::throwExceptionIfParameterNotFound( $sParameter );
+
+        //if we don't want to overwrite a potential existing parameter, we return if a value is found for a key
+        if( $ifOverwriteExisting === false )
+            if( ! is_null( $this->aParameters[$ParameterKey] ))
+                return false;
+
+        $this->aParameters[$ParameterKey] = $value;
+        return true;
     }
 
     public function getWPQueryFacade() {
@@ -73,9 +103,7 @@ class Lib_PC3Container {
 
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
     public static function throwExceptionIfParameterNotFound($expectedString) {
-        if (!is_string($expectedString)) {
+
             throw new Exception(__('\'' . $expectedString . '\' not a valid config parameter', 'one-page-sections'));
-        }
-        return true;
     }
 }
