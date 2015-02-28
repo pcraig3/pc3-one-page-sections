@@ -40,7 +40,6 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * Hunt down the 16 TODOs -- mostly this means more in-code documentation
 * grunt or something.
 * Settings Page with debug flag, as well as options to (de)queue libraries.
-* Ability to update parameters in container using Settings pages.
 
 == Changelog ==
 

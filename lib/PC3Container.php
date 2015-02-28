@@ -20,6 +20,7 @@ class Lib_PC3Container {
     private $wpQueryFacade;
     private $cssFileEditor;
     private $templateLoader;
+    private $functionsFacade;
 
     //@TODO: field names for page :/
     function __construct() {
@@ -110,6 +111,16 @@ class Lib_PC3Container {
         }
 
         return $this->templateLoader;
+    }
+
+    public function getFunctionsFacade() {
+
+        if (!isset($this->functionsFacade)) {
+
+            $this->functionsFacade = new Lib_PC3FunctionsFacade();
+        }
+
+        return $this->functionsFacade;
     }
 
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php

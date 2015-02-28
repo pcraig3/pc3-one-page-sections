@@ -100,4 +100,26 @@ class One_Page_Sections_Admin {
 
 	}
 
+    public function pc3_sections_page_remove_metaboxes() {
+
+        global $post;
+        $sections_page = '1931';
+
+        /*
+        if( ! is_null( $queried_object )  ) {
+
+            if( $queried_object->ID === intval( $this->sections_page ) ||
+                $queried_object->post_name === $this->sections_page ||
+                $queried_object->post_title === $this->sections_page ) {
+
+            }
+        }
+        */
+
+
+        if( $post->ID === $sections_page )
+            var_dump( $post );
+
+    }
+
 }

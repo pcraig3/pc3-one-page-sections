@@ -3,16 +3,6 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://example.com
- * @since      0.1.0
- *
- * @package    One_Page_Sections
- * @subpackage One_Page_Sections/public
- */
-
-/**
- * The public-facing functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the dashboard-specific stylesheet and JavaScript.
  *
@@ -51,8 +41,24 @@ class One_Page_Sections_Public {
 	 */
 	private $template_loader;
 
+    /**
+     * The handle for the page on which our sections will be displayed.
+     * Might be a page slug, page ID, or page title.
+     *
+     * @since    0.7.0
+     * @access   private
+     * @var      string    $sections_page    page slug, page ID, or page title
+     */
 	private $sections_page;
 
+    /**
+     * The service container.
+     * Contains a lot of plugin-wide variables, as well as several service objects we need.
+     *
+     * @since    0.9.2
+     * @access   private
+     * @var      object    $container    service container contains lots of important stuff
+     */
     private $container;
 
 	/**
@@ -344,16 +350,10 @@ class One_Page_Sections_Public {
 
         $queried_object = $query->queried_object;
 
-        if( ! is_null( $queried_object )  ) {
-
-            if( $queried_object->ID === intval( $this->sections_page ) ||
-                $queried_object->post_name === $this->sections_page ||
-                $queried_object->post_title === $this->sections_page ) {
+        if( $this->container->getFunctionsFacade()->isMatchesPostObject($this->sections_page, $queried_object)  ) {
 
                 $section__slug = $this->container->getParameter('section__slug');
                 $query->$section__slug = $this->container->getWPQueryFacade()->getSectionsByOrderASC();
-            }
         }
-
     }
 }
