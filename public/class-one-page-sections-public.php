@@ -59,10 +59,9 @@ class One_Page_Sections_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.7.0
-	 * @var      string    $plugin_name     The name of the plugin.
-	 * @var      string    $version    		The version of this plugin.
-     * @var 	 string    $sections_page 	The id or slug of the page to use for displaying our sections
-     * @var 	 Lib_PC3Container    $container 	    Depenency injection and variable knower-abouter.
+	 * @var      string    $plugin_name         The name of the plugin.
+	 * @var      string    $version    		    The version of this plugin.
+     * @var 	 Lib_PC3Container    $container Dependency injection and variable knower-abouter.
 	 */
 	public function __construct( $plugin_name, $version, Lib_PC3Container $container ) {
 
@@ -71,7 +70,7 @@ class One_Page_Sections_Public {
         $this->container = $container;
 
         $this->sections_page = $this->container->getParameter('page__sections');
-		$this->template_loader = new Lib_PC3TemplateLoader();
+		$this->template_loader = $this->container->getPC3TemplateLoader();
 
         add_shortcode( 'pc3_locate_section_template', array( $this, 'pc3_locate_section_template') );
         add_shortcode( 'pc3_get_parameter', array( $this, 'pc3_get_parameter') );

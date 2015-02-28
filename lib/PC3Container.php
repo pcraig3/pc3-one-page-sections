@@ -19,6 +19,7 @@ class Lib_PC3Container {
 
     private $wpQueryFacade;
     private $cssFileEditor;
+    private $templateLoader;
 
     //@TODO: field names for page :/
     function __construct() {
@@ -99,6 +100,16 @@ class Lib_PC3Container {
         }
 
         return $this->cssFileEditor;
+    }
+
+    public function getPC3TemplateLoader() {
+
+        if (!isset($this->templateLoader)) {
+
+            $this->templateLoader = new Lib_PC3TemplateLoader();
+        }
+
+        return $this->templateLoader;
     }
 
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
