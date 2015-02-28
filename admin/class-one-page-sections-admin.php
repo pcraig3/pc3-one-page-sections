@@ -40,17 +40,30 @@ class One_Page_Sections_Admin {
 	 */
 	private $version;
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    0.1.0
-	 * @var      string    $plugin_name       The name of this plugin.
-	 * @var      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
+    /**
+     * The service container.
+     * Contains a lot of plugin-wide variables, as well as several service objects we need.
+     *
+     * @since    0.9.2
+     * @access   private
+     * @var      object    $container    service container contains lots of important stuff
+     */
+    private $container;
+
+    /**
+     * Initialize the class and set its properties.
+     *
+     * @since    0.1.0
+     * @var      string    $plugin_name         The name of this plugin.
+     * @var      string    $version             The version of this plugin.
+     * @var 	 Lib_PC3Container    $container Dependency injection and variable knower-abouter.
+     */
+	public function __construct( $plugin_name, $version, Lib_PC3Container $container ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+
+        $this->container = $container;
 
 	}
 
@@ -102,23 +115,13 @@ class One_Page_Sections_Admin {
 
     public function pc3_sections_page_remove_metaboxes() {
 
-        global $post;
+        $post =  $this->container->getFunctionsFacade()->getGlobalPostObject();
         $sections_page = '1931';
 
-        /*
-        if( ! is_null( $queried_object )  ) {
+        if( $this->container->getFunctionsFacade()->isMatchesPostObject($sections_page, $post)  ) {
 
-            if( $queried_object->ID === intval( $this->sections_page ) ||
-                $queried_object->post_name === $this->sections_page ||
-                $queried_object->post_title === $this->sections_page ) {
-
-            }
+            var_dump('found');
         }
-        */
-
-
-        if( $post->ID === $sections_page )
-            var_dump( $post );
 
     }
 

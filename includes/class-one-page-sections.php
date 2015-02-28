@@ -176,7 +176,11 @@ class One_Page_Sections {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new One_Page_Sections_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new One_Page_Sections_Admin(
+            $this->get_plugin_name(),
+            $this->get_version(),
+            $this->container
+        );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
