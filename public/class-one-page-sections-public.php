@@ -102,7 +102,6 @@ class One_Page_Sections_Public {
 		 * class.
 		 */
 
-		//@TODO: improve this, and check for empty values
 		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
 
 			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
@@ -137,7 +136,6 @@ class One_Page_Sections_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/one-page-sections-public.js', array( 'jquery' ), $this->version, false );
 
-		//@TODO: improve this, and check for empty values
 		if( ! empty( $this->sections_page ) &&  is_page( $this->sections_page ) ) {
 
 			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
@@ -150,73 +148,44 @@ class One_Page_Sections_Public {
 	}
 
 	/**
-	 * Checks if provided template path points to the page we want it to.
-	 *
-	 * @TODO: All comments hereafter are junk to be sorted through later.
-	 * ' template recognised by our humble little plugin.
-	 * If no usc_jobs-archive template is present the plug-in will pick the most appropriate
-	 * option, first from the theme/child-theme directory then the plugin.
-	 *
-	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L153
-	 * @author  Stephen Harris
-	 *
-	 * @since    0.4.0
-	 *
-	 * @param string    $templatePath absolute path to template or filename (with .php extension)
-	 * @param string    $context What the template is for ('usc_jobs','archive-usc_jobs', etc).
-	 * @return bool     return true if template is recognised as an 'event' template. False otherwise.
-	 */
-	private function is_pc3_section_template($templatePath,$context=''){
-		$template = basename($templatePath);
-
-		switch($context):
-			case 'page';
-			return $template === $this->container->getParameter('template__page');
-
-		endswitch;
-		return false;
-	}
-	/**
 	 * Checks the provided template path is correct, considering that we want a specific page to
-	 * display our one-page-sections.
+	 * display our one-page-sections custom post type.
 	 *
-	 * @TODO: Everything hereafter is junk and I'll get to it.
 	 * Checks to see if appropriate templates are present in active template directory.
-	 * Otherwise uses templates present in plugin's template directory.
-	 * Hooked onto template_include
+	 * Otherwise uses templates present in plugin's template directory
 	 *
-	 * **THIS MEANS THAT IF YOU WANT A CHANGE TO A TEMPLATE TO PROPAGATE, MAKE THE CHANGE TO THE TEMPLATE IN THE
-	 * THEMES FOLDER, NOT THE TEMPLATE FILE IN THE FOLDER FOR THIS PLUGIN**
+	 * @see     Gajamo_Template_Loader::locate_template
+     * @author  Gary Jones
 	 *
-	 * @see     https://github.com/stephenharris/Event-Organiser/blob/1.7.3/includes/event-organiser-templates.php#L192
-	 * @author  Stephen Harris
+	 * @since    0.9.0
 	 *
-	 * @since    0.8.0
-	 *
-	 * @param string $template Absolute path to template
-	 * @return string Absolute path to template
+     * @param string $template  Absolute path to template
+     * @return string $template Absolute path to template
 	 */
-	public function set_pc3_section_template( $template ) {
+	public function pc3_set_section_page_template( $template ) {
 
-		//@TODO: improve this, and check for empty values
-		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $this->is_pc3_section_template( $template, 'page' ) )
-			//$template = $this->_pc3_locate_template('page-pc3_section.php', false, true );
+        $is_pc3_section_template = ( basename($template) === $this->container->getParameter('template__page') );
+
+		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) && ! $is_pc3_section_template )
 			$template = $this->template_loader->locate_template( $this->container->getParameter('template__page'), false, true );
 
 		return $template;
 	}
 
 	/**
-	 * @TODO: fix this method
+	 * Method called by the `pc3_locate_section_template` shortcode.
+     * Looks for a `post-pc3_section.php` template file in the (child) theme folder(s) first,
+     * and then, if not found, in this plugin.
+     * The idea is that the default template can be overwritten if you know what's up.
 	 *
 	 * @since    0.4.0
 	 *
-	 * @return string
+     * @return string   Absolute path to template
 	 */
 	public function pc3_locate_section_template() {
 
 		return $this->template_loader->locate_template( $this->container->getParameter('template__post'), true, false );
-	}
+    }
 
     /**
      * @since    0.8.2
@@ -243,7 +212,6 @@ class One_Page_Sections_Public {
 
         return $message;
     }
-
 
 	/**
 	 * Method returns hashtag links to other sections on the same page.
@@ -334,7 +302,6 @@ class One_Page_Sections_Public {
         $this->container->getParameter('section__slug') === get_post_type() && remove_filter( 'the_content', 'wpautop' );
 		return $content;
 	}
-
 
     /**
      *
