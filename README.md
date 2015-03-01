@@ -35,11 +35,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == TODOs ==
 
-* Hide metaboxes and editor in selected Page, as content is no longer used.
 * Section URLs redirect to index, or to page with sections.
-* Hunt down the 16 TODOs -- mostly this means more in-code documentation
+* Hunt down the 11 TODOs -- mostly this means more in-code documentation
 * grunt or something.
 * Settings Page with debug flag, as well as options to (de)queue libraries.
+* Remove CSS file changes from being tracked.
 
 == Changelog ==
 

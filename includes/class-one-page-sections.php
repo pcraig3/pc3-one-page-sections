@@ -235,6 +235,12 @@ class One_Page_Sections {
                 $this->container->getWPQueryFacade()
             );
 
+            $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
+                $this->container->getParameter('page__settings'),
+                '__debug',
+                '__submit'
+            );
+
 
             //fair enough this sets our local variable, but we want it to set a container variable
             $_sPageID = PC3_AdminPageFramework::getOption(

@@ -68,14 +68,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
     private $sMetaKey;
 
     /**
-     * The name of this class
-     *
-     * @since   0.7.0
-     * @var     string
-     */
-    private $sPageClass;
-
-    /**
      * @since   0.7.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
@@ -226,6 +218,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
     {
         // Show the saved option value.
         echo '<h3>Show all the options as an array</h3>';
-        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption('Admin_PC3SectionManagerPage'));
+        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption( get_class( $this ) ) );
     }
 }

@@ -30,6 +30,7 @@ class Lib_PC3Container {
             'section__meta_key'             => 'order',
             'page__sections'                => 'one-page-sections',
             'page__manage'                  => 'manage_sections',
+            'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
             'debug'                         => true
