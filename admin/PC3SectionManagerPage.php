@@ -59,27 +59,22 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public $sSubmitFieldId = '__submit';
 
-    /**
-     * The meta key name to keep track of the order in which our sortable fields should be rendered
-     *
-     * @since   0.7.0
-     * @var     string
-     */
-    private $sMetaKey;
+    private $bDebug;
 
     /**
      * @since   0.7.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
      * @param string $sSectionSlug      The slug for our custom post type (Sections)
-     * @param string $sMetaKey          The meta key name to keep track of the order in which our sortable fields should be rendered
      * @param string $sSelectFieldId    Field id for the select box in our form
      * @param string $sSortableFieldId  Field id for the sortable sections in our form
      * @param string $sEditorFieldId    Field id for the (CSS) editor field in our form
      * @param string $sSubmitFieldId    Field id for the submit button in our form
+     * @param int $iDebug               Debug flag
      */
-    public function __construct($sPageSlug, $sSectionSlug, $sMetaKey,
-                                $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='') {
+    public function __construct($sPageSlug, $sSectionSlug,
+                                $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+                                $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -91,7 +86,9 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
 
         $this->sPageSlug = $sPageSlug;
         $this->sSectionSlug = $sSectionSlug;
-        $this->sMetaKey = $sMetaKey;
+
+        //set to 'true' if $iDebug is not zero.
+        $this->bDebug = intval( $iDebug ) !== 0;
 
         //@TODO this is a pretty ugly solution
         $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
@@ -110,7 +107,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
     public function setUp()
     {
         // Create the root menu - specifies to which parent menu to add.
-        if (post_type_exists( $this->sSectionSlug ))
+        if ( post_type_exists( $this->sSectionSlug ) )
             $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sSectionSlug );
         else
             $this->setRootMenuPage('Settings');
@@ -216,8 +213,10 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public function do_manage_sections()
     {
-        // Show the saved option value.
-        echo '<h3>Show all the options as an array</h3>';
-        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption( get_class( $this ) ) );
+        if( $this->bDebug ) {
+            // Show the saved option value.
+            echo '<h3>Show all the options as an array</h3>';
+            echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption(get_class($this)));
+        }
     }
 }

@@ -188,13 +188,45 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-            new Admin_PC3SectionPostTypeMetaBox(
-                null,   // meta box ID - can be null.
-                __('Debug', 'one-page-sections'), // title
-                array( $this->container->getParameter('section__slug') ),             // post type slugs: post, page, etc.
-                'side',                             // context
-                'default'                           // priority
+            //@TODO: Move this into a callback or something
+            //sets the page to be our sections_page
+            $_sPageID = PC3_AdminPageFramework::getOption(
+                'Admin_PC3SectionManagerPage',
+                $this->container->getParameter('page__manage') . '__sections_page'
             );
+
+            //if a value exists, than overwrite it in our container
+            if( $_sPageID )
+                $this->container->setParameter(
+                    $this->container->getParameter('page__manage') . '__sections_page',
+                    $_sPageID
+                );
+
+            //@TODO: Move this into a callback or something
+            //sets the debug flag
+            $_iDebug = PC3_AdminPageFramework::getOption(
+                'Admin_PC3SectionSettingsPage',
+                $this->container->getParameter('page__settings') . '__debug'
+            );
+
+            //if a value exists, than overwrite it in our container
+            if( $_iDebug )
+                $this->container->setParameter(
+                    $this->container->getParameter('page__settings') . '__debug',
+                    $_iDebug
+                );
+
+
+            if( 0 !== intval( $this->container->getParameter('debug') ) ) {
+
+                new Admin_PC3SectionPostTypeMetaBox(
+                    null,   // meta box ID - can be null.
+                    __('Debug', 'one-page-sections'), // title
+                    array($this->container->getParameter('section__slug')),             // post type slugs: post, page, etc.
+                    'side',                             // context
+                    'default'                           // priority
+                );
+            }
 
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
@@ -203,7 +235,8 @@ class One_Page_Sections {
                 '__sections_page',
                 '__sections',
                 '__editor',
-                '__submit'
+                '__submit',
+                $this->container->getParameter('debug')
             );
 
             //$sPageClass, $sPageSlug,
@@ -238,22 +271,12 @@ class One_Page_Sections {
             $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
                 $this->container->getParameter('page__settings'),
                 '__debug',
-                '__submit'
+                '__submit',
+                $this->container->getParameter('debug')
             );
 
 
-            //fair enough this sets our local variable, but we want it to set a container variable
-            $_sPageID = PC3_AdminPageFramework::getOption(
-                get_class( $sectionManagerPage ),
-                $this->container->getParameter('page__manage') . '__sections_page'
-            );
 
-            //if a value exists, than overwrite it in our container
-            if( $_sPageID )
-                $this->container->setParameter(
-                    $this->container->getParameter('page__manage') . '__sections_page',
-                    $_sPageID
-                );
         }
 	}
 

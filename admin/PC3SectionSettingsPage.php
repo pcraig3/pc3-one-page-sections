@@ -33,15 +33,19 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
      */
     public $sSubmitFieldId = '__submit';
 
+    private $bDebug;
+
     /**
      * @since   0.7.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
      * @param string $sDebugFieldId     Field id for the debug radio buttons in our form
      * @param string $sSubmitFieldId    Field id for the submit button in our form
+     * @param int $iDebug               Debug flag
      */
     public function __construct($sPageSlug,
-                                $sDebugFieldId='', $sSubmitFieldId='') {
+                                $sDebugFieldId='', $sSubmitFieldId='' ,
+                                $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -52,6 +56,9 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
         );
 
         $this->sPageSlug = $sPageSlug;
+
+        //set to 'true' if $iDebug is not zero.
+        $this->bDebug = intval( $iDebug ) !== 0;
 
         //@TODO this is a pretty ugly solution
         $this->sDebugFieldId    = $sDebugFieldId ? $sDebugFieldId : $this->sDebugFieldId;
@@ -124,8 +131,10 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
      */
     public function do_pc3_settings()
     {
-        // Show the saved option value.
-        echo '<h3>Show all the options as an array</h3>';
-        echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption( get_class( $this ) ) );
+        if( $this->bDebug ) {
+            // Show the saved option value.
+            echo '<h3>Show all the options as an array</h3>';
+            echo $this->oDebug->getArray(PC3_AdminPageFramework::getOption(get_class($this)));
+        }
     }
 }

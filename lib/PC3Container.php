@@ -33,7 +33,7 @@ class Lib_PC3Container {
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
-            'debug'                         => true
+            'debug'                         => 0
         );
 
         //keys with values that correspond to $aParameter keys will be modifiable.
@@ -43,7 +43,8 @@ class Lib_PC3Container {
 
         $this->aModifiableParameters = array(
 
-            'manage_sections__sections_page' => 'page__sections'
+            'manage_sections__sections_page' => 'page__sections',
+            'pc3_settings__debug' => 'debug'
         );
 
     }
