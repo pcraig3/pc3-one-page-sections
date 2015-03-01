@@ -32,12 +32,32 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
     private $sSectionSlug;
 
     /**
-     * The field_id for our sortable field (hopefully to be filled with Sections).
+     * @since      0.7.0
      *
-     * @since   0.7.0
-     * @var     string
+     * @var string Field id for the select drop-down list in our form
      */
-    private $sSortableFieldId = 'manage_sections__sections';
+    public $sSelectFieldId = '__sections_page';
+
+    /**
+     * @since      0.3.0
+     *
+     * @var string Field id for the sortable sections in our form
+     */
+    public $sSortableFieldId = '__sections';
+
+    /**
+     * @since      0.8.2
+     *
+     * @var string Field id for the editor field in our form
+     */
+    public $sEditorFieldId = '__editor';
+
+    /**
+     * @since      0.3.0
+     *
+     * @var string Field id for the submit button in our form
+     */
+    public $sSubmitFieldId = '__submit';
 
     /**
      * The meta key name to keep track of the order in which our sortable fields should be rendered
@@ -59,11 +79,15 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @since   0.7.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
-     * @param string $sSectionSlug     The slug for our custom post type (Sections)
-     * @param string $sSortableFieldId  The field_id for our sortable field
+     * @param string $sSectionSlug      The slug for our custom post type (Sections)
      * @param string $sMetaKey          The meta key name to keep track of the order in which our sortable fields should be rendered
+     * @param string $sSelectFieldId    Field id for the select box in our form
+     * @param string $sSortableFieldId  Field id for the sortable sections in our form
+     * @param string $sEditorFieldId    Field id for the (CSS) editor field in our form
+     * @param string $sSubmitFieldId    Field id for the submit button in our form
      */
-    public function __construct($sPageSlug, $sSectionSlug, $sSortableFieldId='', $sMetaKey) {
+    public function __construct($sPageSlug, $sSectionSlug, $sMetaKey,
+                                $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='') {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -75,10 +99,13 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
 
         $this->sPageSlug = $sPageSlug;
         $this->sSectionSlug = $sSectionSlug;
-        $this->sSortableFieldId = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sMetaKey = $sMetaKey;
 
-        $this->sPageClass       = get_class($this);
+        //@TODO this is a pretty ugly solution
+        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
+        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
+        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
     }
 
     /**
@@ -119,7 +146,7 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public function load_manage_sections($oAdminPage)
     {
-        $this->registerFieldTypes( $this->sPageClass );
+        $this->registerFieldTypes();
 
         $this->addSettingFields(
             array( // Single Drop-down List
@@ -179,10 +206,8 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * Register custom field types.
      *
      * @since      0.8.0
-     *
-     * @param string $sClassName    the name of this class
      */
-    private function registerFieldTypes( $sClassName ) {
+    private function registerFieldTypes() {
 
         if ( ! class_exists('AceCustomFieldType') )
             require_once ONE_PAGE_SECTIONS_DIR_PATH . 'vendor/AceCustomFieldType/AceCustomFieldType.php';

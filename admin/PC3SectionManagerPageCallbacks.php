@@ -84,8 +84,8 @@ class Admin_PC3SectionManagerPageCallbacks {
      * @param string $sPageSlug                     Slug of the page these callbacks are registered to
      * @param string $sSelectFieldId                Field id for the select box in our form
      * @param string $sSortableFieldId              Field id for the sortable sections in our form
-     * @param string $sSubmitFieldId                Field id for the submit button in our form
      * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
+     * @param string $sSubmitFieldId                Field id for the submit button in our form
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */

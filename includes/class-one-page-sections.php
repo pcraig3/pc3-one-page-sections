@@ -199,8 +199,11 @@ class One_Page_Sections {
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
+                $this->container->getParameter('section__meta_key'),
+                '__sections_page',
                 '__sections',
-                $this->container->getParameter('section__meta_key')
+                '__editor',
+                '__submit'
             );
 
             //$sPageClass, $sPageSlug,
