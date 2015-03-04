@@ -188,6 +188,22 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
+            $aAdminPages = array(
+                'Admin_PC3SectionManagerPage',
+                'Admin_PC3SectionSettingsPage'
+            );
+
+            $debugField = new Lib_PC3AdminPageField(
+                'field__debug',
+                'Debug Flag',
+                'debug',
+                0
+            );
+
+            $this->container->addParameter( $debugField, $aAdminPages );
+
+
+
             //@TODO: Move this into a callback or something
             //sets the page to be our sections_page
             $_sPageID = PC3_AdminPageFramework::getOption(
@@ -200,20 +216,6 @@ class One_Page_Sections {
                 $this->container->setParameter(
                     $this->container->getParameter('page__manage') . '__sections_page',
                     $_sPageID
-                );
-
-            //@TODO: Move this into a callback or something
-            //sets the debug flag
-            $_iDebug = PC3_AdminPageFramework::getOption(
-                'Admin_PC3SectionSettingsPage',
-                $this->container->getParameter('page__settings') . '__debug'
-            );
-
-            //if a value exists, than overwrite it in our container
-            if( $_iDebug )
-                $this->container->setParameter(
-                    $this->container->getParameter('page__settings') . '__debug',
-                    $_iDebug
                 );
 
 
@@ -235,8 +237,7 @@ class One_Page_Sections {
                 '__sections_page',
                 '__sections',
                 '__editor',
-                '__submit',
-                $this->container->getParameter('debug')
+                '__submit'
             );
 
             //$sPageClass, $sPageSlug,
@@ -272,11 +273,13 @@ class One_Page_Sections {
                 $this->container->getParameter('page__settings'),
                 '__debug',
                 '__submit',
-                $this->container->getParameter('debug')
+                $this->container->getParameter('debug'),
+                array( $debugField )
             );
 
-
-
+            echo '<pre>';
+            $this->container->printParametersToScreen();
+            echo '</pre>';
         }
 	}
 

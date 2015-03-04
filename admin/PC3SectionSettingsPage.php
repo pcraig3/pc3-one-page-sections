@@ -35,17 +35,22 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
 
     private $bDebug;
 
+    private $aSettingFields;
+
     /**
      * @since   0.7.0
      *
-     * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
-     * @param string $sDebugFieldId     Field id for the debug radio buttons in our form
-     * @param string $sSubmitFieldId    Field id for the submit button in our form
-     * @param int $iDebug               Debug flag
+     * @param string $sPageSlug             The slug used to uniquely identify this page, both in the code and in the URL
+     * @param string $sDebugFieldId         Field id for the debug radio buttons in our form
+     * @param string $sSubmitFieldId        Field id for the submit button in our form
+     * @param int $iDebug                   Debug flag
+     * @param array $aSettingFields         Setting fields for our admin page
+     * @param Lib_PC3Container $oContainer  Container that does everything
      */
     public function __construct($sPageSlug,
                                 $sDebugFieldId='', $sSubmitFieldId='' ,
-                                $iDebug = 0 ) {
+                                $iDebug = 0,
+                                array $aSettingFields = array() ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -60,9 +65,16 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
         //set to 'true' if $iDebug is not zero.
         $this->bDebug = intval( $iDebug ) !== 0;
 
+        $this->aSettingFields = $aSettingFields;
+
         //@TODO this is a pretty ugly solution
         $this->sDebugFieldId    = $sDebugFieldId ? $sDebugFieldId : $this->sDebugFieldId;
         $this->sSubmitFieldId   = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+    }
+
+    private function add_field_to_container_settings( $container, $oSettingField ) {
+
+
     }
 
     /**
@@ -101,17 +113,31 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
     public function load_pc3_settings($oAdminPage)
     {
 
-        $this->addSettingFields(
-            array( // Repeatable radio buttons
-                'field_id'      => $this->sPageSlug . $this->sDebugFieldId,
-                'title'         => __( 'Debug Flag', 'one-page-sections' ),
-                'type'          => 'radio',
-                'label'         => array(
-                    0 => 'No',
-                    1 => 'Yes'
-                ),
-                'default' => 0, // set the key of the label array
-            ),
+        if( ! empty( $this->aSettingFields ) )
+            foreach( $this->aSettingFields as $oSettingField )
+                $this->addSettingField(
+                    $oSettingField->getFieldArray()
+                );
+
+        else {
+
+            $this->addSettingField(
+                array( // Repeatable radio buttons
+                    'field_id' => $this->sPageSlug . $this->sDebugFieldId,
+                    'title' => __('Debug Flag', 'one-page-sections'),
+                    'type' => 'radio',
+                    'label' => array(
+                        0 => 'No',
+                        1 => 'Yes'
+                    ),
+                    'default' => 0, // set the key of the label array
+                )
+            );
+        }
+
+
+
+        $this->addSettingField(
             array( // Submit button
                 'field_id'      => $this->sPageSlug . '__submit',
                 'type'          => 'submit',

@@ -44,7 +44,6 @@ class Lib_PC3Container {
         $this->aModifiableParameters = array(
 
             'manage_sections__sections_page' => 'page__sections',
-            'pc3_settings__debug' => 'debug'
         );
 
     }
@@ -58,6 +57,32 @@ class Lib_PC3Container {
             self::throwExceptionIfParameterNotFound($sParameter);
 
         return $sParameter;
+    }
+
+    public function printParametersToScreen() {
+
+        //change this to $debug
+        if( true )
+            var_dump( $this->aParameters );
+    }
+
+    public function addParameter( Lib_PC3AdminPageField $oField, array $aAdminPageClassnames ) {
+
+        //get name
+        $sKey = $oField->getContainerParameterKey();
+
+        //get value
+        $sVal = null;
+
+        while( ! empty( $aAdminPageClassnames ) && is_null( $sVal ))
+            $sVal = PC3_AdminPageFramework::getOption( array_shift( $aAdminPageClassnames ), $oField->getFieldID() );
+
+        //if not, get default value
+        if( is_null( $sVal ) )
+            $sVal = $oField->getDefaultVal();
+
+        $this->aParameters[$sKey] = $sVal;
+
     }
 
     public function setParameter( $sParameter, $value, $ifOverwriteExisting = true) {
@@ -128,6 +153,6 @@ class Lib_PC3Container {
     //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
     public static function throwExceptionIfParameterNotFound($expectedString) {
 
-            throw new Exception(__('\'' . $expectedString . '\' not a valid config parameter', 'one-page-sections'));
+            throw new Exception(__('"' . $expectedString . '" not a valid config parameter', 'one-page-sections'));
     }
 }
