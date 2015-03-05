@@ -1,11 +1,14 @@
 <?php
-
 /**
- * Class Lib_PC3PageDebugField
+ * Class defines a 'Debug' radio button setting field.
+ * Debug flag can be turned on or off
  *
- * @TODO
+ * @since      0.9.0
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/admin
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Lib_PC3PageDebugField extends Lib_PC3PageSettingField {
+class Admin_PC3PageDebugField extends Lib_PC3PageSettingField {
 
     public function __construct( $sFieldID, $sContainerParameterKey, array $aFieldParameters = array() ) {
 
@@ -19,8 +22,7 @@ class Lib_PC3PageDebugField extends Lib_PC3PageSettingField {
             'default' => 0
         );
 
-        //@TODO ARRAY_MERGE
-        $aMergedFieldParameters = $aDefaultFieldParameters;
+        $aMergedFieldParameters = array_merge( $aDefaultFieldParameters, $aFieldParameters );
 
         parent::__construct($sFieldID, $sContainerParameterKey, $aMergedFieldParameters);
     }

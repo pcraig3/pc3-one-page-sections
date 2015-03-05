@@ -198,13 +198,13 @@ class One_Page_Sections {
             //General SettingField superclass
             //Title Optional
 
-            $debugField = new Lib_PC3PageDebugField(
+            $debugField = new Admin_PC3PageDebugField(
                 'field__debug',
                 'debug',
                 array( 'title' => 'Debug Flag' )
             );
 
-            $submitField = new Lib_PC3PageSubmitField(
+            $submitField = new Admin_PC3PageSubmitField(
                 'field__submit'
             );
 
@@ -241,11 +241,11 @@ class One_Page_Sections {
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
-                $this->container->getParameter('section__meta_key'),
                 '__sections_page',
                 '__sections',
                 '__editor',
-                '__submit'
+                '__submit',
+                $this->container->getParameter('debug')
             );
 
             //$sPageClass, $sPageSlug,
@@ -277,6 +277,7 @@ class One_Page_Sections {
                 $this->container->getWPQueryFacade()
             );
 
+            //@TODO: housekeeping
             $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
                 $this->container->getParameter('page__settings'),
                 array( $debugField, $submitField ),
@@ -285,9 +286,14 @@ class One_Page_Sections {
                 $this->container->getParameter('debug')
             );
 
-            echo '<pre>';
-            $this->container->printParametersToScreen();
-            echo '</pre>';
+            new Admin_PC3SectionSettingsPageCallbacks(
+                get_class( $pc3SettingsPage ),
+                array( $debugField, $submitField )
+            );
+
+//            echo '<pre>';
+//            $this->container->printParametersToScreen();
+//            echo '</pre>';
         }
 	}
 
