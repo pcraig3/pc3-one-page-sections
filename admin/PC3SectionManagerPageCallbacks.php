@@ -24,41 +24,6 @@ class Admin_PC3SectionManagerPageCallbacks {
     public $sPageClass;
 
     /**
-     * @since      0.3.0
-     *
-     * The page slug to add the tab and form elements.
-     */
-    public $sPageSlug;
-
-    /**
-     * @since      0.7.0
-     *
-     * @var string Field id for the select drop-down list in our form
-     */
-    public $sSelectFieldId = 'manage_sections__sections_page';
-
-    /**
-     * @since      0.3.0
-     *
-     * @var string Field id for the sortable sections in our form
-     */
-    public $sSortableFieldId = 'manage_sections__sections';
-
-    /**
-     * @since      0.8.2
-     *
-     * @var string Field id for the editor field in our form
-     */
-    public $sEditorFieldId = 'manage_sections__editor';
-
-    /**
-     * @since      0.3.0
-     *
-     * @var string Field id for the submit button in our form
-     */
-    public $sSubmitFieldId = 'manage_sections__submit';
-
-    /**
      * An array of setting fields to be added to this page.
      *
      * @since   0.9.0
@@ -89,33 +54,21 @@ class Admin_PC3SectionManagerPageCallbacks {
     
     /**
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
-     * @param string $sPageSlug                     Slug of the page these callbacks are registered to
-     * @param string $sSelectFieldId                Field id for the select box in our form
-     * @param string $sSortableFieldId              Field id for the sortable sections in our form
-     * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
-     * @param string $sSubmitFieldId                Field id for the submit button in our form
      * @param array $aSettingFields                 Setting fields for our admin page
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
-    public function __construct( $sPageClass, $sPageSlug,
-                                 $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+    public function __construct( $sPageClass,
                                  array $aSettingFields, Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass   = $sPageClass;
-        $this->sPageSlug    = $sPageSlug;
-        //@TODO this is a pretty ugly solution
-        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
-        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
-        $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
-        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
 
         $this->aSettingFields   = $aSettingFields;
         $this->oCSSFileEditor   = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // load_ + page slug
-        add_action( 'load_' . $this->sPageSlug, array( $this, 'replyToLoadPage' ) );
+        add_action( 'load_' . $this->sPageClass, array( $this, 'replyToLoadPage' ) );
     }
 
     /**

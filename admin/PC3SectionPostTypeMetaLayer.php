@@ -39,35 +39,35 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *
      * @var string Field id for the select drop-down list in our form
      */
-    public $sSelectFieldId = 'manage_sections__sections_page';
+    public $sSelectFieldId;
 
     /**
      * @since      0.3.0
      *
      * @var string Field id for the sortable sections in our form
      */
-    public $sSortableFieldId = 'manage_sections__sections';
+    public $sSortableFieldId;
 
     /**
      * @since      0.8.2
      *
      * @var string Field id for the editor field in our form
      */
-    public $sEditorFieldId = 'manage_sections__editor';
+    public $sEditorFieldId;
 
     /**
      * @since      0.3.0
      *
      * @var string Field id for the submit button in our form
      */
-    public $sSubmitFieldId = 'manage_sections__submit';
+    public $sSubmitFieldId;
 
     /**
      * @since      0.8.0
      *
      * Object reads and writes to our custom CSS file
      */
-    private $oCSSFileEditor = null;
+    private $oCSSFileEditor;
 
     /**
      * @since      0.8.2
@@ -88,7 +88,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct($sPageClass, $sSectionSlug, $sMetaKey,
-                                $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+                                $sSelectFieldId, $sSortableFieldId, $sEditorFieldId, $sSubmitFieldId,
                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sSectionSlug     = $sSectionSlug;
@@ -96,12 +96,12 @@ class Admin_PC3SectionPostTypeMetaLayer {
         $this->sMetaKey         = $sMetaKey;
 
         //@TODO this is a pretty ugly solution
-        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
-        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
-        $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
-        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+        $this->sSelectFieldId   = $sSelectFieldId;
+        $this->sSortableFieldId = $sSortableFieldId;
+        $this->sEditorFieldId   = $sEditorFieldId;
+        $this->sSubmitFieldId   = $sSubmitFieldId;
 
-        $this->oCSSFileEditor    = $oCSSFileEditor;
+        $this->oCSSFileEditor   = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         //@TODO: maybe move these into the Loader somehow

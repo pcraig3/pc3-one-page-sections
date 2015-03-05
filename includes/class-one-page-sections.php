@@ -241,24 +241,14 @@ class One_Page_Sections {
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
-                '__sections_page',
-                '__sections',
-                '__editor',
-                '__submit',
                 array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getParameter('debug')
             );
 
-            //$sPageClass, $sPageSlug,
-            //$sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
+            //$sPageClass,
             //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
-                $this->container->getParameter('page__manage'),
-                $this->container->getParameter('page__manage') . '__sections_page',
-                $this->container->getParameter('page__manage') . '__sections',
-                $this->container->getParameter('page__manage') . '__editor',
-                $this->container->getParameter('page__manage') . '__submit',
                 array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
@@ -271,10 +261,10 @@ class One_Page_Sections {
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
-                'field__select_page',
-                'field__sortable_sections',
-                'field__editor',
-                'field__submit',
+                $selectPagesField->getFieldID(),
+                $sortableSectionsField->getFieldID(),
+                $editorField->getFieldID(),
+                $submitField->getFieldID(),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );

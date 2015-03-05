@@ -28,12 +28,14 @@ class Lib_PC3Container {
         $this->aParameters = array(
             'section__slug'                 => 'pc3_section',
             'section__meta_key'             => 'order',
-            'page__sections'                => 'one-page-sections',
             'page__manage'                  => 'manage_sections',
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
-            //'debug'                         => 0
+
+            //both of these should be overwritten in `One_Page_Sections->define_admin_hooks`
+            'page__sections'                => 'one-page-sections',
+            'debug'                         => 0
         );
 
         //keys with values that correspond to $aParameter keys will be modifiable.
@@ -43,7 +45,7 @@ class Lib_PC3Container {
 
         $this->aModifiableParameters = array(
 
-            'field__select_page' => 'page__sections',
+            //'field__select_page' => 'page__sections',
         );
 
     }
