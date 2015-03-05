@@ -63,6 +63,8 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $oWPQueryFacade;
 
     /**
+     * @since      0.9.0
+     *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param string $sSectionSlug                  Slug of the 'Section' custom post types
      * @param string $sMetaKey                      Key for the meta value recording the 'order' of each section
@@ -143,7 +145,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
     }
 
     /**
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function pc3_section_submit_after_() {
 
@@ -197,7 +199,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
 
 
     /**
-     * @since      0.8.1
+     * @since      0.9.0
      */
     public function pc3_section_submit_after_css() {
 
