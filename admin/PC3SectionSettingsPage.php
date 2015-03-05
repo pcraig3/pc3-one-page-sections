@@ -42,7 +42,7 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
      * @param array $aSettingFields         Setting fields for our admin page
      * @param int $iDebug                   Debug flag
      */
-    public function __construct($sPageSlug, array $aSettingFields = array(),
+    public function __construct($sPageSlug, array $aSettingFields,
                                 $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
@@ -54,11 +54,10 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
         );
 
         $this->sPageSlug = $sPageSlug;
+        $this->aSettingFields = $aSettingFields;
 
         //set to 'true' if $iDebug is not zero.
         $this->bDebug = intval( $iDebug ) !== 0;
-
-        $this->aSettingFields = $aSettingFields;
     }
 
     /**

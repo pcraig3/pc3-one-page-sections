@@ -59,6 +59,14 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public $sSubmitFieldId = '__submit';
 
+    /**
+     * An array of setting fields to be added to this page.
+     *
+     * @since   0.9.0
+     * @var     array
+     */
+    private $aSettingFields;
+
     private $bDebug;
 
     /**
@@ -70,11 +78,12 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      * @param string $sSortableFieldId  Field id for the sortable sections in our form
      * @param string $sEditorFieldId    Field id for the (CSS) editor field in our form
      * @param string $sSubmitFieldId    Field id for the submit button in our form
+     * @param array $aSettingFields         Setting fields for our admin page
      * @param int $iDebug               Debug flag
      */
     public function __construct($sPageSlug, $sSectionSlug,
                                 $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
-                                $iDebug = 0 ) {
+                                array $aSettingFields = array(), $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -86,6 +95,8 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
 
         $this->sPageSlug = $sPageSlug;
         $this->sSectionSlug = $sSectionSlug;
+
+        $this->aSettingFields = $aSettingFields;
 
         //set to 'true' if $iDebug is not zero.
         $this->bDebug = intval( $iDebug ) !== 0;
@@ -179,16 +190,15 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
                     'readonly'      => false,
                     'fontsize'      => 14,
                 )
-            ),
-            array( // Submit button
-                'field_id'      => $this->sPageSlug . '__submit',
-                'type'          => 'submit',
-                'attributes'    => array(
-                    'disabled'  => 'disabled',
-                    'class'     => 'button'
-                )
             )
         );
+
+        if( ! empty( $this->aSettingFields ) )
+            foreach( $this->aSettingFields as $oSettingField )
+                $this->addSettingField(
+                    $oSettingField->setUpField()
+                );
+
     }
 
     /**

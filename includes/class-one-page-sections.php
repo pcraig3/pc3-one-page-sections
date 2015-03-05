@@ -244,6 +244,7 @@ class One_Page_Sections {
                 '__sections',
                 '__editor',
                 '__submit',
+                array( $submitField ),
                 $this->container->getParameter('debug')
             );
 
@@ -257,6 +258,7 @@ class One_Page_Sections {
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('page__manage') . '__editor',
                 $this->container->getParameter('page__manage') . '__submit',
+                array( $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );

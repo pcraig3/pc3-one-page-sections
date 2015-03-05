@@ -56,7 +56,15 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * @var string Field id for the submit button in our form
      */
-    public $sSubmitFieldId = 'manage_sections__submit';
+    //public $sSubmitFieldId = 'manage_sections__submit';
+
+    /**
+     * An array of setting fields to be added to this page.
+     *
+     * @since   0.9.0
+     * @var     array
+     */
+    private $aSettingFields;
 
     /**
      * @since      0.8.0
@@ -86,12 +94,13 @@ class Admin_PC3SectionManagerPageCallbacks {
      * @param string $sSortableFieldId              Field id for the sortable sections in our form
      * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
      * @param string $sSubmitFieldId                Field id for the submit button in our form
+     * @param array $aSettingFields                 Setting fields for our admin page
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct( $sPageClass, $sPageSlug,
                                  $sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
-                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+                                 array $aSettingFields, Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass   = $sPageClass;
         $this->sPageSlug    = $sPageSlug;
@@ -99,9 +108,10 @@ class Admin_PC3SectionManagerPageCallbacks {
         $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
-        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+        //$this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
 
-        $this->oCSSFileEditor    = $oCSSFileEditor;
+        $this->aSettingFields   = $aSettingFields;
+        $this->oCSSFileEditor   = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // load_ + page slug
@@ -127,10 +137,14 @@ class Admin_PC3SectionManagerPageCallbacks {
         add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId,
             array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId ) );
 
-        // field_definition_{instantiated class name}_{section id}_{field_id}
-        //{field_id} = submit_button
-        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSubmitFieldId,
-            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSubmitFieldId ) );
+        if( ! empty( $this->aSettingFields ) )
+            foreach( $this->aSettingFields as &$oSettingField )
+
+                // field_definition_{instantiated class name}_{section id}_{field_id}
+                if( is_callable( array( $this,  'field_definition_' . $this->sPageClass . '_' . $oSettingField->getFieldID() ) )) {
+
+                    call_user_func_array( array( $this,  'field_definition_' . $this->sPageClass . '_' . $oSettingField->getFieldID() ), array( &$oSettingField ) );
+                }
     }
 
     /**
@@ -237,17 +251,24 @@ class Admin_PC3SectionManagerPageCallbacks {
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
      * @since      0.3.0
-     * @param $aField array    the field with an id of 'manage_sections__submit'
-     * @return mixed array     the field
+     * @param object $oSettingField     the field with an id of 'field__submit'
+     * @return mixed array              the field
      */
-    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__submit( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_field__submit( &$oSettingField ) {
 
-        if( $this->bIfSections )
-            $aField['attributes'] = array(
-                'class' => 'button button-primary'
+        $aNewParameters = array();
+
+        //@TODO: This has to be returned to
+        //if( $this->bIfSections )
+        if( true )
+            $aNewParameters = array(
+                'attributes' => array(
+                    'class' => 'button button-primary'
+                )
             );
 
-        return $aField;
+        $oSettingField->setFieldParameters( $aNewParameters );
+        return $oSettingField->setUpField();
     }
 
     /**
