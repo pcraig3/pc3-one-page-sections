@@ -1,13 +1,13 @@
 <?php
 /**
- * Generalized AdminPage class.  Other AdminPage classes should extend this one.
+ * abstract AdminPage class.  Other AdminPage classes should extend this one.
  *
  * @since      0.9.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/lib
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Lib_PC3AdminPage extends PC3_AdminPageFramework
+abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
 {
     /**
      * The slug used to uniquely identify this page, both in the code and in the URL

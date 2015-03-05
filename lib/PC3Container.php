@@ -14,6 +14,12 @@
  */
 class Lib_PC3Container {
 
+    /**
+     * Array of parameters needed in various places by our plugin
+     *
+     * @since   0.8.0
+     * @var     array
+     */
     private $aParameters = array();
 
     private $wpQueryFacade;
@@ -21,6 +27,13 @@ class Lib_PC3Container {
     private $templateLoader;
     private $functionsFacade;
 
+    /**
+     * Initialises our array of parameters with a bunch of default values.
+     * Change them here, and they should change everywhere in the application
+     * (with the notable exception of some function names, but c'est la vie)
+     *
+     * @since   0.9.0
+     */
     function __construct() {
 
         $this->aParameters = array(
@@ -30,6 +43,7 @@ class Lib_PC3Container {
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
+            'file__css'                     =>  ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/one-page-sections-public.css',
 
             //both of these are overwritten in `One_Page_Sections->define_admin_hooks`
             'page__sections'                => 'one-page-sections',
@@ -37,36 +51,69 @@ class Lib_PC3Container {
         );
     }
 
+    /**
+     * input string is used as the key for the `aParameters` array
+     * if `aParameters[$sParameter]` returns a value, it is returned
+     * else, an exception is thrown
+     *
+     * @since   0.9.0
+     *
+     * @param string $sParameter    $key of parameter
+     * @return mixed                $value of parameter
+     * @throws Exception            if $key doesn't correspond to a parameter $value, an exception is thrown
+     */
     public function getParameter( $sParameter ) {
 
         //null if parameter doesn't exist
         $sParameter = $this->aParameters[$sParameter];
 
         if( is_null( $sParameter ) )
-            self::throwExceptionIfParameterNotFound($sParameter);
+            $this->getFunctionsFacade()->throwExceptionIfParameterNotFound( $sParameter );
 
         return $sParameter;
     }
 
-    public function printParametersToScreen() {
-
-        //change this to $debug
-        if( true )
-            var_dump( $this->aParameters );
-    }
-
+    /**
+     * Iterates through an array of `Lib_PC3AdminPageSettingField`s and calls
+     * `->addParameter()` on each of them
+     *
+     * @since   0.9.0
+     *
+     * @param array $aFields                array of `Lib_PC3AdminPageSettingField`s
+     * @param array $aAdminPageClassnames   array of AdminPage Classnames
+     */
     public function addSettingFieldsAsParameters( array $aFields, array $aAdminPageClassnames ) {
 
         while( ! empty( $aFields ) )
             $this->addParameter( array_shift( $aFields ), $aAdminPageClassnames);
     }
 
-    private function addParameter( Lib_PC3PageSettingField $oField, array $aAdminPageClassnames ) {
+    /**
+     * Method adds the values of `Lib_PC3AdminPageSettingField`s to our array of parameters, possibly overwriting
+     * existing defaults.
+     *
+     * Algorithm followed:
+     * 1.   The `Lib_PC3AdminPageSettingField` key is checked for a non-null, non-empty `containerParameterKey`
+     * 2.   If an acceptable key is found, attempt to retrieve existing options
+     *      2.1.    The `PC3_AdminPageFramework::getOption` method needs the ID of the field, as well as the classname
+     *              of the page it is registered to, so iterate through the array of AdminPage classnames and try to
+     *              return a value for this fieldID
+     *      2.2.    If a value is returned, stop iterating and move on.
+     * 3.   If no value is returned, get the default value for this field
+     * 4.   If there is no default value, throw an exception.
+     * 5.   Else, add the value to the array of parameters under the provided `containerParameterKey`
+     *
+     * @since   0.9.0
+     *
+     * @param Lib_PC3AdminPageSettingField $oField
+     * @param array $aAdminPageClassnames
+     */
+    private function addParameter( Lib_PC3AdminPageSettingField $oField, array $aAdminPageClassnames ) {
 
         //get name
         $sKey = $oField->getContainerParameterKey();
 
-        if( is_null( $sKey ) )
+        if( is_null( $sKey ) || $sKey === '' )
             return;
 
         //get value
@@ -79,9 +126,28 @@ class Lib_PC3Container {
         if( is_null( $sVal ) )
             $sVal = $oField->getDefaultVal();
 
+        if( is_null( $sVal ) )
+            $this->getFunctionsFacade()->throwExceptionIfDefaultValueNotFound( $oField );
+
         $this->aParameters[$sKey] = $sVal;
     }
 
+    /**
+     * prints `$aParameters` to the screen if $aParameters['debug'] is not '0'
+     *
+     * @since   0.9.0
+     */
+    public function printParametersToScreen() {
+
+        if( 0 !== intval( $this->getParameter('debug') ) )
+            var_dump( $this->aParameters );
+    }
+
+    /**
+     * @since   0.9.0
+     *
+     * @return Lib_PC3WPQueryFacade
+     */
     public function getWPQueryFacade() {
 
             if (!isset($this->wpQueryFacade)) {
@@ -95,18 +161,26 @@ class Lib_PC3Container {
             return $this->wpQueryFacade;
     }
 
-
-
+    /**
+     * @since   0.9.0
+     *
+     * @return Lib_PC3CSSFileEditor
+     */
     public function getCSSFileEditor() {
 
         if (!isset($this->cssFileEditor)) {
 
-            $this->cssFileEditor = new Lib_PC3CSSFileEditor( ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/one-page-sections-public.css' );
+            $this->cssFileEditor = new Lib_PC3CSSFileEditor( $this->getParameter( 'file__css' ) );
         }
 
         return $this->cssFileEditor;
     }
 
+    /**
+     * @since   0.9.0
+     *
+     * @return Lib_PC3TemplateLoader
+     */
     public function getPC3TemplateLoader() {
 
         if (!isset($this->templateLoader)) {
@@ -117,6 +191,11 @@ class Lib_PC3Container {
         return $this->templateLoader;
     }
 
+    /**
+     * @since   0.9.0
+     *
+     * @return Lib_PC3FunctionsFacade
+     */
     public function getFunctionsFacade() {
 
         if (!isset($this->functionsFacade)) {
@@ -125,11 +204,5 @@ class Lib_PC3Container {
         }
 
         return $this->functionsFacade;
-    }
-
-    //@TODO: ahem, https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
-    public static function throwExceptionIfParameterNotFound($expectedString) {
-
-            throw new Exception(__('"' . $expectedString . '" not a valid config parameter', 'one-page-sections'));
     }
 }

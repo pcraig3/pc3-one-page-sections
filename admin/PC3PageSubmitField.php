@@ -8,8 +8,12 @@
  * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Admin_PC3PageSubmitField extends Lib_PC3PageSettingField {
+class Admin_PC3PageSubmitField extends Lib_PC3AdminPageSettingField {
 
+    /**
+     * @param string $sFieldID              the field_id of this setting field
+     * @param array $aFieldParameters       parameters to override our defaults
+     */
     public function __construct( $sFieldID, array $aFieldParameters = array() ) {
 
         $aDefaultFieldParameters = array( // Repeatable radio buttons

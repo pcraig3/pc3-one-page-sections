@@ -1,11 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Paul
- * Date: 28/02/2015
- * Time: 17:15
- */
 
+/**
+ * My attempt at a functions facade
+ * Heavily modelled on one used by Mike Toppa in his Shashin plugin
+ *
+ * @see: https://github.com/toppa/Shashin/blob/master/lib/ShashinFunctions.php
+ *
+ * @since      0.9.0
+ *
+ * @package    One_Page_Sections
+ * @subpackage One_Page_Sections/lib
+ */
 class Lib_PC3FunctionsFacade {
 
 
@@ -122,5 +127,34 @@ class Lib_PC3FunctionsFacade {
     // File system functions
     public function checkFileExists($path) {
         return file_exists($path);
+    }
+
+    /**
+     * Takes a string, throws an exception.
+     *
+     * @see: https://github.com/toppa/Toppa-libs/blob/master/ToppaFunctions.php
+     *
+     * @since   0.9.0
+     *
+     * @param $expectedString
+     * @throws Exception
+     */
+    public function throwExceptionIfParameterNotFound($expectedString) {
+
+        throw new Exception(__('"' . $expectedString . '" not a valid config parameter', 'one-page-sections'));
+    }
+
+    /**
+     * Takes a Field object and throws an exception.
+     *
+     * @since   0.9.0
+     *
+     * @param Lib_PC3AdminPageSettingField $oField
+     * @throws Exception
+     */
+    public function throwExceptionIfDefaultValueNotFound( Lib_PC3AdminPageSettingField $oField ) {
+
+        throw new Exception(__('No default value found for "' . get_class( $oField )  .
+            '" object with `fieldID` of "' . $oField->getFieldID() . '".', 'one-page-sections'));
     }
 }

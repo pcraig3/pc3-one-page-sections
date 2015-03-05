@@ -250,9 +250,9 @@ class One_Page_Sections {
 
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
-                $this->container->getParameter('section__slug'),
                 $aManageSectionsPageFields,
-                $this->container->getParameter('debug')
+                $this->container->getParameter('debug'),
+                $this->container->getParameter('section__slug')
             );
 
             //($sPageClass, $aSettingFields
