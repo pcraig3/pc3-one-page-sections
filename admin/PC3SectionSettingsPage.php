@@ -20,34 +20,29 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
     private $sPageSlug;
 
     /**
-     * @since      0.7.0
+     * An array of setting fields to be added to this page.
      *
-     * @var string Field id for the debug radio buttons in our form
+     * @since   0.9.0
+     * @var     array
      */
-    public $sDebugFieldId = '__debug';
-
-    /**
-     * @since      0.3.0
-     *
-     * @var string Field id for the submit button in our form
-     */
-    public $sSubmitFieldId = '__submit';
-
-    private $bDebug;
-
     private $aSettingFields;
 
     /**
-     * @since   0.7.0
+     * In 'Debug' mode, this page prints to screen its settings
+     *
+     * @since   0.9.0
+     * @var     boolean
+     */
+    private $bDebug;
+
+    /**
+     * @since   0.9.0
      *
      * @param string $sPageSlug             The slug used to uniquely identify this page, both in the code and in the URL
      * @param array $aSettingFields         Setting fields for our admin page
-     * @param string $sDebugFieldId         Field id for the debug radio buttons in our form
-     * @param string $sSubmitFieldId        Field id for the submit button in our form
      * @param int $iDebug                   Debug flag
      */
     public function __construct($sPageSlug, array $aSettingFields = array(),
-                                $sDebugFieldId='', $sSubmitFieldId='' ,
                                 $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
@@ -64,15 +59,6 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
         $this->bDebug = intval( $iDebug ) !== 0;
 
         $this->aSettingFields = $aSettingFields;
-
-        //@TODO this is a pretty ugly solution
-        $this->sDebugFieldId    = $sDebugFieldId ? $sDebugFieldId : $this->sDebugFieldId;
-        $this->sSubmitFieldId   = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
-    }
-
-    private function add_field_to_container_settings( $container, $oSettingField ) {
-
-
     }
 
     /**
@@ -106,7 +92,7 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
      *
      * Here we add form fields.
      *
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function load_pc3_settings($oAdminPage)
     {
@@ -123,7 +109,7 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
      *
      * ie, do_{page slug}
      *
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function do_pc3_settings()
     {

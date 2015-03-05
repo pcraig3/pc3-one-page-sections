@@ -193,7 +193,7 @@ class One_Page_Sections {
                 'Admin_PC3SectionManagerPage',
                 'Admin_PC3SectionSettingsPage'
             );
-            
+
             $debugField = new Admin_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
@@ -276,12 +276,9 @@ class One_Page_Sections {
                 $this->container->getWPQueryFacade()
             );
 
-            //@TODO: housekeeping
             $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
                 $this->container->getParameter('page__settings'),
                 array( $debugField, $submitField ),
-                '__debug',
-                '__submit',
                 $this->container->getParameter('debug')
             );
 
