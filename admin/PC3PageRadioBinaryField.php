@@ -13,7 +13,7 @@ class Admin_PC3PageRadioBinaryField extends Lib_PC3PageSettingField {
     public function __construct( $sFieldID, $sContainerParameterKey, array $aFieldParameters = array() ) {
 
         $aDefaultFieldParameters = array( // Repeatable radio buttons
-            'title' => __('Radio', 'one-page-sections'),
+            'title' => __('Radio Binary Title', 'one-page-sections'),
             'type' => 'radio',
             'label' => array(
                 0 => 'No',

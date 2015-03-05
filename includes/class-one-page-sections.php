@@ -194,12 +194,12 @@ class One_Page_Sections {
                 'Admin_PC3SectionSettingsPage'
             );
 
-            $selectPagesField = new Admin_PC3PageSelectField(
+            $selectPageField = new Admin_PC3PageSelectPageField(
                 'field__select_page',
                 'page__sections'
             );
 
-            $sortableSectionsField = new Admin_PC3PageSortableField(
+            $sortableSectionsField = new Admin_PC3PageSortableSectionsField(
                 'field__sortable_sections',
                 null
             );
@@ -221,7 +221,7 @@ class One_Page_Sections {
                 'field__submit'
             );
 
-            $this->container->addSettingFieldsAsParameters( array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
+            $this->container->addSettingFieldsAsParameters( array( $selectPageField, $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
             $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
             ///
 
@@ -241,7 +241,7 @@ class One_Page_Sections {
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
-                array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
+                array( $selectPageField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getParameter('debug')
             );
 
@@ -249,7 +249,7 @@ class One_Page_Sections {
             //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
-                array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
+                array( $selectPageField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
@@ -261,7 +261,7 @@ class One_Page_Sections {
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
-                $selectPagesField->getFieldID(),
+                $selectPageField->getFieldID(),
                 $sortableSectionsField->getFieldID(),
                 $editorField->getFieldID(),
                 $submitField->getFieldID(),

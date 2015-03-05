@@ -111,6 +111,7 @@ class Admin_PC3SectionManagerPageCallbacks {
         ) );
 
         if( empty( $aPages ) ) {
+
             $oSettingField->setFieldParameters( $aNewParameters );
             return $oSettingField->setUpField();
         }
@@ -141,6 +142,7 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         //return unmodified field if no sections were found
         if( empty( $aPosts ) ) {
+
             $oSettingField->setFieldParameters( $aNewParameters );
             return $oSettingField->setUpField();
         }
@@ -160,6 +162,7 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         //stop here if only one section was found
         if( empty( $aPosts ) ) {
+
             $oSettingField->setFieldParameters( $aNewParameters );
             return $oSettingField->setUpField();
         }

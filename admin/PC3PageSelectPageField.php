@@ -7,7 +7,7 @@
  * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Admin_PC3PageSelectField extends Lib_PC3PageSettingField {
+class Admin_PC3PageSelectPageField extends Lib_PC3PageSettingField {
 
     public function __construct( $sFieldID, $sContainerParameterKey, array $aFieldParameters = array() ) {
 
