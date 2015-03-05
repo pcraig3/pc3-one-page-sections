@@ -8,18 +8,18 @@
  * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Admin_PC3PageDebugField extends Lib_PC3PageSettingField {
+class Admin_PC3PageRadioBinaryField extends Lib_PC3PageSettingField {
 
     public function __construct( $sFieldID, $sContainerParameterKey, array $aFieldParameters = array() ) {
 
         $aDefaultFieldParameters = array( // Repeatable radio buttons
-            'title' => __('Debug', 'one-page-sections'),
+            'title' => __('Radio', 'one-page-sections'),
             'type' => 'radio',
             'label' => array(
                 0 => 'No',
                 1 => 'Yes',
             ),
-            'default' => 0
+            'default' => 1
         );
 
         $aMergedFieldParameters = array_merge( $aDefaultFieldParameters, $aFieldParameters );

@@ -193,15 +193,14 @@ class One_Page_Sections {
                 'Admin_PC3SectionManagerPage',
                 'Admin_PC3SectionSettingsPage'
             );
-
-            //@TODO
-            //General SettingField superclass
-            //Title Optional
-
-            $debugField = new Admin_PC3PageDebugField(
+            
+            $debugField = new Admin_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
-                array( 'title' => 'Debug Flag' )
+                array(
+                    'title'     => 'Debug Flag',
+                    'default'   => 0
+                    )
             );
 
             $submitField = new Admin_PC3PageSubmitField(

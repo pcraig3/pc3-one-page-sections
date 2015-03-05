@@ -20,7 +20,6 @@ class Admin_PC3SectionSettingsPageCallbacks {
 
     public $aSettingFields;
 
-    private $oCurrentSetting;
 
     public function __construct( $sPageClass, array $aSettingFields ) {
 
@@ -40,15 +39,13 @@ class Admin_PC3SectionSettingsPageCallbacks {
     public function replyToLoadPage( $oAdminPage ) {
 
         if( ! empty( $this->aSettingFields ) )
-            foreach( $this->aSettingFields as $this->oCurrentSetting )
+            foreach( $this->aSettingFields as &$oSettingField )
 
                 // field_definition_{instantiated class name}_{section id}_{field_id}
-                if( is_callable( array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->oCurrentSetting->getFieldID() ) )) {
+                if( is_callable( array( $this,  'field_definition_' . $this->sPageClass . '_' . $oSettingField->getFieldID() ) )) {
 
-                    add_filter('field_definition_' . $this->sPageClass . '_' . $this->oCurrentSetting->getFieldID(),
-                        array($this, 'field_definition_' . $this->sPageClass . '_' . $this->oCurrentSetting->getFieldID() ) );
+                    call_user_func_array( array( $this,  'field_definition_' . $this->sPageClass . '_' . $oSettingField->getFieldID() ), array( &$oSettingField ) );
                 }
-
     }
 
     /**
@@ -61,7 +58,7 @@ class Admin_PC3SectionSettingsPageCallbacks {
      * @param $aField array    the field with an id of 'manage_sections__submit'
      * @return mixed array     the field
      */
-    public function field_definition_Admin_PC3SectionSettingsPage_field__submit( $aField ) {
+    public function field_definition_Admin_PC3SectionSettingsPage_field__submit( &$oSettingField  ) {
 
         $aNewParameters = array(
             'attributes' => array(
@@ -69,7 +66,8 @@ class Admin_PC3SectionSettingsPageCallbacks {
             )
         );
 
-        $this->oCurrentSetting->setFieldParameters( $aNewParameters );
-        return $this->oCurrentSetting->setUpField();
+        $oSettingField->setFieldParameters( $aNewParameters );
+        return $oSettingField->setUpField();
     }
-}
+
+    }
