@@ -194,6 +194,11 @@ class One_Page_Sections {
                 'Admin_PC3SectionSettingsPage'
             );
 
+            $sortableSectionsField = new Admin_PC3PageSortableField(
+                'field__sortable_sections',
+                null
+            );
+
             $editorField = new Admin_PC3PageACEEditorField(
                 'field__editor'
             );
@@ -211,7 +216,7 @@ class One_Page_Sections {
                 'field__submit'
             );
 
-            $this->container->addSettingFieldsAsParameters( array( $editorField, $submitField ), $aAdminPages );
+            $this->container->addSettingFieldsAsParameters( array( $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
             $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
             ///
 
@@ -249,7 +254,7 @@ class One_Page_Sections {
                 '__sections',
                 '__editor',
                 '__submit',
-                array( $editorField, $submitField ),
+                array( $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getParameter('debug')
             );
 
@@ -263,7 +268,7 @@ class One_Page_Sections {
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('page__manage') . '__editor',
                 $this->container->getParameter('page__manage') . '__submit',
-                array( $editorField, $submitField ),
+                array( $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
@@ -276,9 +281,9 @@ class One_Page_Sections {
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
                 $this->container->getParameter('page__manage') . '__sections_page',
-                $this->container->getParameter('page__manage') . '__sections',
-                $this->container->getParameter('page__manage') . '__editor',
-                $this->container->getParameter('page__manage') . '__submit',
+                'field__sortable_sections',
+                'field__editor',
+                'field__submit',
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );

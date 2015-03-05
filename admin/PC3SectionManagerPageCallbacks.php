@@ -129,10 +129,6 @@ class Admin_PC3SectionManagerPageCallbacks {
         add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId,
             array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId ) );
 
-        // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId,
-            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId ) );
-
         if( ! empty( $this->aSettingFields ) )
             foreach( $this->aSettingFields as &$oSettingField )
 
@@ -178,45 +174,52 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.7.0
+     * @since      0.9.0
      *
-     * @param $aField array    the field with an id of 'callback_example'
-     * @return array array     the field
+     * @param object $oSettingField     the field with an id of 'field__sortable_sections'
+     * @return array array              the field
      */
-    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections( $aField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+    public function field_definition_Admin_PC3SectionManagerPage_field__sortable_sections( &$oSettingField ) { // field_definition_{instantiated class name}_{section id}_{field_id}
+
+        $aNewParameters = array();
 
         $aPosts = $this->oWPQueryFacade->getSectionsByOrderASC();
 
         //return unmodified field if no sections were found
-        if( empty( $aPosts ) )
-            return $aField;
+        if( empty( $aPosts ) ) {
+            $oSettingField->setFieldParameters( $aNewParameters );
+            return $oSettingField->setUpField();
+        }
 
         //flag this as 'true'; Sections were found!
         $this->bIfSections = true;
 
-        $aField['type']         = 'text';
-        $aField['description']  = __( 'Reorder the sections to modify the order they appear on your page.', 'one-page-sections' );
-        $aField['sortable']     = true;
+        $aNewParameters['type']         = 'text';
+        $aNewParameters['description']  = __( 'Reorder the sections to modify the order they appear on your page.', 'one-page-sections' );
+        $aNewParameters['sortable']     = true;
 
         //first section must exist because array is not empty
         $_oFirstPost = array_shift( $aPosts );
 
         //first value must be set differently from any preceding values
-        $aField = array_merge( $aField, $this->_returnSectionArray( $_oFirstPost->post_title, $_oFirstPost->ID ) );
+        $aNewParameters = array_merge( $aNewParameters, $this->_returnSectionArray( $_oFirstPost->post_title, $_oFirstPost->ID ) );
 
         //stop here if only one section was found
-        if( empty( $aPosts ) )
-            return $aField;
+        if( empty( $aPosts ) ) {
+            $oSettingField->setFieldParameters( $aNewParameters );
+            return $oSettingField->setUpField();
+        }
 
         //return array of arrays containing Section values that will be inserted into our field
         $aFormattedPosts = $this->_formatPostsForField( $aPosts );
 
         foreach( $aFormattedPosts as $aPost ) {
 
-            array_push( $aField, $aPost );
+            array_push( $aNewParameters, $aPost );
         }
 
-        return $aField;
+        $oSettingField->setFieldParameters( $aNewParameters );
+        return $oSettingField->setUpField();
     }
 
     /**
@@ -233,13 +236,11 @@ class Admin_PC3SectionManagerPageCallbacks {
     public function field_definition_Admin_PC3SectionManagerPage_field__editor( &$oSettingField ) {
 
         $aNewParameters = array();
-
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
         if( ! empty( $sContent ) )
-            $aNewParameters = array(
-                'value' => $sContent
-            );
+            $aNewParameters['value'] = $sContent;
+
 
         $oSettingField->setFieldParameters( $aNewParameters );
         return $oSettingField->setUpField();
@@ -259,13 +260,9 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         $aNewParameters = array();
 
-        //@TODO: THIS HAS TO BE FIXED
-        //if( $this->bIfSections )
-        if( true )
-            $aNewParameters = array(
-                'attributes' => array(
+        if( $this->bIfSections )
+            $aNewParameters['attributes'] =  array(
                     'class' => 'button button-primary'
-                )
             );
 
         $oSettingField->setFieldParameters( $aNewParameters );

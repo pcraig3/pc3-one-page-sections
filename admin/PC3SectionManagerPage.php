@@ -157,16 +157,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
                 'description' => __( 'This select field should be filled with the names of pages from your site.',
                         'one-page-sections' )
                     . ' ' . __( 'Please create at least one Page.', 'one-page-sections' ),
-            ),
-            array(
-                'field_id'          => $this->sPageSlug . $this->sSortableFieldId,
-                'title'             => __( 'Section Titles', 'one-page-sections' ),
-                'type'              => 'hidden',
-                'default'           => '',
-                // 'hidden' =>    true // <-- the field row can be hidden with this option.
-                'label'             =>
-                    __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
-                'description'       => __( 'Maybe try <a href="/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
             )
         );
 

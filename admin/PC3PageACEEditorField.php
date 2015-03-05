@@ -12,7 +12,6 @@ class Admin_PC3PageACEEditorField extends Lib_PC3PageSettingField {
     public function __construct( $sFieldID, array $aFieldParameters = array() ) {
 
         $aDefaultFieldParameters =         array(  // Ace Custom Field
-            'field_id'          => $sFieldID,
             'title'             => __('CSS Editor', 'one-page-sections' ),
             'description'       => __('Custom CSS goes here.', 'one-page-sections' ),
             'type'              => 'ace',
