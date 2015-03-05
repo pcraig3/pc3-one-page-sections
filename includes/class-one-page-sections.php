@@ -188,20 +188,30 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
+            ///This isn't brilliant, but it's better than what was here before
             $aAdminPages = array(
                 'Admin_PC3SectionManagerPage',
                 'Admin_PC3SectionSettingsPage'
             );
 
-            $debugField = new Lib_PC3AdminPageField(
+            //@TODO
+            //General SettingField superclass
+            //Title Optional
+
+            $debugField = new Lib_PC3PageSettingField(
                 'field__debug',
                 'Debug Flag',
-                'debug',
-                0
+                0,
+                'debug'
             );
 
-            $this->container->addParameter( $debugField, $aAdminPages );
+            $submitField = new Lib_PC3PageSettingFieldSubmit(
+                'field__submit',
+                'Submit'
+            );
 
+            $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
+            ///
 
 
             //@TODO: Move this into a callback or something
@@ -271,10 +281,10 @@ class One_Page_Sections {
 
             $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
                 $this->container->getParameter('page__settings'),
+                array( $debugField, $submitField ),
                 '__debug',
                 '__submit',
-                $this->container->getParameter('debug'),
-                array( $debugField )
+                $this->container->getParameter('debug')
             );
 
             echo '<pre>';

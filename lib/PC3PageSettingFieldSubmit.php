@@ -1,20 +1,24 @@
 <?php
 
-//get the debug thing to work
-class Lib_PC3AdminPageField {
+/**
+ * Class Lib_PC3PageSettingFieldSubmit
+ *
+ * @TODO
+ */
+class Lib_PC3PageSettingFieldSubmit {
 
     private $sFieldID;
     private $sTitle;
     private $sDefaultVal;
     private $sContainerParameterKey;
 
-    function __construct( $sFieldID, $sTitle, $sContainerParameterKey = '', $sDefaultVal = null ) {
+    function __construct( $sFieldID, $sTitle, $sDefaultVal = null, $sContainerParameterKey = null ) {
 
         $this->sFieldID = $sFieldID;
         $this->sTitle = $sTitle;
 
-        $this->sContainerParameterKey = ( $sContainerParameterKey !== '' ) ? $sContainerParameterKey : $sFieldID;
-        $this->$sDefaultVal = $sDefaultVal;
+        $this->sDefaultVal = $sDefaultVal;
+        $this->sContainerParameterKey = $sContainerParameterKey;
     }
 
     //has a method that returns a settings array
@@ -27,10 +31,9 @@ class Lib_PC3AdminPageField {
         $aSetUpField =  array( // Repeatable radio buttons
             'field_id'      => $this->sFieldID,
             'title'         => __( $this->sTitle, 'one-page-sections' ),
-            'type'          => 'radio',
-            'label'         => array(
-                0 => 'No',
-                1 => 'Yes'
+            'type'          => 'submit',
+            'attributes'    => array(
+                'class'     => 'button button-primary'
             )
         );
 

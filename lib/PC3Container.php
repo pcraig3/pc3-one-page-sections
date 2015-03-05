@@ -33,7 +33,7 @@ class Lib_PC3Container {
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
-            'debug'                         => 0
+            //'debug'                         => 0
         );
 
         //keys with values that correspond to $aParameter keys will be modifiable.
@@ -66,10 +66,19 @@ class Lib_PC3Container {
             var_dump( $this->aParameters );
     }
 
-    public function addParameter( Lib_PC3AdminPageField $oField, array $aAdminPageClassnames ) {
+    public function addSettingFieldsAsParameters( array $aFields, array $aAdminPageClassnames ) {
+
+        while( ! empty( $aFields ) )
+            $this->addParameter( array_shift( $aFields ), $aAdminPageClassnames);
+    }
+
+    private function addParameter( $oField, array $aAdminPageClassnames ) {
 
         //get name
         $sKey = $oField->getContainerParameterKey();
+
+        if( is_null( $sKey ) )
+            return;
 
         //get value
         $sVal = null;
@@ -82,7 +91,6 @@ class Lib_PC3Container {
             $sVal = $oField->getDefaultVal();
 
         $this->aParameters[$sKey] = $sVal;
-
     }
 
     public function setParameter( $sParameter, $value, $ifOverwriteExisting = true) {
