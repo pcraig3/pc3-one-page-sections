@@ -15,14 +15,12 @@
 class Lib_PC3Container {
 
     private $aParameters = array();
-    private $aModifiableParameters = array();
 
     private $wpQueryFacade;
     private $cssFileEditor;
     private $templateLoader;
     private $functionsFacade;
 
-    //@TODO: field names for page :/
     function __construct() {
 
         $this->aParameters = array(
@@ -33,21 +31,10 @@ class Lib_PC3Container {
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
 
-            //both of these should be overwritten in `One_Page_Sections->define_admin_hooks`
+            //both of these are overwritten in `One_Page_Sections->define_admin_hooks`
             'page__sections'                => 'one-page-sections',
             'debug'                         => 0
         );
-
-        //keys with values that correspond to $aParameter keys will be modifiable.
-        //so, for example, if we want to be able to modify 'page__sections',
-        //we could set $aModifiableParameters['set_sections_page'] => 'page__sections'
-        //and then call $container->setParameter('set_sections_page', 'new-sections-page');
-
-        $this->aModifiableParameters = array(
-
-            //'field__select_page' => 'page__sections',
-        );
-
     }
 
     public function getParameter( $sParameter ) {
@@ -93,26 +80,6 @@ class Lib_PC3Container {
             $sVal = $oField->getDefaultVal();
 
         $this->aParameters[$sKey] = $sVal;
-    }
-
-    public function setParameter( $sParameter, $value, $ifOverwriteExisting = true) {
-
-        //key => handle
-        //value => key of aParameters.
-
-        $ParameterKey = $this->aModifiableParameters[$sParameter];
-
-        //first, make sure that this is a parameter which can be overwritten
-        if( is_null( $ParameterKey ) )
-            self::throwExceptionIfParameterNotFound( $sParameter );
-
-        //if we don't want to overwrite a potential existing parameter, we return if a value is found for a key
-        if( $ifOverwriteExisting === false )
-            if( ! is_null( $this->aParameters[$ParameterKey] ))
-                return false;
-
-        $this->aParameters[$ParameterKey] = $value;
-        return true;
     }
 
     public function getWPQueryFacade() {

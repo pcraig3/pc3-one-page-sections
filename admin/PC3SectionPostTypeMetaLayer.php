@@ -35,32 +35,18 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $sMetaKey;
 
     /**
-     * @since      0.7.0
+     * @since      0.9.0
      *
-     * @var string Field id for the select drop-down list in our form
+     * @var Admin_PC3PageSortableSectionsField  Field object for the sortable sections
      */
-    public $sSelectFieldId;
+    private $oSortableSectionsField;
 
     /**
-     * @since      0.3.0
+     * @since      0.9.0
      *
-     * @var string Field id for the sortable sections in our form
+     * @var Admin_PC3PageACEEditorField  Field object for the CSS editor
      */
-    public $sSortableFieldId;
-
-    /**
-     * @since      0.8.2
-     *
-     * @var string Field id for the editor field in our form
-     */
-    public $sEditorFieldId;
-
-    /**
-     * @since      0.3.0
-     *
-     * @var string Field id for the submit button in our form
-     */
-    public $sSubmitFieldId;
+    private $oEditorField;
 
     /**
      * @since      0.8.0
@@ -80,26 +66,24 @@ class Admin_PC3SectionPostTypeMetaLayer {
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param string $sSectionSlug                  Slug of the 'Section' custom post types
      * @param string $sMetaKey                      Key for the meta value recording the 'order' of each section
-     * @param string $sSelectFieldId                Field id for the select box in our form
-     * @param string $sSortableFieldId              Field id for the sortable sections in our form
-     * @param string $sSubmitFieldId                Field id for the submit button in our form
-     * @param string $sEditorFieldId                Field id for the (CSS) editor field in our form
+     * @param Admin_PC3PageSortableSectionsField $oSortableSectionsField
+     *                                              Field object for the sortable sections
+     * @param Admin_PC3PageACEEditorField $oEditorField
+     *                                              Field object for the CSS editor
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct($sPageClass, $sSectionSlug, $sMetaKey,
-                                $sSelectFieldId, $sSortableFieldId, $sEditorFieldId, $sSubmitFieldId,
+                                Admin_PC3PageSortableSectionsField $oSortableSectionsField, Admin_PC3PageACEEditorField $oEditorField,
                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
-        $this->sSectionSlug     = $sSectionSlug;
         $this->sPageClass       = $sPageClass;
+        $this->sSectionSlug     = $sSectionSlug;
         $this->sMetaKey         = $sMetaKey;
 
-        //@TODO this is a pretty ugly solution
-        $this->sSelectFieldId   = $sSelectFieldId;
-        $this->sSortableFieldId = $sSortableFieldId;
-        $this->sEditorFieldId   = $sEditorFieldId;
-        $this->sSubmitFieldId   = $sSubmitFieldId;
+        //At least we can type-hint the type of the object we're getting this way
+        $this->oSortableSectionsField    = $oSortableSectionsField;
+        $this->oEditorField              = $oEditorField;
 
         $this->oCSSFileEditor   = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
@@ -165,7 +149,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
 
         $_bAllPostsExist = true;
 
-        $_aOrdersPostIds = PC3_AdminPageFramework::getOption( $this->sPageClass , $this->sSortableFieldId );
+        $_aOrdersPostIds = PC3_AdminPageFramework::getOption( $this->sPageClass , $this->oSortableSectionsField->getFieldID() );
 
         $_aPostIdsOrders = array_flip( $_aOrdersPostIds );
 
@@ -217,7 +201,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
      */
     public function pc3_section_submit_after_css() {
 
-        $_sEditorRules = PC3_AdminPageFramework::getOption( $this->sPageClass, $this->sEditorFieldId );
+        $_sEditorRules = PC3_AdminPageFramework::getOption( $this->sPageClass, $this->oEditorField->getFieldID() );
 
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 

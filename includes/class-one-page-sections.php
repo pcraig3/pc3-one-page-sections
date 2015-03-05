@@ -188,27 +188,35 @@ class One_Page_Sections {
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
-            ///This isn't brilliant, but it's better than what was here before
+            /**
+             * This isn't brilliant, but it's better than what was here before
+             *
+             * Idea is to initialize all of the settings fields as objects so that we can
+             *      1. Pass arrays of fields to different objects
+             *      2. Add their values to our $container
+             *      3. Type-hint where needed so that we're not always relying on string matching
+             */
+
             $aAdminPages = array(
                 'Admin_PC3SectionManagerPage',
                 'Admin_PC3SectionSettingsPage'
             );
 
-            $selectPageField = new Admin_PC3PageSelectPageField(
+            $oSelectPageField = new Admin_PC3PageSelectPageField(
                 'field__select_page',
                 'page__sections'
             );
 
-            $sortableSectionsField = new Admin_PC3PageSortableSectionsField(
+            $oSortableSectionsField = new Admin_PC3PageSortableSectionsField(
                 'field__sortable_sections',
                 null
             );
 
-            $editorField = new Admin_PC3PageACEEditorField(
+            $oEditorField = new Admin_PC3PageACEEditorField(
                 'field__editor'
             );
 
-            $debugField = new Admin_PC3PageRadioBinaryField(
+            $oDebugField = new Admin_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
                 array(
@@ -217,16 +225,18 @@ class One_Page_Sections {
                     )
             );
 
-            $submitField = new Admin_PC3PageSubmitField(
+            $oSubmitField = new Admin_PC3PageSubmitField(
                 'field__submit'
             );
 
-            $this->container->addSettingFieldsAsParameters( array( $selectPageField, $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
-            $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
-            ///
+            $aManageSectionsPageFields = array( $oSelectPageField, $oSortableSectionsField, $oEditorField, $oSubmitField );
+            $aSectionSettingsPageFields = array( $oDebugField, $oSubmitField );
+
+            $this->container->addSettingFieldsAsParameters( $aManageSectionsPageFields, $aAdminPages );
+            $this->container->addSettingFieldsAsParameters( $aSectionSettingsPageFields, $aAdminPages );
 
 
-
+            //not brilliant, but workable
             if( 0 !== intval( $this->container->getParameter('debug') ) ) {
 
                 new Admin_PC3SectionPostTypeMetaBox(
@@ -241,48 +251,43 @@ class One_Page_Sections {
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
                 $this->container->getParameter('section__slug'),
-                array( $selectPageField, $sortableSectionsField, $editorField, $submitField ),
+                $aManageSectionsPageFields,
                 $this->container->getParameter('debug')
             );
 
-            //$sPageClass,
-            //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+            //($sPageClass, $aSettingFields
+            //$oCSSFileEditor, $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
-                array( $selectPageField, $sortableSectionsField, $editorField, $submitField ),
+                $aManageSectionsPageFields,
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
 
             //($sPageClass, $sSectionSlug, $sMetaKey,
-            //$sSelectFieldId='', $sSortableFieldId='', $sEditorFieldId='', $sSubmitFieldId='',
-            //Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade
+            //$oSortableSectionsField, $oEditorField,
+            //$oCSSFileEditor, $oWPQueryFacade) {
             new Admin_PC3SectionPostTypeMetaLayer(
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
-                $selectPageField->getFieldID(),
-                $sortableSectionsField->getFieldID(),
-                $editorField->getFieldID(),
-                $submitField->getFieldID(),
+                $oSortableSectionsField,
+                $oEditorField,
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
 
             $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
                 $this->container->getParameter('page__settings'),
-                array( $debugField, $submitField ),
+                $aSectionSettingsPageFields,
                 $this->container->getParameter('debug')
             );
 
+            //($sPageClass, $aSettingFields) {
             new Admin_PC3SectionSettingsPageCallbacks(
                 get_class( $pc3SettingsPage ),
-                array( $debugField, $submitField )
+                $aSectionSettingsPageFields
             );
-
-//            echo '<pre>';
-//            $this->container->printParametersToScreen();
-//            echo '</pre>';
         }
 	}
 

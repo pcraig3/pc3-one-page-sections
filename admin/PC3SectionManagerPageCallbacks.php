@@ -58,8 +58,8 @@ class Admin_PC3SectionManagerPageCallbacks {
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
-    public function __construct( $sPageClass,
-                                 array $aSettingFields, Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+    public function __construct( $sPageClass, array $aSettingFields,
+                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass   = $sPageClass;
 
