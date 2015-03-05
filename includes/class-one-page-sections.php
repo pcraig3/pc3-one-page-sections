@@ -194,6 +194,11 @@ class One_Page_Sections {
                 'Admin_PC3SectionSettingsPage'
             );
 
+            $selectPagesField = new Admin_PC3PageSelectField(
+                'field__select_page',
+                'page__sections'
+            );
+
             $sortableSectionsField = new Admin_PC3PageSortableField(
                 'field__sortable_sections',
                 null
@@ -216,24 +221,10 @@ class One_Page_Sections {
                 'field__submit'
             );
 
-            $this->container->addSettingFieldsAsParameters( array( $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
+            $this->container->addSettingFieldsAsParameters( array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ), $aAdminPages );
             $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
             ///
 
-
-            //@TODO: Move this into a callback or something
-            //sets the page to be our sections_page
-            $_sPageID = PC3_AdminPageFramework::getOption(
-                'Admin_PC3SectionManagerPage',
-                $this->container->getParameter('page__manage') . '__sections_page'
-            );
-
-            //if a value exists, than overwrite it in our container
-            if( $_sPageID )
-                $this->container->setParameter(
-                    $this->container->getParameter('page__manage') . '__sections_page',
-                    $_sPageID
-                );
 
 
             if( 0 !== intval( $this->container->getParameter('debug') ) ) {
@@ -254,7 +245,7 @@ class One_Page_Sections {
                 '__sections',
                 '__editor',
                 '__submit',
-                array( $sortableSectionsField, $editorField, $submitField ),
+                array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getParameter('debug')
             );
 
@@ -268,7 +259,7 @@ class One_Page_Sections {
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('page__manage') . '__editor',
                 $this->container->getParameter('page__manage') . '__submit',
-                array( $sortableSectionsField, $editorField, $submitField ),
+                array( $selectPagesField, $sortableSectionsField, $editorField, $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
@@ -280,7 +271,7 @@ class One_Page_Sections {
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
-                $this->container->getParameter('page__manage') . '__sections_page',
+                'field__select_page',
                 'field__sortable_sections',
                 'field__editor',
                 'field__submit',

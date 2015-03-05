@@ -102,8 +102,8 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
         $this->bDebug = intval( $iDebug ) !== 0;
 
         //@TODO this is a pretty ugly solution
-        $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
-        $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
+        $this->sSelectFieldId    = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
+        $this->sSortableFieldId  = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
         $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
     }
@@ -146,26 +146,11 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public function load_manage_sections($oAdminPage)
     {
-        $this->addSettingFields(
-            array( // Single Drop-down List
-                'field_id'      => $this->sPageSlug . '__sections_page',
-                'title'         => __( 'One Page Sections Page', 'one-page-sections' ),
-                'type'          => 'select',
-                'label'         => array(
-                    0 => __( '---', 'one-page-sections' ),
-                ),
-                'description' => __( 'This select field should be filled with the names of pages from your site.',
-                        'one-page-sections' )
-                    . ' ' . __( 'Please create at least one Page.', 'one-page-sections' ),
-            )
-        );
-
         if( ! empty( $this->aSettingFields ) )
             foreach( $this->aSettingFields as $oSettingField )
                 $this->addSettingField(
                     $oSettingField->setUpField()
                 );
-
     }
 
     /**

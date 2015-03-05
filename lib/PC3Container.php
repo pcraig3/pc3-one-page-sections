@@ -43,7 +43,7 @@ class Lib_PC3Container {
 
         $this->aModifiableParameters = array(
 
-            'manage_sections__sections_page' => 'page__sections',
+            'field__select_page' => 'page__sections',
         );
 
     }

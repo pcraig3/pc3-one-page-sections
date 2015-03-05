@@ -56,7 +56,7 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * @var string Field id for the submit button in our form
      */
-    //public $sSubmitFieldId = 'manage_sections__submit';
+    public $sSubmitFieldId = 'manage_sections__submit';
 
     /**
      * An array of setting fields to be added to this page.
@@ -108,7 +108,7 @@ class Admin_PC3SectionManagerPageCallbacks {
         $this->sSelectFieldId = $sSelectFieldId ? $sSelectFieldId : $this->sSelectFieldId;
         $this->sSortableFieldId    = $sSortableFieldId ? $sSortableFieldId : $this->sSortableFieldId;
         $this->sEditorFieldId    = $sEditorFieldId ? $sEditorFieldId : $this->sEditorFieldId;
-        //$this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
+        $this->sSubmitFieldId    = $sSubmitFieldId ? $sSubmitFieldId : $this->sSubmitFieldId;
 
         $this->aSettingFields   = $aSettingFields;
         $this->oCSSFileEditor   = $oCSSFileEditor;
@@ -124,10 +124,6 @@ class Admin_PC3SectionManagerPageCallbacks {
      * @since      0.7.0
      */
     public function replyToLoadPage( $oAdminPage ) {
-
-        // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId,
-            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSelectFieldId ) );
 
         if( ! empty( $this->aSettingFields ) )
             foreach( $this->aSettingFields as &$oSettingField )
@@ -145,11 +141,13 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.7.0
-     * @param $aField array    the field with an id of 'submit_button'
+     * @since      0.9.0
+     * @param object $oSettingField     the field with an id of 'field__select_page'
      * @return mixed array     the field
      */
-    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__sections_page( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_field__select_page( &$oSettingField ) {
+
+        $aNewParameters = array();
 
         $aPages = $this->oWPQueryFacade->getPosts( array(
             'post_type' => 'page',
@@ -159,13 +157,16 @@ class Admin_PC3SectionManagerPageCallbacks {
             'posts_per_page' => -1
         ) );
 
-        if( empty( $aPages ) )
-            return $aField;
+        if( empty( $aPages ) ) {
+            $oSettingField->setFieldParameters( $aNewParameters );
+            return $oSettingField->setUpField();
+        }
 
-        $aField['description']  = __( 'Select a Page to be used for your One Page Sections', 'one-page-sections' );
-        $aField['label'] = $this->_formatPagesAsLabels( $aPages );
+        $aNewParameters['description']  = __( 'Select a Page to be used for your One Page Sections', 'one-page-sections' );
+        $aNewParameters['label'] = $this->_formatPagesAsLabels( $aPages );
 
-        return $aField;
+        $oSettingField->setFieldParameters( $aNewParameters );
+        return $oSettingField->setUpField();
     }
 
     /**
