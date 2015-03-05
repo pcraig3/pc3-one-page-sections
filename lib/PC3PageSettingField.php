@@ -5,44 +5,18 @@
  *
  * @TODO
  */
-class Lib_PC3PageSettingField {
+abstract class Lib_PC3PageSettingField {
 
-    private $sFieldID;
-    private $sTitle;
-    private $sDefaultVal;
-    private $sContainerParameterKey;
+    protected $sFieldID;
+    protected $aFieldParameters;
+    protected $sContainerParameterKey;
 
-    function __construct( $sFieldID, $sTitle, $sDefaultVal = null, $sContainerParameterKey = null) {
+    protected function __construct( $sFieldID, $sContainerParameterKey = null, array $aFieldParameters = array() ) {
 
         $this->sFieldID = $sFieldID;
-        $this->sTitle = $sTitle;
-
-        $this->sDefaultVal = $sDefaultVal;
         $this->sContainerParameterKey = $sContainerParameterKey;
-    }
 
-    //has a method that returns a settings array
-    //has a callback method
-    //has a field_id
-    //has a default/init. value
-
-    public function getFieldArray() {
-
-        $aSetUpField =  array( // Repeatable radio buttons
-            'field_id'      => $this->sFieldID,
-            'title'         => __( $this->sTitle, 'one-page-sections' ),
-            'type'          => 'radio',
-            'label'         => array(
-                0 => 'No',
-                1 => 'Yes'
-            )
-        );
-
-        if( ! is_null( $this->sDefaultVal ) )
-            $aSetUpField['default'] = $this->sDefaultVal;
-
-
-        return $aSetUpField;
+        $this->aFieldParameters = $aFieldParameters;
     }
 
     public function getContainerParameterKey() {
@@ -57,6 +31,15 @@ class Lib_PC3PageSettingField {
 
     public function getDefaultVal() {
 
-        return $this->sDefaultVal;
+        return $this->aFieldParameters['default'];
     }
+
+    public function setUpField() {
+
+        $aSetUpField = $this->aFieldParameters;
+        $aSetUpField['field_id'] = $this->sFieldID;
+
+        return $aSetUpField;
+    }
+
 }

@@ -198,16 +198,14 @@ class One_Page_Sections {
             //General SettingField superclass
             //Title Optional
 
-            $debugField = new Lib_PC3PageSettingField(
+            $debugField = new Lib_PC3PageDebugField(
                 'field__debug',
-                'Debug Flag',
-                0,
-                'debug'
+                'debug',
+                array( 'title' => 'Debug Flag' )
             );
 
-            $submitField = new Lib_PC3PageSettingFieldSubmit(
-                'field__submit',
-                'Submit'
+            $submitField = new Lib_PC3PageSubmitField(
+                'field__submit'
             );
 
             $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );

@@ -114,7 +114,7 @@ class Admin_PC3SectionSettingsPage extends PC3_AdminPageFramework
         if( ! empty( $this->aSettingFields ) )
             foreach( $this->aSettingFields as $oSettingField )
                 $this->addSettingField(
-                    $oSettingField->getFieldArray()
+                    $oSettingField->setUpField()
                 );
     }
 

@@ -72,7 +72,7 @@ class Lib_PC3Container {
             $this->addParameter( array_shift( $aFields ), $aAdminPageClassnames);
     }
 
-    private function addParameter( $oField, array $aAdminPageClassnames ) {
+    private function addParameter( Lib_PC3PageSettingField $oField, array $aAdminPageClassnames ) {
 
         //get name
         $sKey = $oField->getContainerParameterKey();
