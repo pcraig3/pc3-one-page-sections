@@ -146,8 +146,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
      */
     public function load_manage_sections($oAdminPage)
     {
-        $this->registerFieldTypes();
-
         $this->addSettingFields(
             array( // Single Drop-down List
                 'field_id'      => $this->sPageSlug . '__sections_page',
@@ -169,27 +167,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
                 'label'             =>
                     __( 'Sorry, but I couldn\'t find any sections.  <br>:(', 'one-page-sections' ),
                 'description'       => __( 'Maybe try <a href="/wp-admin/post-new.php?post_type=pc3_section">adding a Section</a>?', 'one-page-sections' )
-            ),
-            array(  // Ace Custom Field
-                'field_id'          => $this->sPageSlug . '__editor',
-                'title'             => __('CSS Editor', 'one-page-sections' ),
-                'description'       => __('Custom CSS goes here.', 'one-page-sections' ),
-                'type'              => 'ace',
-                //'default'           => '.abc { color: #fff; }',
-                //'repeatable'        => true,
-                // The attributes below are the defaults, i.e. if you want theses you don't have to set them
-                'attributes' =>  array(
-                    'cols'          =>  96,
-                    'rows'          =>  14,
-                ),
-                // The options below are the  defaults, i.e. if you want theses you don't have to set them
-                'options'    => array(
-                    'language'      => 'css', // available languages https://github.com/ajaxorg/ace/tree/master/lib/ace/mode
-                    'theme'         => 'dreamweaver', //available themes https://github.com/ajaxorg/ace/tree/master/lib/ace/theme
-                    'gutter'        => true,
-                    'readonly'      => false,
-                    'fontsize'      => 14,
-                )
             )
         );
 
@@ -199,19 +176,6 @@ class Admin_PC3SectionManagerPage extends PC3_AdminPageFramework
                     $oSettingField->setUpField()
                 );
 
-    }
-
-    /**
-     * Register custom field types.
-     *
-     * @since      0.8.0
-     */
-    private function registerFieldTypes() {
-
-        if ( ! class_exists('AceCustomFieldType') )
-            require_once ONE_PAGE_SECTIONS_DIR_PATH . 'vendor/AceCustomFieldType/AceCustomFieldType.php';
-
-        new AceCustomFieldType();
     }
 
     /**

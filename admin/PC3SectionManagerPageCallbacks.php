@@ -133,10 +133,6 @@ class Admin_PC3SectionManagerPageCallbacks {
         add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId,
             array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sSortableFieldId ) );
 
-        // field_definition_{instantiated class name}_{section id}_{field_id}
-        add_filter( 'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId,
-            array( $this,  'field_definition_' . $this->sPageClass . '_' . $this->sEditorFieldId ) );
-
         if( ! empty( $this->aSettingFields ) )
             foreach( $this->aSettingFields as &$oSettingField )
 
@@ -230,18 +226,23 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * @TODO Errors or something
      *
-     * @since      0.8.0
-     * @param $aField array    the field with an id of 'manage_sections__editor'
-     * @return mixed array     the field
+     * @since      0.9.0
+     * @param object $oSettingField     the field with an id of 'field__editor'
+     * @return mixed array              the field
      */
-    public function field_definition_Admin_PC3SectionManagerPage_manage_sections__editor( $aField ) {
+    public function field_definition_Admin_PC3SectionManagerPage_field__editor( &$oSettingField ) {
+
+        $aNewParameters = array();
 
         $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
         if( ! empty( $sContent ) )
-            $aField['value'] = $sContent;
+            $aNewParameters = array(
+                'value' => $sContent
+            );
 
-        return $aField;
+        $oSettingField->setFieldParameters( $aNewParameters );
+        return $oSettingField->setUpField();
     }
 
     /**
@@ -250,7 +251,7 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.3.0
+     * @since      0.9.0
      * @param object $oSettingField     the field with an id of 'field__submit'
      * @return mixed array              the field
      */
@@ -258,7 +259,7 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         $aNewParameters = array();
 
-        //@TODO: This has to be returned to
+        //@TODO: THIS HAS TO BE FIXED
         //if( $this->bIfSections )
         if( true )
             $aNewParameters = array(

@@ -194,6 +194,10 @@ class One_Page_Sections {
                 'Admin_PC3SectionSettingsPage'
             );
 
+            $editorField = new Admin_PC3PageACEEditorField(
+                'field__editor'
+            );
+
             $debugField = new Admin_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
@@ -207,6 +211,7 @@ class One_Page_Sections {
                 'field__submit'
             );
 
+            $this->container->addSettingFieldsAsParameters( array( $editorField, $submitField ), $aAdminPages );
             $this->container->addSettingFieldsAsParameters( array( $debugField, $submitField ), $aAdminPages );
             ///
 
@@ -244,7 +249,7 @@ class One_Page_Sections {
                 '__sections',
                 '__editor',
                 '__submit',
-                array( $submitField ),
+                array( $editorField, $submitField ),
                 $this->container->getParameter('debug')
             );
 
@@ -258,7 +263,7 @@ class One_Page_Sections {
                 $this->container->getParameter('page__manage') . '__sections',
                 $this->container->getParameter('page__manage') . '__editor',
                 $this->container->getParameter('page__manage') . '__submit',
-                array( $submitField ),
+                array( $editorField, $submitField ),
                 $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
