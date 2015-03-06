@@ -5,7 +5,7 @@
  * Basically we want very little other than a container to hold a series of other containers.
  * Idea is just to loop through sections and display them.
  *
- * @since      0.8.0
+ * @since      0.9.0
  *
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/templates

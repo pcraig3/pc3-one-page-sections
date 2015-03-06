@@ -91,16 +91,19 @@ class Admin_PC3SectionPostTypeMetaLayer {
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         //@TODO: maybe move these into the Loader somehow
-        add_action( 'save_post_' . $this->sSectionSlug, array( $this, $this->sSectionSlug . '_save_post_' ) );
-        add_action( 'wp_trash_post', array( $this,  $this->sSectionSlug . '_wp_trash_post' ) );
+        add_action( 'save_post_' . $this->sSectionSlug, array( $this, 'pc3_section_save_post_' ) );
+        add_action( 'wp_trash_post', array( $this,  'pc3_section_wp_trash_post' ) );
 
-        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sSectionSlug . '_submit_after_' ) );
+        add_action( 'submit_after_' . $this->sPageClass, array( $this, 'pc3_section_submit_after_' ) );
 
         //@TODO: This is a really bad place for this
-        add_action( 'submit_after_' . $this->sPageClass, array( $this,  $this->sSectionSlug . '_submit_after_css' ) );
+        add_action( 'submit_after_' . $this->sPageClass, array( $this, 'pc3_section_submit_after_css' ) );
     }
 
     /**
+     * If we save a section and it's not trash or a draft, and it doesn't already have a meta-order (ie, this is a new posts),
+     * then get the existing post with the highest order, and give this post an incremented order
+     *
      * @since      0.8.0
      *
      * @param $post_id
@@ -130,6 +133,8 @@ class Admin_PC3SectionPostTypeMetaLayer {
     }
 
     /**
+     * If you trash a post, delete its order meta value
+     *
      * @since      0.8.0
      *
      * @param $post_id
@@ -145,6 +150,11 @@ class Admin_PC3SectionPostTypeMetaLayer {
     }
 
     /**
+     *
+     * After submitting the 'Manage Sections' page, get the order of the sortable fields and then modify the order
+     * meta values of our sections to reflect the sortable sections.
+     * This means that the order chosen on the 'Manage Sections' page is preserved
+     *
      * @since      0.9.0
      */
     public function pc3_section_submit_after_() {

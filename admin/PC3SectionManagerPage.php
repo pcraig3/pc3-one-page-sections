@@ -18,13 +18,13 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
     /**
      * The slug for our custom post type (Sections)
      *
-     * @since   0.7.0
+     * @since   0.9.0
      * @var     string
      */
     protected $sSectionSlug;
 
     /**
-     * @since   0.7.0
+     * @since   0.9.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
      * @param array $aSettingFields     Setting fields for our admin page
@@ -71,7 +71,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      *
      * Here a method in the parent class will add our form fields
      *
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function load_manage_sections($oAdminPage)
     {
@@ -83,7 +83,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      *
      * ie, do_{page slug}
      *
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function do_manage_sections()
     {

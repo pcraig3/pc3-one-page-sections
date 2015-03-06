@@ -2,8 +2,6 @@
 /**
  * The file that handles the logic for the callbacks on the Settings Page
  *
- * Submit button is enabled, just
- *
  * @since      0.9.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/admin
@@ -20,12 +18,16 @@ class Admin_PC3SectionSettingsPageCallbacks {
 
     public $aSettingFields;
 
-
+    /**
+     * @since      0.9.0
+     *
+     * @param string $sPageClass                    Classname of the page these callbacks are registered to
+     * @param array $aSettingFields                 Setting fields for our admin page
+     */
     public function __construct( $sPageClass, array $aSettingFields ) {
 
         $this->sPageClass   = $sPageClass;
         $this->aSettingFields = $aSettingFields;
-
 
         // load_ + page slug
         add_action( 'load_' . $this->sPageClass, array( $this, 'replyToLoadPage' ) );
@@ -49,14 +51,12 @@ class Admin_PC3SectionSettingsPageCallbacks {
     }
 
     /**
-     * @TODO: Callback method passed the submit_button field after the Sections have (or haven't) been returned
-     * If sections have been found, Submit button is usable.  Otherwise, it remains disabled
-     *
+     * By default, the submit button is disabled.  Callback enables the button.
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.3.0
-     * @param $aField array    the field with an id of 'manage_sections__submit'
-     * @return mixed array     the field
+     * @since      0.9.0
+     * @param $oSettingField $aField    the field with an id of 'field__submit'
+     * @return mixed array              the field
      */
     public function field_definition_Admin_PC3SectionSettingsPage_field__submit( &$oSettingField  ) {
 

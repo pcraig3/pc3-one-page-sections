@@ -18,7 +18,7 @@
  *
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/admin
- * @author     Your Name <email@example.com>
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
 class One_Page_Sections_Admin {
 
@@ -44,7 +44,7 @@ class One_Page_Sections_Admin {
      * The service container.
      * Contains a lot of plugin-wide variables, as well as several service objects we need.
      *
-     * @since    0.9.2
+     * @since    0.9.0
      * @access   private
      * @var      object    $container    service container contains lots of important stuff
      */
@@ -53,7 +53,7 @@ class One_Page_Sections_Admin {
     /**
      * Initialize the class and set its properties.
      *
-     * @since    0.1.0
+     * @since    0.9.0
      * @var      string    $plugin_name         The name of this plugin.
      * @var      string    $version             The version of this plugin.
      * @var 	 Lib_PC3Container    $container Dependency injection and variable knower-abouter.

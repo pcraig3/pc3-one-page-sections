@@ -57,6 +57,14 @@ class One_Page_Sections {
 	 */
 	protected $version;
 
+    /**
+     * The service container.
+     * Contains a lot of plugin-wide variables, as well as several service objects we need.
+     *
+     * @since    0.8.2
+     * @access   protected
+     * @var      Lib_PC3Container $container    service container contains lots of important stuff
+     */
     protected $container;
 
 	/**
@@ -66,12 +74,12 @@ class One_Page_Sections {
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
-	 * @since    0.8.2
+	 * @since    0.9.0
 	 */
 	public function __construct() {
 
 		$this->plugin_name = 'one-page-sections';
-		$this->version = '0.8.2';
+		$this->version = '0.9.0';
 
         $this->load_dependencies();
         //autoloader loads all new classes classes
@@ -93,7 +101,11 @@ class One_Page_Sections {
 	 * - One_Page_Sections_Loader. Orchestrates the hooks of the plugin.
 	 * - One_Page_Sections_i18n. Defines internationalization functionality.
 	 * - One_Page_Sections_Admin. Defines all hooks for the dashboard.
-	 * - One_Page_Sections_Public. Defines all hooks for the public side of the site.
+     * - One_Page_Sections_Public. Defines all hooks for the public side of the site.
+     * - PC3_AdminPageFramework. Library we're using to quickly do up admin pages.
+     * - AceCustomFieldType. Library allows us to easily do (CSS) editor windows in our admin pages.
+     * - Gamajo_Template_Loader. Easily include templates which can be overwritten by individual users.
+     * - PC3AutoLoader. Loads the rest of our classes.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -171,7 +183,7 @@ class One_Page_Sections {
 	 * Register all of the hooks related to the dashboard functionality
 	 * of the plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    0.9.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -295,7 +307,7 @@ class One_Page_Sections {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    0.4.0
+	 * @since    0.9.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {

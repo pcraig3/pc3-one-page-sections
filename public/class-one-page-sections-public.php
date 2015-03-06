@@ -55,7 +55,7 @@ class One_Page_Sections_Public {
      * The service container.
      * Contains a lot of plugin-wide variables, as well as several service objects we need.
      *
-     * @since    0.9.2
+     * @since    0.8.0
      * @access   private
      * @var      object    $container    service container contains lots of important stuff
      */
@@ -64,7 +64,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    0.7.0
+	 * @since    0.9.0
 	 * @var      string    $plugin_name         The name of the plugin.
 	 * @var      string    $version    		    The version of this plugin.
      * @var 	 Lib_PC3Container    $container Dependency injection and variable knower-abouter.
@@ -86,7 +86,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.8.0
+	 * @since    0.9.0
 	 */
 	public function enqueue_styles() {
 
@@ -118,7 +118,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.8.2
+	 * @since    0.9.0
 	 */
 	public function enqueue_scripts() {
 
@@ -139,7 +139,7 @@ class One_Page_Sections_Public {
 		if( ! empty( $this->sections_page ) &&  is_page( $this->sections_page ) ) {
 
 			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, true );
+			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, false );
 
 			wp_enqueue_script( 'jquery-sticky', plugin_dir_url( __FILE__ ) . 'js/bower_components/jquery-sticky/jquery.sticky.js', array( 'jquery' ), $this->version, false );
 			wp_enqueue_script( 'pc3-sticky', plugin_dir_url( __FILE__ ) . 'js/sticky.js', array( 'jquery', 'jquery-sticky' ), $this->version, false );
@@ -188,10 +188,10 @@ class One_Page_Sections_Public {
     }
 
     /**
-     * @since    0.8.2
+     * @since    0.9.0
      *
-     * @param $atts
-     * @return string
+     * @param array $atts   shortcode attributes
+     * @return string       container parameter if found, else an error message string.
      */
     public function pc3_get_parameter( $atts ) {
 
@@ -226,7 +226,7 @@ class One_Page_Sections_Public {
 	 *
 	 * title, class, and rel attributes can be passed in
 	 *
-	 * @since    0.8.0
+	 * @since    0.9.0
 	 *
 	 * @param array $atts   array of values passed into our shortcode
 	 * @param null $content link text for our anchor tag
@@ -290,7 +290,7 @@ class One_Page_Sections_Public {
 	 * Method stops WordPress from automatically inserting '<p>' tags to content in our editor boxes
      * for our 'sections' custom post type.
      *
-	 * @since    0.8.0
+	 * @since    0.9.0
 	 *
 	 * @param $content
 	 *
@@ -309,7 +309,7 @@ class One_Page_Sections_Public {
      * custom key into the main WP_Query object, which is then used by the page-pc3_section template to iterate
      * through our sections and print them to the screen.
      *
-     * @since    0.8.0
+     * @since    0.9.0
      *
      * @param $query
      */

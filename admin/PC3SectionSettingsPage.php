@@ -16,7 +16,7 @@ class Admin_PC3SectionSettingsPage extends Lib_PC3AdminPage
      *
      * Here we define the setup() method to set how many pages, page titles and icons etc.
      *
-     * @since      0.8.0
+     * @since      0.9.0
      */
     public function setUp()
     {

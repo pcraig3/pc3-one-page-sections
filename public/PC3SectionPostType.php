@@ -20,7 +20,7 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
     /**
      * The slug for our custom post type (Sections)
      *
-     * @since   0.8.2
+     * @since   0.9.0
      * @var     string
      */
     private $sSectionSlug;
@@ -28,12 +28,17 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
     /**
      * The meta key name to keep track of the order in which our sortable fields should be rendered
      *
-     * @since   0.8.0
+     * @since   0.9.0
      * @var     string
      */
     private $sMetaKey;
 
-
+    /**
+     * @since   0.9.0
+     *
+     * @param string $sSectionSlug  the slug for this Custom Post Type
+     * @param array $sMetaKey       the custom meta key used to order this custom post type
+     */
     public function __construct($sSectionSlug, $sMetaKey) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
@@ -87,17 +92,14 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
 
     }
 
-    /*
-     * Modifies the columns of post listing table.
-     *
-     * @remark  columns_{post type slug}
-     */
     /**
      * Modifies the columns of post listing table.
      * In our case, we're adding the 'order' column,
      * representing the order that the sections will be rendered in on the front-end
      *
-     * @since    0.6.0
+     * @remark  columns_{post type slug}
+     *
+     * @since    0.9.0
      *
      * @param $aHeaderColumns
      * @return array
@@ -108,7 +110,6 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
             'cb'    => '<input type="checkbox" />', // Checkbox for bulk actions.
             'title' => __( 'Title', 'one-page-sections' ), // Post title. Includes "edit", "quick edit", "trash" and "view" links. If $mode (set from $_REQUEST['mode']) is 'excerpt', a post excerpt is included between the title and links.
             'date' => __( 'Date', 'one-page-sections' ),
-            //@var: order
             $this->sMetaKey => __( 'Order', 'one-page-sections' )
         )
             // + $aHeaderColumns // uncomment this to enable the default columns.
@@ -119,7 +120,7 @@ class Public_PC3SectionPostType extends PC3_AdminPageFramework_PostType {
     /**
      * Controls the rendering of the 'order' column cell contents of the post listing table
      *
-     * @since    0.6.0
+     * @since    0.9.0
      *
      * @param string $sCell the markup that will become each individual column cell
      * @param int $iPostID  the post_id

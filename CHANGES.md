@@ -1,3 +1,25 @@
+#### 0.9.0
+* Added offsets to scroll and sticky plugins.
+* Added Pure responsive grids CSS files
+* Changed custom CSS filename to the name of this plugin
+* Added an autoloading class based on (ie, directly lifted) [Shashin's Autoloader](https://github.com/toppa/Shashin/blob/master/lib/ShashinAutoLoader.php)
+    * This meant changing a lot of classnames
+* Added a Container class based on (same idea) [Shashin's Container](https://github.com/toppa/Shashin/blob/master/lib/ShashinContainer.php)
+* Added a FunctionsFacade class based on (guess who?) [Shashin's FunctionsFacade](https://github.com/toppa/Shashin/blob/master/lib/ShashinFunctionsFacade.php)
+* Hunted down (nearly) all plugin-wide string variables and added them to the Container instead
+* `pc3_get_parameter` shortcode pulls said variables into template files.
+* Sections added to a key on `WP_Query`, making our template files cleaner. 
+* QueryFacade, CSSEditor, and TemplateLoader injected by container
+* Editor metabox (and, maybe, others) removed from Edit Screen of Page on which Sections will be displayed
+* Cleaned up template calling
+* Added Settings Page with `Debug` parameter
+* Refactored SettingFields as their own classes because it's pretty helpful:
+    * 1. Fields can be passed to objects (instead of copy-pasting arrays)
+    * 2. Fields' values can be added to our Container parameters
+    * 3. Fields can be type-hinted, where needed
+* Subclassed my AdminPages and PageSettingFields because it was easy
+* Commenting here and there
+
 #### 0.8.2
 * More CSS changes.
 * Added jquery-sticky plugin.

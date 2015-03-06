@@ -1,104 +1,110 @@
-=== One Page Sections ===
-Contributors: pcraig3
-Tags: one, page, sections
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+#One Page Sections
+* Contributors: [Paul Craig](https://github.com/pcraig3), etc
+* Tags: plugin, sections, one-page, whatever
+* Requires at least: 3.8
+* Requires PHP: 5.3
+* Tested up to: 4.1
+* Stable tag: mostly
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Quick and Dirty Plugin Builds One (Scrolling) Page with Sections.
+###Short description
 
-== Description ==
+One Page Sections is a WordPress plugin that makes it possible to create a one-page layout within the context of another theme.  Plugin assumes authors are comfortable writing HTML and CSS.  
 
-Quick and Dirty Plugin Builds One (Scrolling) Page with Sections.
+###Long description
 
-Or so goes the thinking.
+One Page Sections is a WordPress plugin makes it possible to create the a one-page layout in a reasonably intuitive manner, as this behaviour is not very easy to achieve semantically.  
 
-== Installation ==
+After installation, One Page Sections registers "Sections" as a [Custom Post Type](http://codex.wordpress.org/Post_Types), which will eventually represent blocks of content of a one-page scrolling layout.  However, since WordPress' default behaviour is to assume a separate page per post (~and One Page Sections doesn't allow Sections to have public-facing URLs~) **users must select an existing page** on which to display sections.  (Existing content on selected page will be disregarded.)
 
-1. Activate the plugin through the 'Plugins' menu in WordPress
+In addition, Sections can be re-ordered by dragging and dropping them in the Settings page (~there's a bug needs fixing~), and (~CSS overrides which have yet to be introduced, hmmm~).
 
-== Frequently Asked Questions ==
+#####Included third-party libraries
 
-= When will it be done =
+* [PureCSS](http://purecss.io/) for quickly prototyping UI elements on the front-end
+* [page-scroll-to-id](https://github.com/malihu/page-scroll-to-id) for JavaScript-powered scrolling to elements on the same page
+* [sticky](https://github.com/garand/sticky) for JavaScript-powered fixing elements in the browser
+* [Gamajo Template Loader](https://github.com/GaryJones/Gamajo-Template-Loader) allows [custom templates to be bundled into the plugin that can easily be overwritten by an intermediate-level user](https://pippinsplugins.com/template-file-loaders-plugins/).
+* [Admin Page Framework](https://wordpress.org/plugins/admin-page-framework/) so as to more easily create Admin Pages (and, especially, the forms therein)
 
-It's always never going to be done.
+####Unavoidable Issues 
+* Since the default header and footer are preserved (at least, unless templates are overridden), you are always going to be fighting the theme's CSS.  
+* I've included the Pure CSS framework (for those interested), which might cause CSS complications
+* Secondly, writing HTML code in WordPress editor is totally a drag. Copy + pasting works, but it's not a particularly elegant solution
 
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
-
-== TODOs ==
+##TODOs
 
 * Section URLs redirect to index, or to page with sections.
-* Hunt down the 11 TODOs -- mostly this means more in-code documentation
+* Hunt down the 7 TODOs -- mostly this means more in-code documentation
 * grunt or something.
-* Settings Page with debug flag, as well as options to (de)queue libraries.
+* Settings Page with options to (de)queue libraries.
 * Remove CSS file changes from being tracked.
 
-== Changelog ==
+##Installation
 
-#### 0.9.0
+###Upload
 
+* Download the latest ~~crazy unstable~~ (haha, kidding) probably-fine branch archive (choose the "zip" option).
+* Go to the `Plugins` -> `Add New` screen and click the Upload tab.
+* Upload the zipped archive directly.
+* Go to the `Plugins` screen and click `Activate`.
+* Shazam.
 
-#### 0.8.2
-* More CSS changes.
-* Added jquery-sticky plugin.
+###Manual
 
-#### 0.8.1
-* Lots of CSS changes.  Added some fonts.  Basically, just bad practice stuff.
+* Download the latest tagged archive (choose the "zip" option).
+* Unzip the archive
+* Copy the folder to your /wp-content/plugins/ directory. (Like FTP or whatever)
+* Go to the `Plugins` screen and click `Activate`.
+* Also shazam.
 
-#### 0.8.0
-* Added `pc3_section_link` shortcode to return on-page hashtag links to other Sections 
-* Added method to return Sections by `ID`, by `post_name`, or by `post_title`
-* Added Code Editor [AceCustomFieldType](https://github.com/soderlind/AceCustomFieldType) which extends the [AdminPageFramework](https://wordpress.org/plugins/admin-page-framework/)
-* Added ability to edit custom CSS code from the Admin Dashboard
-* Fixed small bug when updating 'order' meta values
-* Hardened 'order' meta value logic
+Check out [the Codex for more information about installing plugins manually](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
-#### 0.7.1
-* Removed Composer's vendor directory and instead just manually added two files :(
-* [GitHub Updater](https://github.com/afragen/github-updater) was breaking my site because composer was using a git submodule for my vendors
+###Updates
 
-#### 0.7.0
-* Calls to WP_Query somewhat isolated
-* Able to select the page where to display sections = Awesome
-* Pulled a bunch of variables through = Less hardcoding = Awesome
+Either 
 
-#### 0.6.0
-* Updated references to APF static methods that were crashing all over the place
-* Added a debugging MetaBox to Sections
-* Added a MetaLayer that handles logic related to the re-ordering of Sections
-* Nearly standardized `WP_QUERY` calls, although they need to be harmonized
-* Added new 'Order' column to Sections listing in Admin Dashboard
+1. Check this repository every so often for new updates and then manually install new version of plugin following aforementioned instructions.
+ 	* (*hint: try not to do this*)
+2. Download and install the consistently excellent [Github Updater](https://github.com/afragen/github-updater) plugin.
+	* GitHub Updater enables effortless updates for plugins like this one (i.e., plugins hosted on github rather than [the WordPress plugin respository](https://wordpress.org/plugins/)).
+    * Any new appropriately-tagged updates are detected and this plugin can then be upgraded like any other.
 
-#### 0.5.0
-* Unhid the vendor directory so that we can plug and play this thing.
-* Embedded YouTube videos work without too much finagling.
-* Added [page-scroll-to-id](https://github.com/malihu/page-scroll-to-id) with [Bower](http://bower.io/) for some smooth scrolling goodness.
-* Set up the [Pure Marketing Layout](http://purecss.io/layouts/marketing/) as a proof of concept
+##How to do things
 
-#### 0.4.0
-* One Page Sections page has template overridden: all sections listed at once.
-* Using [Gamajo_Template_Loader](https://github.com/GaryJones/Gamajo-Template-Loader) to handle template overrides
-* Added [Pure.css](http://purecss.io/) and [Fontawesome Icons](https://github.com/FortAwesome/Font-Awesome) using [Bower](http://bower.io/) so as to quickly do up a demo.
+###1. How to create a new Section
 
-#### 0.3.0
-* Submitting options preserves order of sortable Section fields.
-* Defaults to error message and disabled submit button in case of no Sections
-* Dynamically populating sortable fields with Post Titles and Ids of Sections
-* Added a new page -- 'Manage Sections' -- in the Sections Post Type submenu
-* Added namespace to Admin Page Framework because I was dumb and introduced a conflict.
+Create a new Section the same way you would create a new Post
 
-#### 0.2.0
-* Added a Custom Post Type: 'Sections'
-* Added the [AdminPageFramework](https://wordpress.org/plugins/admin-page-framework/) to help build pages later
+ 1. Sections. 
+ 2. Add New. 
+ 3. Do literally anything. 
+ 4. Publish.
 
-#### 0.1.0
-* Just started
+###2. How to display your sections.
 
+Sections can only be displayed on a selected Page.
+
+ 1. Create a Page which has no content (or maybe a meta description or something, to make your SEO happy).
+ 2. Settings page drop-down list.
+ 3. Select Page. 
+ 4. Save options.
+
+###3. How to re-order your sections.
+
+Sections can be re-ordered fairly easily, in case you decide your progression of arguments makes no sense.
+
+ 1. Sections Submenu. 
+ 2. Manage Sections. 
+ 3. Sections are pulled in ordered by your custom order. Default ordering is latest Sections first. 
+ 4. ~Small bug menu order incorrect look into it.~
+
+###(4. CSS)
+* (this is how you edit the CSS)
+
+###(5. Templates) 
+* (this is how you override a template)
+
+###(6. Linking sections)
+* (this is how the one-page scroll works)

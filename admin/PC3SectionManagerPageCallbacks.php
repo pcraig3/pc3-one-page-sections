@@ -53,6 +53,8 @@ class Admin_PC3SectionManagerPageCallbacks {
     private $bIfSections = false;
     
     /**
+     * @since      0.9.0
+     *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param array $aSettingFields                 Setting fields for our admin page
      * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits

@@ -10,6 +10,8 @@
 class Admin_PC3PageSortableSectionsField extends Lib_PC3AdminPageSettingField {
 
     /**
+     * @since      0.9.0
+     *
      * @param string $sFieldID              the field_id of this setting field
      * @param string $sContainerParameterKey
      *                          if a string is provided, the value of this SettingField will be added to

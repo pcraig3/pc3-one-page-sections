@@ -10,6 +10,8 @@
 class Admin_PC3PageACEEditorField extends Lib_PC3AdminPageSettingField {
 
     /**
+     * @since      0.9.0
+     *
      * @param string $sFieldID          the field_id of this setting field
      * @param array $aFieldParameters   parameters to override our defaults
      */
