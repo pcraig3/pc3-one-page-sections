@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      0.1.0
+ * @since      0.9.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/includes
  * @author     Paul Craig <paul@pcraig3.ca>
