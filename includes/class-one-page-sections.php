@@ -197,7 +197,7 @@ class One_Page_Sections {
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_head', $plugin_admin, 'pc3_sections_page_remove_metaboxes');
-        //$this->loader->add_filter( 'upgrader_post_install', $plugin_admin, 'pc3_upgrade_replace_things');
+        $this->loader->add_action( 'plugins_loaded', $plugin_admin, 'pc3_overwrite_default_custom_css_content_in_case_of_update');
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
@@ -372,7 +372,8 @@ class One_Page_Sections {
      * @since     0.1.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version() {
+    public function get_version()
+    {
         return $this->version;
     }
 

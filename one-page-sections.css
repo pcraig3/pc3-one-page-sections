@@ -610,8 +610,8 @@
         background: rgb(86, 196, 196);
         color: rgb(0, 102, 203);
 
-        padding-left: 0em;
-        padding-right: 0em;
+        padding-left: 0;
+        padding-right: 0;
     }
     .pc3_section__wrapper .resources--m a i::after {
 

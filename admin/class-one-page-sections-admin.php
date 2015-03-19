@@ -175,13 +175,32 @@ class One_Page_Sections_Admin {
 
     }
 
-    public function pc3_upgrade_replace_things( $response, $hook_extra, $result ) {
+    /**
+     * @TODO
+     */
+    public function pc3_overwrite_default_custom_css_content_in_case_of_update() {
 
-        $rep = $response;
-        $extra = $hook_extra;
-        $res = $result;
+        $css_file_editor = $this->container->getCSSFileEditor();
 
-        $pop = $res = $rep = $extra = 1;
+        $css_file_content = trim( $css_file_editor->readContentOfCustomCSSFile() );
+
+        //check if
+        // a. css file contains default content
+        // b. admin page settings !== default content.
+        if( $css_file_editor->getDefaultContent() === $css_file_content
+            || empty( $css_file_content ) ) {
+
+            //@TODO: These variables shouldn't be here
+            $_sEditorRules = PC3_AdminPageFramework::getOption(
+                'Admin_PC3SectionManagerPage', //$this->container->getParameter(''),
+                'field__editor' //$this->oEditorField->getFieldID()
+            );
+
+            if( $css_file_content !== $_sEditorRules ) {
+
+                $css_file_editor->writeToCustomCSSFile( $_sEditorRules );
+            }
+        }
     }
 
 }
