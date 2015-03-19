@@ -109,7 +109,7 @@ class One_Page_Sections_Public {
 			wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array( 'pure' ), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array( 'pure', 'pure-grids' ), $this->version, 'all');
 
-			wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url( __FILE__ ) . 'css/' . basename( $this->container->getParameter('file__css') ) , array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
+			wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url( __DIR__ ) . basename( $this->container->getParameter('file__css') ) , array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
 
 			//@TODO GET RID OF THIS
 			remove_action( 'wp_footer', 'orbit_functioncall', 1000 );
