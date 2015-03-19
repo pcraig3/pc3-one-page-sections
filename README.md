@@ -35,7 +35,6 @@ In addition, Sections can be re-ordered by dragging and dropping them in the Set
 
 ##TODOs
 
-* Section URLs redirect to index, or to page with sections.
 * Hunt down the 7 TODOs -- mostly this means more in-code documentation
 * grunt or something.
 * Settings Page with options to (de)queue libraries.

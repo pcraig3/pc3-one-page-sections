@@ -101,14 +101,15 @@ class One_Page_Sections_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/one-page-sections-public.css', array(), $this->version, 'all' );
 
-		if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
+        if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
 
-			wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
+            wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
 			wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array( 'pure' ), $this->version, 'all');
 			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array( 'pure', 'pure-grids' ), $this->version, 'all');
 
-			wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/one-page-sections-public.css', array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
+			wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url(__DIR__) . basename( $this->container->getParameter('file__css') ) , array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
 
 			//@TODO GET RID OF THIS
 			remove_action( 'wp_footer', 'orbit_functioncall', 1000 );

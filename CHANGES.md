@@ -14,9 +14,9 @@
 * Cleaned up template calling
 * Added Settings Page with `Debug` parameter
 * Refactored SettingFields as their own classes because it's pretty helpful:
-    * 1. Fields can be passed to objects (instead of copy-pasting arrays)
-    * 2. Fields' values can be added to our Container parameters
-    * 3. Fields can be type-hinted, where needed
+    1. Fields can be passed to objects (instead of copy-pasting arrays)
+    2. Fields' values can be added to our Container parameters
+    3. Fields can be type-hinted, where needed
 * Subclassed my AdminPages and PageSettingFields because it was easy
 * Commenting here and there
 
@@ -40,7 +40,7 @@
 * [GitHub Updater](https://github.com/afragen/github-updater) was breaking my site because composer was using a git submodule for my vendors 
 
 #### 0.7.0
-* Calls to WP_Query somewhat isolated
+* Calls to `WP_Query` somewhat isolated
 * Able to select the page where to display sections = Awesome
 * Pulled a bunch of variables through = Less hardcoding = Awesome
 
@@ -66,7 +66,7 @@
 * Submitting options preserves order of sortable Section fields.
 * Defaults to error message and disabled submit button in case of no Sections 
 * Dynamically populating sortable fields with Post Titles and Ids of Sections 
-* Added a new page -- 'Manage Sections' -- in the Sections Post Type submenu  
+* Added a new page -- `Manage Sections` -- in the Sections Post Type submenu  
 * Added namespace to Admin Page Framework because I was dumb and introduced a conflict.
 
 #### 0.2.0

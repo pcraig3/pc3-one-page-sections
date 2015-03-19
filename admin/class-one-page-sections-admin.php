@@ -175,4 +175,13 @@ class One_Page_Sections_Admin {
 
     }
 
+    public function pc3_upgrade_replace_things( $upgrader, $data_array ) {
+
+        var_dump('here');
+        var_dump($upgrader);
+        var_dump( $data_array );
+
+        die();
+    }
+
 }

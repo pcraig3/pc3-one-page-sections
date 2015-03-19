@@ -18,19 +18,17 @@
  * @since      0.1.0
  * @package    One_Page_Sections
  * @subpackage One_Page_Sections/includes
- * @author     Your Name <email@example.com>
+ * @author     Paul Craig <paul@pcraig3.ca>
  */
 class One_Page_Sections_Activator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    0.1.0
-	 */
-	public static function activate() {
+    /**
+     * Empty method.
+     *
+     * @since    0.1.0
+     */
+    function activate() {
 
-	}
+    } // end activate
 
 }
