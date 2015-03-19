@@ -15,7 +15,7 @@
  * Plugin Name:       One Page Sections
  * Plugin URI:        https://github.com/pcraig3/pc3-one-page-sections
  * Description:       Quick and Dirty Plugin Builds One (Scrolling) Page with Sections
- * Version:           0.0.0
+ * Version:           0.1.0
  * Author:            Paul Craig
  * Author URI:        http://pcraig3.ca
  * License:           GPL-2.0+
@@ -97,3 +97,6 @@ function run_one_page_sections() {
 	$plugin->run();
 }
 run_one_page_sections();
+
+/* So I know the answer.  The answer is that we save the version when we save the CSS file and then
+if they don't match we overwrite the CSS file.  Easy peasy. */

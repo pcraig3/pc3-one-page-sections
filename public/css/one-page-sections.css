@@ -3,12 +3,12 @@
  */
 @font-face {
     font-family: 'lavanderia_delicate';
-    src: url('public/css/fonts/lavanderia_delicate-webfont.eot');
-    src: url('public/css/fonts/lavanderia_delicate-webfont.eot?#iefix') format('embedded-opentype'),
-    url('public/css/fonts/lavanderia_delicate-webfont.woff2') format('woff2'),
-    url('public/css/fonts/lavanderia_delicate-webfont.woff') format('woff'),
-    url('public/css/fonts/lavanderia_delicate-webfont.ttf') format('truetype'),
-    url('public/css/fonts/lavanderia_delicate-webfont.svg#lavanderia_delicatedelicate') format('svg');
+    src: url('fonts/lavanderia_delicate-webfont.eot');
+    src: url('fonts/lavanderia_delicate-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/lavanderia_delicate-webfont.woff2') format('woff2'),
+    url('fonts/lavanderia_delicate-webfont.woff') format('woff'),
+    url('fonts/lavanderia_delicate-webfont.ttf') format('truetype'),
+    url('fonts/lavanderia_delicate-webfont.svg#lavanderia_delicatedelicate') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -16,12 +16,12 @@
 
 @font-face {
     font-family: 'lavanderia_sturdy';
-    src: url('public/css/fonts/lavanderia_sturdy-webfont.eot');
-    src: url('public/css/fonts/lavanderia_sturdy-webfont.eot?#iefix') format('embedded-opentype'),
-    url('public/css/fonts/lavanderia_sturdy-webfont.woff2') format('woff2'),
-    url('public/css/fonts/lavanderia_sturdy-webfont.woff') format('woff'),
-    url('public/css/fonts/lavanderia_sturdy-webfont.ttf') format('truetype'),
-    url('public/css/fonts/lavanderia_sturdy-webfont.svg#lavanderia_sturdysturdy') format('svg');
+    src: url('fonts/lavanderia_sturdy-webfont.eot');
+    src: url('fonts/lavanderia_sturdy-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/lavanderia_sturdy-webfont.woff2') format('woff2'),
+    url('fonts/lavanderia_sturdy-webfont.woff') format('woff'),
+    url('fonts/lavanderia_sturdy-webfont.ttf') format('truetype'),
+    url('fonts/lavanderia_sturdy-webfont.svg#lavanderia_sturdysturdy') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -29,12 +29,12 @@
 
 @font-face {
     font-family: 'lavanderia_regular';
-    src: url('public/css/fonts/lavanderia_regular-webfont.eot');
-    src: url('public/css/fonts/lavanderia_regular-webfont.eot?#iefix') format('embedded-opentype'),
-    url('public/css/fonts/lavanderia_regular-webfont.woff2') format('woff2'),
-    url('public/css/fonts/lavanderia_regular-webfont.woff') format('woff'),
-    url('public/css/fonts/lavanderia_regular-webfont.ttf') format('truetype'),
-    url('public/css/fonts/lavanderia_regular-webfont.svg#lavanderia_regularregular') format('svg');
+    src: url('fonts/lavanderia_regular-webfont.eot');
+    src: url('fonts/lavanderia_regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/lavanderia_regular-webfont.woff2') format('woff2'),
+    url('fonts/lavanderia_regular-webfont.woff') format('woff'),
+    url('fonts/lavanderia_regular-webfont.ttf') format('truetype'),
+    url('fonts/lavanderia_regular-webfont.svg#lavanderia_regularregular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -610,8 +610,8 @@
         background: rgb(86, 196, 196);
         color: rgb(0, 102, 203);
 
-        padding-left: 0em;
-        padding-right: 0em;
+        padding-left: 0;
+        padding-right: 0;
     }
     .pc3_section__wrapper .resources--m a i::after {
 

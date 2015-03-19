@@ -43,7 +43,8 @@ class Lib_PC3Container {
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',
-            'file__css'                     =>  ONE_PAGE_SECTIONS_DIR_PATH . 'one-page-sections.css',
+            'file__css'                     =>  ONE_PAGE_SECTIONS_DIR_PATH . 'public/css/one-page-sections.css',
+            'file__css--default_content'    =>  '/* Enter custom CSS rules here for your One Page Sections page */',
 
             //both of these are overwritten in `One_Page_Sections->define_admin_hooks`
             'page__sections'                => 'one-page-sections',
@@ -170,7 +171,10 @@ class Lib_PC3Container {
 
         if (!isset($this->cssFileEditor)) {
 
-            $this->cssFileEditor = new Lib_PC3CSSFileEditor( $this->getParameter( 'file__css' ) );
+            $this->cssFileEditor = new Lib_PC3CSSFileEditor(
+                $this->getParameter( 'file__css' ),
+                $this->getParameter( 'file__css--default_content')
+            );
         }
 
         return $this->cssFileEditor;

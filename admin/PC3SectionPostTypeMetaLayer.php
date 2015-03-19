@@ -219,7 +219,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
 
         //@TODO maybe a callback method on success
         //@TODO sanitize CSS content?
-        if ( ! empty( $_sEditorRules ) && ( $sContent !== $_sEditorRules ) )
+        if ( $sContent !== $_sEditorRules )
             $this->oCSSFileEditor->writeToCustomCSSFile( $_sEditorRules );
 
 
