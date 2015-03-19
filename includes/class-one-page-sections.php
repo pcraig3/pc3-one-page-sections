@@ -197,9 +197,7 @@ class One_Page_Sections {
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_head', $plugin_admin, 'pc3_sections_page_remove_metaboxes');
-        $this->loader->add_filter( 'upgrader_post_install', $plugin_admin, 'pc3_upgrade_replace_things');
-
-
+        //$this->loader->add_filter( 'upgrader_post_install', $plugin_admin, 'pc3_upgrade_replace_things');
 
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
