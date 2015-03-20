@@ -13,9 +13,13 @@ class Admin_PC3PageACEEditorField extends Lib_PC3AdminPageSettingField {
      * @since      0.9.0
      *
      * @param string $sFieldID          the field_id of this setting field
+     * @param string $sContainerParameterKey
+     *                          if a string is provided, the value of this SettingField will be added to
+     *                          our container parameters under the string provided
+     *                          if a `null` (or empty string) value is provided, this SettingField will *not* be added to our container
      * @param array $aFieldParameters   parameters to override our defaults
      */
-    public function __construct( $sFieldID, array $aFieldParameters = array() ) {
+    public function __construct( $sFieldID, $sContainerParameterKey, array $aFieldParameters = array() ) {
 
         $aDefaultFieldParameters =         array(  // Ace Custom Field
             'title'             => __('CSS Editor', 'one-page-sections' ),
@@ -37,7 +41,7 @@ class Admin_PC3PageACEEditorField extends Lib_PC3AdminPageSettingField {
 
         $aMergedFieldParameters = array_merge( $aDefaultFieldParameters, $aFieldParameters );
 
-        parent::__construct($sFieldID, null, $aMergedFieldParameters);
+        parent::__construct($sFieldID, $sContainerParameterKey, $aMergedFieldParameters);
 
         $this->registerFieldTypes();
     }

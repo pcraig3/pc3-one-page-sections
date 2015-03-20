@@ -194,11 +194,6 @@ class One_Page_Sections {
             $this->container
         );
 
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-        $this->loader->add_action( 'admin_head', $plugin_admin, 'pc3_sections_page_remove_metaboxes');
-        $this->loader->add_action( 'plugins_loaded', $plugin_admin, 'pc3_overwrite_default_custom_css_content_in_case_of_update');
-
         if ( class_exists( 'PC3_AdminPageFramework' ) ) {
 
             /**
@@ -226,7 +221,8 @@ class One_Page_Sections {
             );
 
             $oEditorField = new Admin_PC3PageACEEditorField(
-                'field__editor'
+                'field__editor',
+                'file__css--content'
             );
 
             $oDebugField = new Admin_PC3PageRadioBinaryField(
@@ -302,6 +298,11 @@ class One_Page_Sections {
                 $aSectionSettingsPageFields
             );
         }
+
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        $this->loader->add_action( 'admin_head', $plugin_admin, 'pc3_sections_page_remove_metaboxes');
+        $this->loader->add_action( 'plugins_loaded', $plugin_admin, 'pc3_overwrite_default_custom_css_content_in_case_of_update');
     }
 
     /**

@@ -190,15 +190,12 @@ class One_Page_Sections_Admin {
         if( $css_file_editor->getDefaultContent() === $css_file_content
             || empty( $css_file_content ) ) {
 
-            //@TODO: These variables shouldn't be here
-            $_sEditorRules = PC3_AdminPageFramework::getOption(
-                'Admin_PC3SectionManagerPage', //$this->container->getParameter(''),
-                'field__editor' //$this->oEditorField->getFieldID()
-            );
+            //get the saved editor field rules
+            $editor_field_content = $this->container->getParameter( 'file__css--content' );
 
-            if( $css_file_content !== $_sEditorRules ) {
+            if( $css_file_content !== $editor_field_content ) {
 
-                $css_file_editor->writeToCustomCSSFile( $_sEditorRules );
+                $css_file_editor->writeToCustomCSSFile( $editor_field_content );
             }
         }
     }
