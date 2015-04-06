@@ -1,3 +1,7 @@
+#### 0.9.2
+* CSS file management gotten rid of completely.  User-submitted CSS is now just injected inline into the header.
+* (Fonts are still a bit of trouble.)
+
 #### 0.9.1
 * CSS file logic so that updating the plugin doesn't necessarily mean losing custom CSS data
 * Vendor libraries ([Sticky](https://github.com/garand/sticky), [Page-scroll-to-id](https://github.com/malihu/page-scroll-to-id), and [Pure](http://purecss.io/)) can all be dequeued if deemed necessary 

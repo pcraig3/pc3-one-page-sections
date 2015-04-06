@@ -31,7 +31,7 @@ class Lib_PC3Container {
      * Change them here, and they should change everywhere in the application
      * (with the notable exception of some function names, but c'est la vie)
      *
-     * @since   0.9.1
+     * @since   0.9.2
      */
     function __construct() {
 

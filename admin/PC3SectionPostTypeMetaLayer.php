@@ -56,7 +56,7 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $oWPQueryFacade;
 
     /**
-     * @since      0.9.0
+     * @since      0.9.2
      *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param string $sSectionSlug                  Slug of the 'Section' custom post types

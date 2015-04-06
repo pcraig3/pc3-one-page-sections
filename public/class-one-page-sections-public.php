@@ -86,7 +86,7 @@ class One_Page_Sections_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    0.9.1
+	 * @since    0.9.2
 	 */
 	public function enqueue_styles() {
 
@@ -114,6 +114,12 @@ class One_Page_Sections_Public {
 		}
 	}
 
+    /**
+     * Function takes the CSS entered into the CSS editor in the 'Manage Sections' backend menu
+     * and prints it between `<style>` tags in the header of the 'One Page Sections' Page.
+     *
+     * @since    0.9.2
+     */
     function pc3_inject_custom_css_into_header() {
 
         $editor_field_content = $this->container->getParameter( 'css--content' );
@@ -157,7 +163,6 @@ class One_Page_Sections_Public {
                 wp_enqueue_script('jquery-sticky', plugin_dir_url(__FILE__) . 'js/bower_components/jquery-sticky/jquery.sticky.js', array('jquery'), $this->version, false);
                 wp_enqueue_script('pc3-sticky', plugin_dir_url(__FILE__) . 'js/sticky.js', array('jquery', 'jquery-sticky'), $this->version, false);
             }
-
 		}
 	}
 

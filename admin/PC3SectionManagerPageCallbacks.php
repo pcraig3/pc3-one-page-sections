@@ -53,7 +53,7 @@ class Admin_PC3SectionManagerPageCallbacks {
     private $bIfSections = false;
 
     /**
-     * @since      0.9.0
+     * @since      0.9.2
      *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param array $aSettingFields                 Setting fields for our admin page

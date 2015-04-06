@@ -20,8 +20,7 @@
  * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class One_Page_Sections_Admin
-{
+class One_Page_Sections_Admin {
 
     /**
      * The ID of this plugin.
