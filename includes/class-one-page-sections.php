@@ -222,7 +222,7 @@ class One_Page_Sections {
 
             $oEditorField = new Admin_PC3PageACEEditorField(
                 'field__editor',
-                'file__css--content'
+                'css--content'
             );
 
             $oPureField = new Admin_PC3PageRadioBinaryField(
@@ -306,24 +306,24 @@ class One_Page_Sections {
             );
 
             //($sPageClass, $aSettingFields
-            //$oCSSFileEditor, $oWPQueryFacade) {
+            //$sCustomCSSContent, $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
                 $aManageSectionsPageFields,
-                $this->container->getCSSFileEditor(),
+                $this->container->getParameter( 'css--default_content' ),
+                $this->container->getParameter( 'css--content' ),
                 $this->container->getWPQueryFacade()
             );
 
             //($sPageClass, $sSectionSlug, $sMetaKey,
             //$oSortableSectionsField, $oEditorField,
-            //$oCSSFileEditor, $oWPQueryFacade) {
+            //$oWPQueryFacade) {
             new Admin_PC3SectionPostTypeMetaLayer(
                 get_class( $sectionManagerPage ),
                 $this->container->getParameter('section__slug'),
                 $this->container->getParameter('section__meta_key'),
                 $oSortableSectionsField,
                 $oEditorField,
-                $this->container->getCSSFileEditor(),
                 $this->container->getWPQueryFacade()
             );
 
@@ -343,7 +343,6 @@ class One_Page_Sections {
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_head', $plugin_admin, 'pc3_sections_page_remove_metaboxes');
-        $this->loader->add_action( 'plugins_loaded', $plugin_admin, 'pc3_overwrite_default_custom_css_content_in_case_of_update');
     }
 
     /**
@@ -363,6 +362,7 @@ class One_Page_Sections {
 
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+        $this->loader->add_action( 'wp_head', $plugin_public, 'pc3_inject_custom_css_into_header' );
 
         $this->loader->add_filter( 'template_include', $plugin_public, 'pc3_set_section_page_template' );
         $this->loader->add_filter( 'the_content', $plugin_public, 'pc3_remove_autop_for_posttype', 0 );

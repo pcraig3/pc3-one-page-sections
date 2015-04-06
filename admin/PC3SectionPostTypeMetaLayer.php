@@ -49,13 +49,6 @@ class Admin_PC3SectionPostTypeMetaLayer {
     private $oEditorField;
 
     /**
-     * @since      0.8.0
-     *
-     * Object reads and writes to our custom CSS file
-     */
-    private $oCSSFileEditor;
-
-    /**
      * @since      0.8.2
      *
      * Object executes queries on the database, mostly using the WP_Query class
@@ -72,12 +65,11 @@ class Admin_PC3SectionPostTypeMetaLayer {
      *                                              Field object for the sortable sections
      * @param Admin_PC3PageACEEditorField $oEditorField
      *                                              Field object for the CSS editor
-     * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct($sPageClass, $sSectionSlug, $sMetaKey,
                                 Admin_PC3PageSortableSectionsField $oSortableSectionsField, Admin_PC3PageACEEditorField $oEditorField,
-                                Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+                                Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass       = $sPageClass;
         $this->sSectionSlug     = $sSectionSlug;
@@ -87,7 +79,6 @@ class Admin_PC3SectionPostTypeMetaLayer {
         $this->oSortableSectionsField    = $oSortableSectionsField;
         $this->oEditorField              = $oEditorField;
 
-        $this->oCSSFileEditor   = $oCSSFileEditor;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         //@TODO: maybe move these into the Loader somehow
@@ -205,25 +196,5 @@ class Admin_PC3SectionPostTypeMetaLayer {
 
         for($i = 0; $i < $_iMax; $i++)
             update_post_meta( $aSections[$i]->ID, $this->sMetaKey, $i );
-    }
-
-
-    /**
-     * @TODO
-     *
-     * @since      0.9.1
-     */
-    public function pc3_section_submit_after_css() {
-
-        $_sEditorRules = PC3_AdminPageFramework::getOption( $this->sPageClass, $this->oEditorField->getFieldID() );
-
-        $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
-
-        //@TODO maybe a callback method on success
-        //@TODO sanitize CSS content?
-        if ( $sContent !== $_sEditorRules )
-            $this->oCSSFileEditor->writeToCustomCSSFile( $_sEditorRules );
-
-
     }
 }

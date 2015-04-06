@@ -111,10 +111,17 @@ class One_Page_Sections_Public {
                 wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array('pure'), $this->version, 'all');
                 wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array('pure', 'pure-grids'), $this->version, 'all');
             }
-
-			wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url( __DIR__ ) . basename( $this->container->getParameter('file__css') ) , array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
 		}
 	}
+
+    function pc3_inject_custom_css_into_header() {
+
+        $editor_field_content = $this->container->getParameter( 'css--content' );
+
+        //@TODO Sanitize CSS
+
+        echo '<style type="text/css">' . $editor_field_content . '</style>';
+    }
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.

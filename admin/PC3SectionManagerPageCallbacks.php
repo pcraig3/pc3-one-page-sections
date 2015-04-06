@@ -32,11 +32,18 @@ class Admin_PC3SectionManagerPageCallbacks {
     private $aSettingFields;
 
     /**
-     * @since      0.8.0
+     * @since      0.9.2
      *
-     * Object reads and writes to our custom CSS file
+     * String containing the default CSS we would like in the CSS editor
      */
-    private $oCSSFileEditor;
+    private $sDefaultCSSContent;
+
+    /**
+     * @since      0.9.2
+     *
+     * String containing the custom CSS in the CSS editor
+     */
+    private $sCustomCSSContent;
 
     /**
      * @since      0.8.2
@@ -57,16 +64,18 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param array $aSettingFields                 Setting fields for our admin page
-     * @param Lib_PC3CSSFileEditor $oCSSFileEditor  CSS Editor object overwrites CSS file with new edits
+     * @param string $sDefaultCSSContent            Developer-submitted default custom CSS
+     * @param string $sCustomCSSContent             User-submitted custom CSS
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct( $sPageClass, array $aSettingFields,
-                                 Lib_PC3CSSFileEditor $oCSSFileEditor, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+                                 $sDefaultCSSContent, $sCustomCSSContent, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass   = $sPageClass;
 
         $this->aSettingFields   = $aSettingFields;
-        $this->oCSSFileEditor   = $oCSSFileEditor;
+        $this->sDefaultCSSContent = $sDefaultCSSContent;
+        $this->sCustomCSSContent   = $sCustomCSSContent;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
         // load_ + page slug
@@ -186,19 +195,19 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @since      0.9.0
+     * @since      0.9.2
      * @param object $oSettingField     the field with an id of 'field__editor'
      * @return mixed array              the field
      */
     public function field_definition_Admin_PC3SectionManagerPage_field__editor( &$oSettingField ) {
 
         $aNewParameters = array();
-        $sContent = $this->oCSSFileEditor->readContentOfCustomCSSFile();
 
-        if( ! empty( $sContent ) )
-            $aNewParameters['value'] = $sContent;
+        if( empty( $this->sCustomCSSContent ) )
+           $aNewParameters['value'] = $this->sDefaultCSSContent;
 
         $oSettingField->setFieldParameters( $aNewParameters );
+
         return $oSettingField->setUpField();
     }
 

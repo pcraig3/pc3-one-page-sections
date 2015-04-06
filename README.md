@@ -30,7 +30,6 @@ In addition, Sections can be re-ordered by dragging and dropping them in the Set
 
 ####Unavoidable Issues 
 * Since the default header and footer are preserved (at least, unless templates are overridden), you are always going to be fighting the theme's CSS.  
-* I've included the Pure CSS framework (for those interested), which might cause CSS complications
 * Secondly, writing HTML code in WordPress editor is totally a drag. Copy + pasting works, but it's not a particularly elegant solution
 
 ##TODOs
