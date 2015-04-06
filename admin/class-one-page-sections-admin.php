@@ -183,7 +183,7 @@ class One_Page_Sections_Admin {
      * AND if() the AdminPageFramework contains something other than the default content
      * THEN overwrite the content in the CSS file with whatever's in the AdminPageFramework.
      *
-     * @since    0.9.0
+     * @since    0.9.1
      */
     public function pc3_overwrite_default_custom_css_content_in_case_of_update() {
 

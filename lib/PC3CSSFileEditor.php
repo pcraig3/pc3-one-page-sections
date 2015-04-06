@@ -22,7 +22,7 @@ class Lib_PC3CSSFileEditor {
     private $sDefaultContent;
 
 	/**
-	 * @since      0.8.0
+	 * @since      0.9.1
 	 */
 	function __construct( $_sFilename, $_sDefaultContent ) {
 

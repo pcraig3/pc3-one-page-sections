@@ -35,7 +35,7 @@ In addition, Sections can be re-ordered by dragging and dropping them in the Set
 
 ##TODOs
 
-* Hunt down the 4 TODOs.
+* Hunt down the 5 TODOs.
 * Update the README.
 
 ##Installation

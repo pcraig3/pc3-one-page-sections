@@ -1,3 +1,7 @@
+#### 0.9.1
+* CSS file logic so that updating the plugin doesn't necessarily mean losing custom CSS data
+* Vendor libraries ([Sticky](https://github.com/garand/sticky), [Page-scroll-to-id](https://github.com/malihu/page-scroll-to-id), and [Pure](http://purecss.io/)) can all be dequeued if deemed necessary 
+
 #### 0.9.0
 * Added offsets to scroll and sticky plugins.
 * Added Pure responsive grids CSS files
