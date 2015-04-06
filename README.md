@@ -35,10 +35,8 @@ In addition, Sections can be re-ordered by dragging and dropping them in the Set
 
 ##TODOs
 
-* Hunt down the 7 TODOs -- mostly this means more in-code documentation
-* grunt or something.
-* Settings Page with options to (de)queue libraries.
-* Remove CSS file changes from being tracked.
+* Hunt down the 4 TODOs.
+* Update the README.
 
 ##Installation
 

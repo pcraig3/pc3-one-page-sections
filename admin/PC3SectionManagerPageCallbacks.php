@@ -186,8 +186,6 @@ class Admin_PC3SectionManagerPageCallbacks {
      *
      * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
      *
-     * @TODO Errors or something
-     *
      * @since      0.9.0
      * @param object $oSettingField     the field with an id of 'field__editor'
      * @return mixed array              the field
@@ -199,7 +197,6 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         if( ! empty( $sContent ) )
             $aNewParameters['value'] = $sContent;
-
 
         $oSettingField->setFieldParameters( $aNewParameters );
         return $oSettingField->setUpField();

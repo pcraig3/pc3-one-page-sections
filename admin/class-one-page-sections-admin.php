@@ -176,7 +176,14 @@ class One_Page_Sections_Admin {
     }
 
     /**
-     * @TODO
+     * Bit of a hack, but what do we care at this point?
+     * Basically, idea is that if the plugin is updated, our custom CSS file is overwritten with a default CSS file in
+     * the repo.  However, the CSS that we last entered will still be remembered by the AdminPageFramework, so
+     * if() the custom CSS file contains the default content
+     * AND if() the AdminPageFramework contains something other than the default content
+     * THEN overwrite the content in the CSS file with whatever's in the AdminPageFramework.
+     *
+     * @since    0.9.0
      */
     public function pc3_overwrite_default_custom_css_content_in_case_of_update() {
 
