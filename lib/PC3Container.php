@@ -49,6 +49,9 @@ class Lib_PC3Container {
             //both of these are overwritten in `One_Page_Sections->define_admin_hooks`
             'page__sections'                => 'one-page-sections',
             'debug'                         => 0,
+            'vendor__sticky'                => 1,
+            'vendor__page_scroll_to_id'     => 1,
+            'vendor__pure'                  => 1,
         );
     }
 

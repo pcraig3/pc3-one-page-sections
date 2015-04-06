@@ -225,6 +225,47 @@ class One_Page_Sections {
                 'file__css--content'
             );
 
+            $oPureField = new Admin_PC3PageRadioBinaryField(
+                'field__pure',
+                'vendor__pure',
+                array(
+                    'title'         => 'Include the Pure CSS Library?',
+                    'description'   => 'The <a href="http://purecss.io/" target="_blank">Pure CSS</a> library gives'
+                        . 'us a set of small, responsive CSS modules that making building web pages easier.<br>'
+                        . '<a href="http://purecss.io/layouts/" target="_blank">Look through the examples</a> '
+                        . 'to get a sense of what it\'s used for.',
+                    'default'       => 1
+                )
+            );
+
+            $oPageScrollToIDField = new Admin_PC3PageRadioBinaryField(
+                'field__page_scroll_to_id',
+                'vendor__page_scroll_to_id',
+                array(
+                    'title'         => 'Include the Page Scroll To ID Library?',
+                    'description'   => '<a href="https://github.com/malihu/page-scroll-to-id" target="_blank">Page '
+                        . 'Scroll To ID</a> is a jQuery plugin that enables animated page scrolling to specific '
+                        . 'points on the same webpage.<br>'
+                        . '<a href="http://manos.malihu.gr/repository/page-scroll-to-id/demo/demo.html" target="_blank">See here for an example</a> '
+                        . 'of it in action.',
+                    'default'       => 1
+                )
+            );
+
+            $oStickyField = new Admin_PC3PageRadioBinaryField(
+                'field__sticky',
+                'vendor__sticky',
+                array(
+                    'title'         => 'Include the jQuery Sticky Library?',
+                    'description'   => '<a href="https://github.com/garand/sticky" target="_blank">Sticky</a> is a '
+                                        . 'jQuery plugin that gives you the ability to make any element '
+                                        . 'on a page always stay visible.<br>'
+                                        . '<a href="http://stickyjs.com/" target="_blank">See here for an example</a> '
+                                        . 'of it in action.',
+                    'default'       => 1
+                )
+            );
+
             $oDebugField = new Admin_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
@@ -239,7 +280,7 @@ class One_Page_Sections {
             );
 
             $aManageSectionsPageFields = array( $oSelectPageField, $oSortableSectionsField, $oEditorField, $oSubmitField );
-            $aSectionSettingsPageFields = array( $oDebugField, $oSubmitField );
+            $aSectionSettingsPageFields = array( $oPureField, $oPageScrollToIDField, $oStickyField, $oDebugField, $oSubmitField );
 
             $this->container->addSettingFieldsAsParameters( $aManageSectionsPageFields, $aAdminPages );
             $this->container->addSettingFieldsAsParameters( $aSectionSettingsPageFields, $aAdminPages );

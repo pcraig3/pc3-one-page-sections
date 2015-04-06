@@ -105,14 +105,14 @@ class One_Page_Sections_Public {
 
         if( ! empty( $this->sections_page ) && is_page( $this->sections_page ) ) {
 
-            wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
-			wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array( 'pure' ), $this->version, 'all');
-			wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array( 'pure', 'pure-grids' ), $this->version, 'all');
+            if( intval( $this->container->getParameter('vendor__pure') ) ) {
+
+                wp_enqueue_style('pure', plugin_dir_url(__FILE__) . 'css/bower_components/pure/pure.css', array(), $this->version, 'all');
+                wp_enqueue_style('pure-grids', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids.css', array('pure'), $this->version, 'all');
+                wp_enqueue_style('pure-grids-responsive', plugin_dir_url(__FILE__) . 'css/bower_components/pure/grids-responsive.css', array('pure', 'pure-grids'), $this->version, 'all');
+            }
 
 			wp_enqueue_style( $this->plugin_name . '-custom', plugin_dir_url( __DIR__ ) . basename( $this->container->getParameter('file__css') ) , array( 'pure', 'pure-grids', 'pure-grids-responsive' ), $this->version, 'all');
-
-			//@TODO GET RID OF THIS
-			remove_action( 'wp_footer', 'orbit_functioncall', 1000 );
 		}
 	}
 
@@ -139,11 +139,17 @@ class One_Page_Sections_Public {
 
 		if( ! empty( $this->sections_page ) &&  is_page( $this->sections_page ) ) {
 
-			wp_enqueue_script( 'page-scroll-to-id', plugin_dir_url( __FILE__ ) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( 'pc3-scroll', plugin_dir_url( __FILE__ ) . 'js/scroll.js', array( 'jquery', 'page-scroll-to-id' ), $this->version, false );
+            if( intval( $this->container->getParameter('vendor__page_scroll_to_id') ) ) {
 
-			wp_enqueue_script( 'jquery-sticky', plugin_dir_url( __FILE__ ) . 'js/bower_components/jquery-sticky/jquery.sticky.js', array( 'jquery' ), $this->version, false );
-			wp_enqueue_script( 'pc3-sticky', plugin_dir_url( __FILE__ ) . 'js/sticky.js', array( 'jquery', 'jquery-sticky' ), $this->version, false );
+                wp_enqueue_script('page-scroll-to-id', plugin_dir_url(__FILE__) . 'js/bower_components/page-scroll-to-id/jquery.malihu.PageScroll2id.js', array('jquery'), $this->version, false);
+                wp_enqueue_script('pc3-scroll', plugin_dir_url(__FILE__) . 'js/scroll.js', array('jquery', 'page-scroll-to-id'), $this->version, false);
+            }
+
+            if( intval( $this->container->getParameter('vendor__sticky') ) ) {
+
+                wp_enqueue_script('jquery-sticky', plugin_dir_url(__FILE__) . 'js/bower_components/jquery-sticky/jquery.sticky.js', array('jquery'), $this->version, false);
+                wp_enqueue_script('pc3-sticky', plugin_dir_url(__FILE__) . 'js/sticky.js', array('jquery', 'jquery-sticky'), $this->version, false);
+            }
 
 		}
 	}

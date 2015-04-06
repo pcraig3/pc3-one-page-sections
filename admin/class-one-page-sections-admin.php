@@ -199,5 +199,4 @@ class One_Page_Sections_Admin {
             }
         }
     }
-
 }
