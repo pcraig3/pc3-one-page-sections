@@ -86,9 +86,6 @@ class Admin_PC3SectionPostTypeMetaLayer {
         add_action( 'wp_trash_post', array( $this,  'pc3_section_wp_trash_post' ) );
 
         add_action( 'submit_after_' . $this->sPageClass, array( $this, 'pc3_section_submit_after_' ) );
-
-        //@TODO: This is a really bad place for this
-        add_action( 'submit_after_' . $this->sPageClass, array( $this, 'pc3_section_submit_after_css' ) );
     }
 
     /**

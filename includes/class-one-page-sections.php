@@ -305,13 +305,17 @@ class One_Page_Sections {
                 $this->container->getParameter('section__slug')
             );
 
+            //Set the CSS content: either to a default value or to the user-set value
+            $sCustomCSSContent = $this->container->getParameter( 'css--content' );
+            if( empty( $sCustomCSSContent ) )
+                $sCustomCSSContent = $this->container->getParameter( 'css--default_content' );
+
             //($sPageClass, $aSettingFields
             //$sCustomCSSContent, $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
                 $aManageSectionsPageFields,
-                $this->container->getParameter( 'css--default_content' ),
-                $this->container->getParameter( 'css--content' ),
+                $sCustomCSSContent,
                 $this->container->getWPQueryFacade()
             );
 

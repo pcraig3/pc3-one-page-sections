@@ -34,13 +34,6 @@ class Admin_PC3SectionManagerPageCallbacks {
     /**
      * @since      0.9.2
      *
-     * String containing the default CSS we would like in the CSS editor
-     */
-    private $sDefaultCSSContent;
-
-    /**
-     * @since      0.9.2
-     *
      * String containing the custom CSS in the CSS editor
      */
     private $sCustomCSSContent;
@@ -58,23 +51,21 @@ class Admin_PC3SectionManagerPageCallbacks {
      * Variable keeps track of whether or not sections were returned
      */
     private $bIfSections = false;
-    
+
     /**
      * @since      0.9.0
      *
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param array $aSettingFields                 Setting fields for our admin page
-     * @param string $sDefaultCSSContent            Developer-submitted default custom CSS
-     * @param string $sCustomCSSContent             User-submitted custom CSS
+     * @param string $sCustomCSSContent             User-submitted custom CSS | Developer-submitted default CSS
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct( $sPageClass, array $aSettingFields,
-                                 $sDefaultCSSContent, $sCustomCSSContent, Lib_PC3WPQueryFacade $oWPQueryFacade) {
+                                 $sCustomCSSContent, Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass   = $sPageClass;
 
         $this->aSettingFields   = $aSettingFields;
-        $this->sDefaultCSSContent = $sDefaultCSSContent;
         $this->sCustomCSSContent   = $sCustomCSSContent;
         $this->oWPQueryFacade   = $oWPQueryFacade;
 
@@ -201,12 +192,11 @@ class Admin_PC3SectionManagerPageCallbacks {
      */
     public function field_definition_Admin_PC3SectionManagerPage_field__editor( &$oSettingField ) {
 
-        $aNewParameters = array();
-
-        if( empty( $this->sCustomCSSContent ) )
-           $aNewParameters['value'] = $this->sDefaultCSSContent;
-
-        $oSettingField->setFieldParameters( $aNewParameters );
+        $oSettingField->setFieldParameters(
+            array(
+                'value' => $this->sCustomCSSContent
+            )
+        );
 
         return $oSettingField->setUpField();
     }
@@ -227,7 +217,7 @@ class Admin_PC3SectionManagerPageCallbacks {
 
         if( $this->bIfSections )
             $aNewParameters['attributes'] =  array(
-                    'class' => 'button button-primary'
+                'class' => 'button button-primary'
             );
 
         $oSettingField->setFieldParameters( $aNewParameters );
