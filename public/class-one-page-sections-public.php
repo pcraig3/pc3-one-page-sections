@@ -336,7 +336,11 @@ class One_Page_Sections_Public {
 
         $queried_object = $query->queried_object;
 
-        if( $this->container->getFunctionsFacade()->isMatchesPostObject($this->sections_page, $queried_object)  ) {
+        if( is_null( $queried_object ) )
+            $queried_object = $query->query_vars['page_id'];
+
+        if( $this->container->getFunctionsFacade()->isMatchesPostObject( $this->sections_page, $queried_object )
+            || intval($this->sections_page) === intval($queried_object) ) {
 
                 $section__slug = $this->container->getParameter('section__slug');
                 $query->$section__slug = $this->container->getWPQueryFacade()->getSectionsByOrderASC();

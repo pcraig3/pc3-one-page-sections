@@ -36,6 +36,10 @@ In addition, Sections can be re-ordered by dragging and dropping them in the Set
 
 * Hunt down the 5 TODOs.
 * Update the README.
+* Is it possible to always have a page-id?
+* Drafts should _not_ show up on Manage Posts page.
+* All sections and input fields in tabs on one admin page
+* CSS validation
 
 ##Installation
 
