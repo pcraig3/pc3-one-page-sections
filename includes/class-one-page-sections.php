@@ -210,22 +210,22 @@ class One_Page_Sections {
                 'Admin_PC3SectionSettingsPage'
             );
 
-            $oSelectPageField = new Admin_PC3PageSelectPageField(
+            $oSelectPageField = new Admin_Fields_PC3PageSelectPageField(
                 'field__select_page',
                 'page__sections'
             );
 
-            $oSortableSectionsField = new Admin_PC3PageSortableSectionsField(
+            $oSortableSectionsField = new Admin_Fields_PC3PageSortableSectionsField(
                 'field__sortable_sections',
                 null
             );
 
-            $oEditorField = new Admin_PC3PageACEEditorField(
+            $oEditorField = new Admin_Fields_PC3PageACEEditorField(
                 'field__editor',
                 'css--content'
             );
 
-            $oPureField = new Admin_PC3PageRadioBinaryField(
+            $oPureField = new Admin_Fields_PC3PageRadioBinaryField(
                 'field__pure',
                 'vendor__pure',
                 array(
@@ -238,7 +238,7 @@ class One_Page_Sections {
                 )
             );
 
-            $oPageScrollToIDField = new Admin_PC3PageRadioBinaryField(
+            $oPageScrollToIDField = new Admin_Fields_PC3PageRadioBinaryField(
                 'field__page_scroll_to_id',
                 'vendor__page_scroll_to_id',
                 array(
@@ -252,7 +252,7 @@ class One_Page_Sections {
                 )
             );
 
-            $oStickyField = new Admin_PC3PageRadioBinaryField(
+            $oStickyField = new Admin_Fields_PC3PageRadioBinaryField(
                 'field__sticky',
                 'vendor__sticky',
                 array(
@@ -266,7 +266,7 @@ class One_Page_Sections {
                 )
             );
 
-            $oDebugField = new Admin_PC3PageRadioBinaryField(
+            $oDebugField = new Admin_Fields_PC3PageRadioBinaryField(
                 'field__debug',
                 'debug',
                 array(
@@ -275,7 +275,7 @@ class One_Page_Sections {
                 )
             );
 
-            $oSubmitField = new Admin_PC3PageSubmitField(
+            $oSubmitField = new Admin_Fields_PC3PageSubmitField(
                 'field__submit'
             );
 

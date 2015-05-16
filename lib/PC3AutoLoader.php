@@ -38,8 +38,16 @@ class PC3AutoLoader {
         $classPath = str_replace('_', '/', $this->className) . '.php';
 
         // shashin has lower-case directory names
-        if (strpos($classPath, '/') !== false) {
-            $classPath[0] = strtolower($classPath[0]);
+        $final_dir_separator = strrpos($classPath, '/');
+        if ($final_dir_separator !== false) {
+
+            //$classpath = 'Admin/Fields/PC3PageSelectPageField.php'
+            //$dirs = 'Admin/Fields/'
+            $dirs = substr($classPath, 0, $final_dir_separator + 1);
+            //$filename = 'PC3PageSelectPageField.php'
+            $filename = substr($classPath, $final_dir_separator + 1);
+
+            $classPath = strtolower($dirs) . $filename;
         }
 
         $this->fullPath = $basePath . '/' . $classPath;

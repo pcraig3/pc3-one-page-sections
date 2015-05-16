@@ -37,14 +37,14 @@ class Admin_PC3SectionPostTypeMetaLayer {
     /**
      * @since      0.9.0
      *
-     * @var Admin_PC3PageSortableSectionsField  Field object for the sortable sections
+     * @var Admin_Fields_PC3PageSortableSectionsField  Field object for the sortable sections
      */
     private $oSortableSectionsField;
 
     /**
      * @since      0.9.0
      *
-     * @var Admin_PC3PageACEEditorField  Field object for the CSS editor
+     * @var Admin_Fields_PC3PageACEEditorField  Field object for the CSS editor
      */
     private $oEditorField;
 
@@ -61,14 +61,14 @@ class Admin_PC3SectionPostTypeMetaLayer {
      * @param string $sPageClass                    Classname of the page these callbacks are registered to
      * @param string $sSectionSlug                  Slug of the 'Section' custom post types
      * @param string $sMetaKey                      Key for the meta value recording the 'order' of each section
-     * @param Admin_PC3PageSortableSectionsField $oSortableSectionsField
+     * @param Admin_Fields_PC3PageSortableSectionsField $oSortableSectionsField
      *                                              Field object for the sortable sections
-     * @param Admin_PC3PageACEEditorField $oEditorField
+     * @param Admin_Fields_PC3PageACEEditorField $oEditorField
      *                                              Field object for the CSS editor
      * @param Lib_PC3WPQueryFacade $oWPQueryFacade  Query Facade returns posts from DB
      */
     public function __construct($sPageClass, $sSectionSlug, $sMetaKey,
-                                Admin_PC3PageSortableSectionsField $oSortableSectionsField, Admin_PC3PageACEEditorField $oEditorField,
+                                Admin_Fields_PC3PageSortableSectionsField $oSortableSectionsField, Admin_Fields_PC3PageACEEditorField $oEditorField,
                                 Lib_PC3WPQueryFacade $oWPQueryFacade) {
 
         $this->sPageClass       = $sPageClass;

@@ -8,7 +8,7 @@
  * @subpackage One_Page_Sections/admin
  * @author     Paul Craig <paul@pcraig3.ca>
  */
-class Admin_PC3PageSubmitField extends Lib_PC3AdminPageSettingField {
+class Admin_Fields_PC3PageSubmitField extends Lib_PC3AdminPageSettingField {
 
     /**
      * @since      0.9.0
