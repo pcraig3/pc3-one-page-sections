@@ -280,12 +280,35 @@ class One_Page_Sections {
                 'field__submit'
             );
 
+            $oManageSectionsTab = new Lib_PC3AdminPageTab(
+                'manage_sections',
+                'Manage Sections',
+                array( $oSelectPageField, $oSortableSectionsField )
+            );
+
+            $oCustomCSSTab = new Lib_PC3AdminPageTab(
+                'custom_css',
+                'Custom CSS',
+                array( $oEditorField )
+            );
+
+            $oBundledLibrariesTab = new Lib_PC3AdminPageTab(
+                'bundled_libraries',
+                'Bundled Libraries',
+                array( $oPureField, $oPageScrollToIDField, $oStickyField )
+            );
+
+            $oDebugTab = new Lib_PC3AdminPageTab(
+                'debug',
+                'Debug',
+                array( $oDebugField )
+            );
+
             $aManageSectionsPageFields = array( $oSelectPageField, $oSortableSectionsField, $oEditorField, $oSubmitField );
             $aSectionSettingsPageFields = array( $oPureField, $oPageScrollToIDField, $oStickyField, $oDebugField, $oSubmitField );
 
-            $this->container->addSettingFieldsAsParameters( $aManageSectionsPageFields, $aAdminPages );
-            $this->container->addSettingFieldsAsParameters( $aSectionSettingsPageFields, $aAdminPages );
-
+            $this->container->addSettingFieldsAsParameters(
+                array_merge($aManageSectionsPageFields, $aSectionSettingsPageFields), $aAdminPages );
 
             //not brilliant, but workable
             if( 0 !== intval( $this->container->getParameter('debug') ) ) {
@@ -301,7 +324,7 @@ class One_Page_Sections {
 
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
                 $this->container->getParameter('page__manage'),
-                $aManageSectionsPageFields,
+                array( $oManageSectionsTab, $oCustomCSSTab, $oBundledLibrariesTab, $oDebugTab ),
                 $this->container->getParameter('debug'),
                 $this->container->getParameter('section__slug')
             );

@@ -27,14 +27,14 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      * @since   0.9.0
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
-     * @param array $aSettingFields     Setting fields for our admin page
+     * @param array $aTabs              Tabs (containing Setting fields) for our admin page
      * @param int $iDebug               Debug flag
      * @param string $sSectionSlug      The slug for our custom post type (Sections)
      */
-    public function __construct($sPageSlug, array $aSettingFields = array(), $iDebug = 0,
+    public function __construct($sPageSlug, array $aTabs = array(), $iDebug = 0,
                                 $sSectionSlug ) {
 
-        parent::__construct($sPageSlug, $aSettingFields, $iDebug);
+        parent::__construct($sPageSlug, $aTabs, $iDebug);
 
         $this->sSectionSlug = $sSectionSlug;
     }
@@ -73,7 +73,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      *
      * @since      0.9.0
      */
-    public function load_manage_sections($oAdminPage)
+    public function load_manage_sections( $oAdminPage )
     {
        $this->add_setting_fields();
     }
@@ -89,5 +89,13 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
     {
         if( $this->bDebug )
             $this->print_debug_information_to_screen();
+    }
+
+    public function content_manage_sections( $sContent ) {
+
+        if ( $this->is_current_tab_has_setting_fields() )
+            return $sContent . get_submit_button();
+
+        return $sContent;
     }
 }

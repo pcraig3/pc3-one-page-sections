@@ -118,7 +118,7 @@ class Admin_PC3SamplePage extends PC3_AdminPageFramework
     {
         // Create the root menu - specifies to which parent menu to add.
         if ( post_type_exists( $this->sSectionSlug ) )
-            $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sPageSlug );
+            $this->setRootMenuPageBySlug( 'edit.php?post_type=' . $this->sSectionSlug );
         else
             $this->setRootMenuPage('Settings');
 
@@ -128,6 +128,7 @@ class Admin_PC3SamplePage extends PC3_AdminPageFramework
             array(
                 'title'         => 'My Tabs',        // page title
                 'page_slug'     => $this->sPageSlug,    // page slug
+                'order' => 6
             )
         );
     }
@@ -158,17 +159,7 @@ class Admin_PC3SamplePage extends PC3_AdminPageFramework
         return $sContent;
     }
 
-    /**
-     * One of the predefined callback method.
-     *
-     * @remark      content_{page slug}_{tab slug}
-     */
-    public function content_my_tabs_third_tab( $sContent ) {
-        $sContent .= '<h3>Variables</h3>';
-
-        $sContent .= '<h4>new editor: ' . $this->container->getParameter('field__new_editor') . '</h4>';
-        $sContent .= '<h4>new binary: ' . $this->container->getParameter('field__binary') . '</h4>';
-
-        return $sContent;
+    public function replyToContent( $sContent ) {
+        return  $sContent .= 'apul';
     }
 }

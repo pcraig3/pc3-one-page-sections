@@ -18,12 +18,12 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
     protected $sPageSlug;
 
     /**
-     * An array of setting fields to be added to this page.
+     * An array of tabs (containing setting fields) to be added to this page.
      *
      * @since   0.9.0
      * @var     array
      */
-    protected $aSettingFields;
+    protected $aTabs;
 
     /**
      * In 'Debug' mode, this page prints to screen its settings
@@ -37,10 +37,10 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
      * @since   0.9.0
      *
      * @param string $sPageSlug             The slug used to uniquely identify this page, both in the code and in the URL
-     * @param array $aSettingFields         Setting fields for our admin page
+     * @param array $aTabs         Tabs (containing setting fields) for our admin page
      * @param int $iDebug                   Debug flag
      */
-    public function __construct($sPageSlug, array $aSettingFields, $iDebug = 0 ) {
+    public function __construct($sPageSlug, array $aTabs, $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -51,25 +51,42 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
         );
 
         $this->sPageSlug = $sPageSlug;
-        $this->aSettingFields = $aSettingFields;
+        $this->aTabs = $aTabs;
 
         //set to 'true' if $iDebug is not zero.
         $this->bDebug = intval( $iDebug ) !== 0;
     }
 
     /**
-     * Adding the form fields from the `aSettingFields` array
+     * Adding the tabs in turn, and then each of their form fields
+     * contained in their respective `aSettingFields` arrays
      *
      * @since      0.9.0
      */
     protected function add_setting_fields()
     {
 
-        if( ! empty( $this->aSettingFields ) )
-            foreach( $this->aSettingFields as $oSettingField )
-                $this->addSettingField(
-                    $oSettingField->setUpField()
+        if( count( $this->aTabs ) > 0 )
+            foreach( $this->aTabs as $oTab ) {
+                $this->addInPageTabs(
+                    $this->sPageSlug,
+                    $oTab->setUpTab()
                 );
+
+                if (isset($_GET['tab']) && $oTab->getTabID() === $_GET['tab']) {
+
+                    $tabSettingFields = $oTab->getSettingFields();
+
+                    if( count( $tabSettingFields ) > 0 )
+                        foreach( $tabSettingFields as $oSettingField )
+                            $this->addSettingField(
+                                $oSettingField->setUpField()
+                            );
+                }
+            }
+
+        $this->setPageHeadingTabsVisibility( false, $this->sPageSlug );    // disables the page heading tabs by passing false.
+        $this->setInPageTabTag( 'h2' );        // sets the tag used for in-page tabs
     }
 
     /**
@@ -82,5 +99,21 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
             // Show the saved option value.
             echo '<h3>Show all the options as an array</h3>';
             echo $this->oDebug->getArray( PC3_AdminPageFramework::getOption( get_class( $this ) ) );
+    }
+
+    /**
+     * Check if the current tab we're on has a non-empty array of setting fields.
+     *
+     * @return bool
+     */
+    protected function is_current_tab_has_setting_fields()
+    {
+        if( count( $this->aTabs ) > 0 )
+            foreach( $this->aTabs as $oTab )
+                if (isset($_GET['tab']) && $oTab->getTabID() === $_GET['tab'])
+                    if( count( $oTab->getSettingFields() ) > 0 )
+                        return true;
+
+        return false;
     }
 }
