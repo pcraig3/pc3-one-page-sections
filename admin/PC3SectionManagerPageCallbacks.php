@@ -202,29 +202,6 @@ class Admin_PC3SectionManagerPageCallbacks {
     }
 
     /**
-     * Callback method passed the submit_button field after the Sections have (or haven't) been returned
-     * If sections have been found, Submit button is usable.  Otherwise, it remains disabled
-     *
-     * Note: method follows following naming pattern: field_definition_{instantiated class name}_{section id}_{field_id}
-     *
-     * @since      0.9.0
-     * @param object $oSettingField     the field with an id of 'field__submit'
-     * @return mixed array              the field
-     */
-    public function field_definition_Admin_PC3SectionManagerPage_field__submit( &$oSettingField ) {
-
-        $aNewParameters = array();
-
-        if( $this->bIfSections )
-            $aNewParameters['attributes'] =  array(
-                'class' => 'button button-primary'
-            );
-
-        $oSettingField->setFieldParameters( $aNewParameters );
-        return $oSettingField->setUpField();
-    }
-
-    /**
      * Iterate through Post objects, turning each into an entry in an array that an APF 'select' Field will understand
      *
      * @since      0.7.0

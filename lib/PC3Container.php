@@ -38,7 +38,6 @@ class Lib_PC3Container {
         $this->aParameters = array(
             'section__slug'                 => 'pc3_section',
             'section__meta_key'             => 'order',
-            'page__manage'                  => 'manage_sections',
             'page__settings'                => 'pc3_settings',
             'template__post'                => 'post-pc3_section.php',
             'template__page'                => 'page-pc3_section.php',

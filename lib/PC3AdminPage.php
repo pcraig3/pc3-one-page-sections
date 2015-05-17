@@ -40,7 +40,7 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
      * @param array $aTabs         Tabs (containing setting fields) for our admin page
      * @param int $iDebug                   Debug flag
      */
-    public function __construct($sPageSlug, array $aTabs, $iDebug = 0 ) {
+    public function __construct( $sPageSlug, array $aTabs, $iDebug = 0 ) {
 
         //string $sOptionKey = null, string $sCallerPath = null, string $sCapability = 'manage_options', string $sTextDomain = 'admin-page-framework'
         parent::__construct(
@@ -67,26 +67,34 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
     {
 
         if( count( $this->aTabs ) > 0 )
-            foreach( $this->aTabs as $oTab ) {
+            foreach( $this->aTabs as $oTab )
                 $this->addInPageTabs(
                     $this->sPageSlug,
                     $oTab->setUpTab()
                 );
 
-                if (isset($_GET['tab']) && $oTab->getTabID() === $_GET['tab']) {
+        if (isset($_GET['page']) && $this->sPageSlug === $_GET['page']) {
 
-                    $tabSettingFields = $oTab->getSettingFields();
+            $current_tab = $this->get_current_tab();
 
-                    if( count( $tabSettingFields ) > 0 )
-                        foreach( $tabSettingFields as $oSettingField )
-                            $this->addSettingField(
-                                $oSettingField->setUpField()
-                            );
-                }
-            }
+            if( ! is_null( $current_tab ) )
+                $this->add_setting_fields_from_tab($current_tab);
+
+            else
+                $this->add_setting_fields_from_tab($this->aTabs[0]);
+        }
 
         $this->setPageHeadingTabsVisibility( false, $this->sPageSlug );    // disables the page heading tabs by passing false.
         $this->setInPageTabTag( 'h2' );        // sets the tag used for in-page tabs
+    }
+
+    private function add_setting_fields_from_tab( $oTab ) {
+
+        $tabSettingFields = $oTab->getSettingFields();
+
+        if (count($tabSettingFields) > 0)
+            foreach ($tabSettingFields as $oSettingField)
+                $this->addSettingField( $oSettingField->setUpField() );
     }
 
     /**
@@ -106,14 +114,18 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
      *
      * @return bool
      */
-    protected function is_current_tab_has_setting_fields()
+    protected function get_current_tab()
     {
-        if( count( $this->aTabs ) > 0 )
-            foreach( $this->aTabs as $oTab )
-                if (isset($_GET['tab']) && $oTab->getTabID() === $_GET['tab'])
-                    if( count( $oTab->getSettingFields() ) > 0 )
-                        return true;
+        if (isset($_GET['page']) && $this->sPageSlug === $_GET['page']) {
 
-        return false;
+            if( count( $this->aTabs ) > 0 )
+                foreach( $this->aTabs as $oTab )
+                    if (isset($_GET['tab']) && $oTab->getTabID() === $_GET['tab'])
+                        return $oTab;
+
+            return $this->aTabs[0];
+        }
+
+        return null;
     }
 }

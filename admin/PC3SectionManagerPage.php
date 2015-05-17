@@ -58,7 +58,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
         //parameters: https://github.com/michaeluno/admin-page-framework/blob/c85cdc9051eeef09efa8668fd79c2f9d74999fce/development/factory/AdminPageFramework/AdminPageFramework_Menu_Controller.php
         $this->addSubMenuItems(
             array(
-                'title' => 'Manage Sections',  // page and menu title
+                'title' => 'One Page Sections Settings',  // page and menu title
                 'page_slug' => $this->sPageSlug,     // page slug
                 'order' => 5
             )
@@ -73,7 +73,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      *
      * @since      0.9.0
      */
-    public function load_manage_sections( $oAdminPage )
+    public function load_pc3_settings( $oAdminPage )
     {
        $this->add_setting_fields();
     }
@@ -85,15 +85,17 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
      *
      * @since      0.9.0
      */
-    public function do_manage_sections()
+    public function do_pc3_settings()
     {
         if( $this->bDebug )
             $this->print_debug_information_to_screen();
     }
 
-    public function content_manage_sections( $sContent ) {
+    public function content_pc3_settings( $sContent ) {
 
-        if ( $this->is_current_tab_has_setting_fields() )
+        $current_tab = $this->get_current_tab();
+
+        if ( count( $current_tab->getSettingFields() ) > 0 )
             return $sContent . get_submit_button();
 
         return $sContent;

@@ -200,16 +200,10 @@ class One_Page_Sections {
              * This isn't brilliant, but it's better than what was here before
              *
              * Idea is to initialize all of the settings fields as objects so that we can
-             *      1. Pass arrays of fields to different objects
+             *      1. Pass arrays of fields to different tabs
              *      2. Add their values to our $container
              *      3. Type-hint where needed so that we're not always relying on string matching
              */
-
-            $aAdminPages = array(
-                'Admin_PC3SectionManagerPage',
-                'Admin_PC3SectionSettingsPage',
-                'Admin_PC3SamplePage'
-            );
 
             $oSelectPageField = new Admin_Fields_PC3PageSelectPageField(
                 'field__select_page',
@@ -276,10 +270,6 @@ class One_Page_Sections {
                 )
             );
 
-            $oSubmitField = new Admin_Fields_PC3PageSubmitField(
-                'field__submit'
-            );
-
             $oManageSectionsTab = new Lib_PC3AdminPageTab(
                 'manage_sections',
                 'Manage Sections',
@@ -304,11 +294,15 @@ class One_Page_Sections {
                 array( $oDebugField )
             );
 
-            $aManageSectionsPageFields = array( $oSelectPageField, $oSortableSectionsField, $oEditorField, $oSubmitField );
-            $aSectionSettingsPageFields = array( $oPureField, $oPageScrollToIDField, $oStickyField, $oDebugField, $oSubmitField );
+            $allSettingFields = array_merge(
+                $oManageSectionsTab->getSettingFields(),
+                $oCustomCSSTab->getSettingFields(),
+                $oBundledLibrariesTab->getSettingFields(),
+                $oDebugTab->getSettingFields()
+            );
 
             $this->container->addSettingFieldsAsParameters(
-                array_merge($aManageSectionsPageFields, $aSectionSettingsPageFields), $aAdminPages );
+                $allSettingFields, array( 'Admin_PC3SectionManagerPage' ) );
 
             //not brilliant, but workable
             if( 0 !== intval( $this->container->getParameter('debug') ) ) {
@@ -323,7 +317,7 @@ class One_Page_Sections {
             }
 
             $sectionManagerPage = new Admin_PC3SectionManagerPage(
-                $this->container->getParameter('page__manage'),
+                $this->container->getParameter('page__settings'),
                 array( $oManageSectionsTab, $oCustomCSSTab, $oBundledLibrariesTab, $oDebugTab ),
                 $this->container->getParameter('debug'),
                 $this->container->getParameter('section__slug')
@@ -338,7 +332,7 @@ class One_Page_Sections {
             //$sCustomCSSContent, $oWPQueryFacade) {
             new Admin_PC3SectionManagerPageCallbacks(
                 get_class( $sectionManagerPage ),
-                $aManageSectionsPageFields,
+                $allSettingFields,
                 $sCustomCSSContent,
                 $this->container->getWPQueryFacade()
             );
@@ -355,63 +349,6 @@ class One_Page_Sections {
                 $this->container->getWPQueryFacade()
             );
 
-            $pc3SettingsPage = new Admin_PC3SectionSettingsPage(
-                $this->container->getParameter('page__settings'),
-                $aSectionSettingsPageFields,
-                $this->container->getParameter('debug')
-            );
-
-            //($sPageClass, $aSettingFields) {
-            new Admin_PC3SectionSettingsPageCallbacks(
-                get_class( $pc3SettingsPage ),
-                $aSectionSettingsPageFields
-            );
-
-            $oNewEditorField = new Admin_Fields_PC3PageACEEditorField(
-                'field__new_editor',
-                'field__new_editor',
-                array(
-                    'title'             => __('New CSS Editor', 'one-page-sections' ),
-                )
-            );
-
-            $oNewPureField = new Admin_Fields_PC3PageRadioBinaryField(
-                'field__binary',
-                'field__binary',
-                array(
-                    'title'         => 'Do you know the answer?',
-                    'description'   => 'This setting field does nothing.',
-                    'default'       => 1
-                )
-            );
-
-            $this->container->addSettingFieldsAsParameters( array( $oNewPureField, $oNewEditorField ), $aAdminPages );
-
-
-            $oFirstTab = new Lib_PC3AdminPageTab(
-                'first_tab',
-                'First Tab',
-                array( $oNewPureField )
-            );
-
-            $oSecondTab = new Lib_PC3AdminPageTab(
-                'second_tab',
-                'Second Tab',
-                array( $oNewEditorField )
-            );
-
-            $oThirdTab = new Lib_PC3AdminPageTab(
-                'third_tab',
-                'Third Tab',
-                array()
-            );
-
-            $pc3SettingsPage = new Admin_PC3SamplePage(
-                'my_tabs',
-                array( $oFirstTab, $oSecondTab, $oThirdTab ),
-                $this->container->getParameter('debug'),
-                $this->container
-            );
         }
 
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
