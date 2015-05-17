@@ -14,7 +14,7 @@ class Lib_PC3AdminPageTab {
     /**
      * The ID used to used to uniquely identify this field within a page.
      *
-     * @since   0.9.0
+     * @since   0.9.3
      * @var     string
      */
     protected $sTabID;
@@ -22,7 +22,7 @@ class Lib_PC3AdminPageTab {
     /**
      * Title of the tab that shows up in the user interface.
      *
-     * @since   0.9.0
+     * @since   0.9.3
      * @var     array
      */
     protected $sTabTitle;
@@ -30,13 +30,13 @@ class Lib_PC3AdminPageTab {
     /**
      * An array of setting fields to be added to this page.
      *
-     * @since   0.9.0
+     * @since   0.9.3
      * @var     array
      */
     protected $aSettingFields;
 
     /**
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @param string $sTabID                the field_id of this tab
      * @param string $sTabTitle             the title of this tab
@@ -50,7 +50,7 @@ class Lib_PC3AdminPageTab {
     }
 
     /**
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @return string
      */
@@ -60,7 +60,7 @@ class Lib_PC3AdminPageTab {
     }
 
     /**
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class Lib_PC3AdminPageTab {
 
     /**
      *
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @return array
      */
@@ -82,5 +82,4 @@ class Lib_PC3AdminPageTab {
 
         return $this->aSettingFields;
     }
-
 }

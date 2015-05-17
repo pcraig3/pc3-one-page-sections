@@ -1,3 +1,11 @@
+#### 0.9.3
+* Isolated Field Classes.  Updated Classloader.
+* Fixed bug where homepage couldn't be set as One Page Sections page.
+* Added Tab Class
+  * Setting Fields belong to Tabs
+  * Tabs can all go on one Admin Settings Page
+  * Removed Custom Submit Field.
+
 #### 0.9.2
 * CSS file management gotten rid of completely.  User-submitted CSS is now just injected inline into the header.
 * (Fonts are still a bit of trouble.)

@@ -79,7 +79,7 @@ class One_Page_Sections {
     public function __construct() {
 
         $this->plugin_name = 'one-page-sections';
-        $this->version = '0.9.2';
+        $this->version = '0.9.3';
 
         $this->load_dependencies();
         //autoloader loads all new classes classes
@@ -183,7 +183,7 @@ class One_Page_Sections {
      * Register all of the hooks related to the dashboard functionality
      * of the plugin.
      *
-     * @since    0.9.2
+     * @since    0.9.3
      * @access   private
      */
     private function define_admin_hooks() {

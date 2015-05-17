@@ -328,7 +328,7 @@ class One_Page_Sections_Public {
      * custom key into the main WP_Query object, which is then used by the page-pc3_section template to iterate
      * through our sections and print them to the screen.
      *
-     * @since    0.9.0
+     * @since    0.9.3
      *
      * @param $query
      */

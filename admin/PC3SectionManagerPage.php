@@ -24,7 +24,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
     protected $sSectionSlug;
 
     /**
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @param string $sPageSlug         The slug used to uniquely identify this page, both in the code and in the URL
      * @param array $aTabs              Tabs (containing Setting fields) for our admin page
@@ -79,7 +79,7 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
     }
 
     /**
-     * One of the pre-defined methods which is triggered when the page contents is going to be rendered.
+     * One of the pre-defined methods which is triggered when the page contents are going to be rendered.
      *
      * ie, do_{page slug}
      *
@@ -91,10 +91,18 @@ class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
             $this->print_debug_information_to_screen();
     }
 
+    /**
+     * One of the pre-defined methods allowing us to add to / edit page contents.
+     *
+     * ie, content_{page slug}
+     *
+     * @since      0.9.3
+     */
     public function content_pc3_settings( $sContent ) {
 
         $current_tab = $this->get_current_tab();
 
+        //if the current tab has setting fields, add a submit button to the page
         if ( count( $current_tab->getSettingFields() ) > 0 )
             return $sContent . get_submit_button();
 

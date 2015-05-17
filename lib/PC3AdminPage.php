@@ -20,7 +20,7 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
     /**
      * An array of tabs (containing setting fields) to be added to this page.
      *
-     * @since   0.9.0
+     * @since   0.9.3
      * @var     array
      */
     protected $aTabs;
@@ -34,7 +34,7 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
     protected $bDebug;
 
     /**
-     * @since   0.9.0
+     * @since   0.9.3
      *
      * @param string $sPageSlug             The slug used to uniquely identify this page, both in the code and in the URL
      * @param array $aTabs         Tabs (containing setting fields) for our admin page
@@ -61,7 +61,7 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
      * Adding the tabs in turn, and then each of their form fields
      * contained in their respective `aSettingFields` arrays
      *
-     * @since      0.9.0
+     * @since      0.9.3
      */
     protected function add_setting_fields()
     {
@@ -88,6 +88,13 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
         $this->setInPageTabTag( 'h2' );        // sets the tag used for in-page tabs
     }
 
+    /**
+     * Adds all the Setting Fields from one tab to the admin page.
+     *
+     * @since      0.9.3
+     *
+     * @param $oTab
+     */
     private function add_setting_fields_from_tab( $oTab ) {
 
         $tabSettingFields = $oTab->getSettingFields();
@@ -110,9 +117,14 @@ abstract class Lib_PC3AdminPage extends PC3_AdminPageFramework
     }
 
     /**
-     * Check if the current tab we're on has a non-empty array of setting fields.
+     * Return the Tab matching the 'tab' query parameter.
+     * If there is no 'tab' query parameter, but the 'page' query parameter is set to this admin page's slug,
+     * return first tab in array of tabs.
+     * If no 'page' query parameter, return null
      *
-     * @return bool
+     * @since      0.9.3
+     *
+     * @return Lib_PC3AdminPageTab | null
      */
     protected function get_current_tab()
     {
