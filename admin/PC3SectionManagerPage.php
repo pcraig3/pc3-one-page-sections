@@ -16,7 +16,7 @@
 class Admin_PC3SectionManagerPage extends Lib_PC3AdminPage
 {
     /**
-     * The slug for our custom post type (Sections)
+     * The slug for our page
      *
      * @since   0.9.0
      * @var     string

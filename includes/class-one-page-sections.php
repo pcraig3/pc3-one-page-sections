@@ -207,7 +207,8 @@ class One_Page_Sections {
 
             $aAdminPages = array(
                 'Admin_PC3SectionManagerPage',
-                'Admin_PC3SectionSettingsPage'
+                'Admin_PC3SectionSettingsPage',
+                'Admin_PC3SamplePage'
             );
 
             $oSelectPageField = new Admin_Fields_PC3PageSelectPageField(
@@ -341,6 +342,52 @@ class One_Page_Sections {
             new Admin_PC3SectionSettingsPageCallbacks(
                 get_class( $pc3SettingsPage ),
                 $aSectionSettingsPageFields
+            );
+
+            $oNewEditorField = new Admin_Fields_PC3PageACEEditorField(
+                'field__new_editor',
+                'field__new_editor',
+                array(
+                    'title'             => __('New CSS Editor', 'one-page-sections' ),
+                )
+            );
+
+            $oNewPureField = new Admin_Fields_PC3PageRadioBinaryField(
+                'field__binary',
+                'field__binary',
+                array(
+                    'title'         => 'Do you know the answer?',
+                    'description'   => 'This setting field does nothing.',
+                    'default'       => 1
+                )
+            );
+
+            $this->container->addSettingFieldsAsParameters( array( $oNewPureField, $oNewEditorField ), $aAdminPages );
+
+
+            $oFirstTab = new Lib_PC3AdminPageTab(
+                'first_tab',
+                'First Tab',
+                array( $oNewPureField )
+            );
+
+            $oSecondTab = new Lib_PC3AdminPageTab(
+                'second_tab',
+                'Second Tab',
+                array( $oNewEditorField )
+            );
+
+            $oThirdTab = new Lib_PC3AdminPageTab(
+                'third_tab',
+                'Third Tab',
+                array()
+            );
+
+            $pc3SettingsPage = new Admin_PC3SamplePage(
+                'my_tabs',
+                array( $oFirstTab, $oSecondTab, $oThirdTab ),
+                $this->container->getParameter('debug'),
+                $this->container
             );
         }
 
